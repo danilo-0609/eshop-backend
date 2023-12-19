@@ -1,0 +1,17 @@
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\Shopping.IntegrationEvents.deps.json
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\Shopping.IntegrationEvents.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\Shopping.IntegrationEvents.pdb
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\BuildingBlocks.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\BuildingBlocks.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\bin\Debug\net7.0\BuildingBlocks.Domain.pdb
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.csproj.CopyComplete
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\refint\Shopping.IntegrationEvents.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\Shopping.IntegrationEvents.pdb
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.IntegrationEvents\obj\Debug\net7.0\ref\Shopping.IntegrationEvents.dll

@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\API",
+    "\\Catalog.Application",
+    "\\Catalog.Application\\Products",
+    "\\Catalog.Application\\Products\\ModifyProduct",
+    "\\Catalog.Application\\Products\\ModifyProduct\\ModifyColor"
+  ],
+  "SelectedNode": "\\eShop.sln",
+  "PreviewInSolutionExplorer": false
+}

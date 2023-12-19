@@ -1,0 +1,12 @@
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\bin\Debug\net7.0\BuildingBlocks.Domain.deps.json
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\bin\Debug\net7.0\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\bin\Debug\net7.0\BuildingBlocks.Domain.pdb
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\refint\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.pdb
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\ref\BuildingBlocks.Domain.dll

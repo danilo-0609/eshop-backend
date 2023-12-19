@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+
+  eshop.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: Eshop.Db
+    volumes:
+       - ./.containers/database:/var/opt/mssql/data
+    ports: 
+       - "1433:1433"
+    environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "SqlP@ssword123"
+  
+  eshop-mq: 
+    image: rabbitmq:3.11.7-management
+    container_name: Queue
+    hostname: eshop-queue
+    volumes:
+        - ./.containers/queue/data/:/var/lib/rabbitmq
+        - ./.containers/queue/data/:/var/log/rabbitmq
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest

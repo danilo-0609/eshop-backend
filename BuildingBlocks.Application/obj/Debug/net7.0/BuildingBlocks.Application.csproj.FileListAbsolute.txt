@@ -1,0 +1,15 @@
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\bin\Debug\net7.0\BuildingBlocks.Application.deps.json
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\bin\Debug\net7.0\BuildingBlocks.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\bin\Debug\net7.0\BuildingBlocks.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\bin\Debug\net7.0\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\bin\Debug\net7.0\BuildingBlocks.Domain.pdb
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.csproj.CopyComplete
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\refint\BuildingBlocks.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\BuildingBlocks.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Application\obj\Debug\net7.0\ref\BuildingBlocks.Application.dll
