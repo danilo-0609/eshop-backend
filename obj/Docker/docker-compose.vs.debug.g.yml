@@ -3,7 +3,7 @@ version: '3.4'
 services:
   api:
     image: api:dev
-    container_name: "API"
+    container_name: "API_1"
     build:
       target: base
       labels:

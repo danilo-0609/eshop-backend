@@ -1,5 +1,3 @@
-using BuildingBlocks.Domain;
-
 namespace UserAccess.Domain.Users;
 
 public sealed class Role 
