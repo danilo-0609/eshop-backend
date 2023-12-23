@@ -1,24 +1,29 @@
-namespace UserAccess.Domain.Users;
+﻿using System;
+using System.Collections.Generic;
 
-public sealed class Role 
+namespace UserAccess.Domain;
+
+public partial class Role
 {
-    public int Id { get; set; }
+    public int RoleId { get; set; }
 
-    public string RoleCode { get; private set; }
+    public string RoleCode { get; set; } = null!;
 
-    public static readonly Role Administrator = new Role(1, nameof(Administrator));
+    public static Role Administrator = new Role(1, nameof(Administrator));
 
-    public static readonly Role Customer = new Role(2, nameof(Customer));
+    public static Role Customer = new Role(1, nameof(Customer));
 
-    public static readonly Role Seller = new Role(3, nameof(Seller));
+    public static Role Seller = new Role(1, nameof(Seller));
 
-    private Role(int id, string roleCode)
+    public Role(int roleId, string roleCode)
     {
-        Id = id;
+        RoleId = roleId;
         RoleCode = roleCode;
     }
 
-    public ICollection<Permission> Permissions { get; set; }
+    public Role()
+    {
+    }
 
-    public Role() { }
+    public virtual ICollection<Permission> Permissions { get; } = new List<Permission>();
 }

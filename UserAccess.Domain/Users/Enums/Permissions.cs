@@ -38,25 +38,25 @@ public enum Permissions
 
     BuyItem = 18,
 
-    AddItemInBasket = 20,
+    AddItemInBasket = 19,
 
-    DeleteBasketItem = 21,
+    DeleteBasketItem = 20,
 
-    BuyBasket = 22,
+    BuyBasket = 21,
 
-    PublishProduct = 23,
+    PublishProduct = 22,
 
-    GetRatings = 24,
+    GetRatings = 23,
 
-    AddRating = 25,
+    AddRating = 24,
 
-    UpdateRating = 26,
+    UpdateRating = 25,
 
-    DeleteRating = 27,
+    DeleteRating = 26,
 
-    SaleProduct = 28,
+    SaleProduct = 27,
 
-    UpdateProduct = 29,
+    UpdateProduct = 28,
 
-    GetUserRegistration = 30
+    GetUserRegistration = 29
 }

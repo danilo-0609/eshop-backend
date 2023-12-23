@@ -1,6 +1,7 @@
 ﻿using Catalog.IntegrationEvents;
 using MassTransit;
 using MediatR;
+using UserAccess.Domain;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.IntegrationEventCostumers;

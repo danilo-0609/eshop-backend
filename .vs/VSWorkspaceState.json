@@ -1,18 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Catalog.Application",
-    "\\Catalog.Application\\Products",
-    "\\Catalog.Application\\Products\\ModifyProduct",
-    "\\Catalog.Application\\Products\\ModifyProduct\\ModifyColor",
     "\\Catalog.Infrastructure",
     "\\Catalog.Infrastructure\\Outbox",
     "\\Catalog.Infrastructure\\Outbox\\Interceptors",
     "\\UserAccess.Application",
     "\\UserAccess.Application\\Common",
+    "\\UserAccess.Domain",
+    "\\UserAccess.Domain\\Users",
+    "\\UserAccess.Domain\\Users\\Enums",
     "\\UserAccess.Infrastructure",
     "\\UserAccess.Infrastructure\\Migrations"
   ],
-  "SelectedNode": "\\eShop.sln",
+  "SelectedNode": "\\UserAccess.Domain\\Users\\Enums\\Permissions.cs",
   "PreviewInSolutionExplorer": false
 }

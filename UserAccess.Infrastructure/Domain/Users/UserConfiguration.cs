@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using UserAccess.Domain;
 using UserAccess.Domain.Common;
 using UserAccess.Domain.Users;
 

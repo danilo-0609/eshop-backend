@@ -1,10 +1,13 @@
-﻿namespace UserAccess.Domain.Users;
+﻿using System;
+using System.Collections.Generic;
 
-public sealed class Permission
+namespace UserAccess.Domain;
+
+public partial class Permission
 {
-    public int Id { get; set; }
+    public int PermissionId { get; set; }
 
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; set; } = null!;
 
-    public Permission() { }
+    public virtual ICollection<Role> Roles { get; } = new List<Role>();
 }
