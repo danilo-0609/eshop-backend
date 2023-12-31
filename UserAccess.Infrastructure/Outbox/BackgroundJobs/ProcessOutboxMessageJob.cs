@@ -28,7 +28,7 @@ internal sealed class ProcessOutboxMessageJob : IJob
     public async Task Execute(IJobExecutionContext context)
     {
         List<OutboxMessage> messages = await _dbContext
-            .Set<OutboxMessage>()
+            .OutboxMessages
             .Where(m => m.ProcessedOnUtc == null)
             .Take(20)
             .ToListAsync();
@@ -50,6 +50,6 @@ internal sealed class ProcessOutboxMessageJob : IJob
             message.ProcessedOnUtc = DateTime.UtcNow;
         }
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(_cancellationToken);
     }
 }

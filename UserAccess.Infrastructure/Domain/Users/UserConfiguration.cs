@@ -6,7 +6,7 @@ using UserAccess.Domain.Users;
 
 namespace UserAccess.Infrastructure.Domain.Users;
 
-internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
+public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
@@ -29,7 +29,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         {
             p.Property(p => p.Value)
              .HasColumnName("Password")
-             .HasMaxLength(25);
+             .HasMaxLength(150);
         });
 
         builder.Property(x => x.Email)
@@ -51,8 +51,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(155);
 
         builder.HasMany(r => r.Roles)
-            .WithMany()
-            .UsingEntity<Role>();
+            .WithMany(r => r.Users)
+            .UsingEntity<UserRole>();
 
         builder.Property(x => x.Address)
             .HasColumnName("Address")

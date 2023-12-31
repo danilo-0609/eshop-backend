@@ -11,7 +11,6 @@ using Catalog.Infrastructure.Domain.Ratings;
 using Catalog.Infrastructure.Domain.Sales;
 using Catalog.Infrastructure.EventsBus;
 using Catalog.Infrastructure.Outbox.BackgroundJobs;
-using Catalog.Infrastructure.Outbox.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,8 +22,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
-
         services.AddQuartzHostedService();
 
         services.AddQuartz(configure =>
@@ -43,15 +40,12 @@ public static class DependencyInjection
         
         services.AddDbContext<CatalogDbContext>((sp, optionsBuilder) => 
         {
-            var interceptor = sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
-
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"))
-                .AddInterceptors(interceptor);
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
         });
 
-
-        //services.AddScoped<IUnitOfWork>(sp =>
-           // sp.GetRequiredService<ApplicationDbContext>());
+        //Unit of work
+        services.AddScoped<IUnitOfWork>(sp =>
+           sp.GetRequiredService<CatalogDbContext>());
         
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<CatalogDbContext>());

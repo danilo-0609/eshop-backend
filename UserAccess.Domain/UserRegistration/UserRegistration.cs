@@ -7,6 +7,7 @@ using UserAccess.Domain.Users;
 using MediatR;
 
 namespace UserAccess.Domain.UserRegistrations;
+
 public sealed class UserRegistration : AggregateRoot<UserRegistrationId, Guid>
 {
     public new UserRegistrationId Id { get; private set; }

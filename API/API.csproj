@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Catalog\Endpoints\" />
     <Folder Include="Modules\Catalog\Requests\" />
   </ItemGroup>
 

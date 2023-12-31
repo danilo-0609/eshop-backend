@@ -5,7 +5,7 @@ using UserAccess.Domain.UserRegistrations;
 
 namespace UserAccess.Infrastructure.Domain.UserRegistrations;
 
-internal sealed class UserRegistrationConfiguration : IEntityTypeConfiguration<UserRegistration>
+public sealed class UserRegistrationConfiguration : IEntityTypeConfiguration<UserRegistration>
 {
     public void Configure(EntityTypeBuilder<UserRegistration> builder)
     {
@@ -28,7 +28,7 @@ internal sealed class UserRegistrationConfiguration : IEntityTypeConfiguration<U
         {
             p.Property(p => p.Value)
              .HasColumnName("Password")
-             .HasMaxLength(25);
+             .HasMaxLength(150);
         });
 
         builder.Property(x => x.Email)

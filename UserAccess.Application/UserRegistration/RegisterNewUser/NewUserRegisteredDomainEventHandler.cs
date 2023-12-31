@@ -1,11 +1,11 @@
 ﻿using BuildingBlocks.Application.EventBus;
-using BuildingBlocks.Application.Events;
+using MediatR;
 using UserAccess.Domain.UserRegistrations.Events;
 using UserAccess.IntegrationEvents;
 
 namespace UserAccess.Application.UserRegistration.RegisterNewUser;
 
-internal sealed class NewUserRegisteredDomainEventHandler : IDomainEventHandler<NewUserRegisteredDomainEvent>
+internal sealed class NewUserRegisteredDomainEventHandler : INotificationHandler<NewUserRegisteredDomainEvent>
 {
     private readonly IEventBus _eventBus;
 

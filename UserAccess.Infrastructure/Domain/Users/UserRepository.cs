@@ -3,7 +3,7 @@ using UserAccess.Domain.Users;
 
 namespace UserAccess.Infrastructure.Domain.Users;
 
-internal sealed class UserRepository : IUserRepository
+public sealed class UserRepository : IUserRepository
 {
     private readonly UserAccessDbContext _dbContext;
 

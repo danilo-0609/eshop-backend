@@ -1,17 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Catalog.Infrastructure",
-    "\\Catalog.Infrastructure\\Outbox",
-    "\\Catalog.Infrastructure\\Outbox\\Interceptors",
-    "\\UserAccess.Application",
-    "\\UserAccess.Application\\Common",
     "\\UserAccess.Domain",
     "\\UserAccess.Domain\\Users",
     "\\UserAccess.Domain\\Users\\Enums",
     "\\UserAccess.Infrastructure",
+    "\\UserAccess.Infrastructure\\Domain",
+    "\\UserAccess.Infrastructure\\Domain\\Permissions",
+    "\\UserAccess.Infrastructure\\Domain\\Roles",
+    "\\UserAccess.Infrastructure\\Domain\\UsersRole",
     "\\UserAccess.Infrastructure\\Migrations"
   ],
-  "SelectedNode": "\\UserAccess.Domain\\Users\\Enums\\Permissions.cs",
+  "SelectedNode": "\\UserAccess.Infrastructure\\UnitOfWork.cs",
   "PreviewInSolutionExplorer": false
 }

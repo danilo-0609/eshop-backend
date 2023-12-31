@@ -1,16 +1,18 @@
 ﻿namespace UserAccess.Infrastructure.Outbox;
 
-internal sealed class OutboxMessage
+public sealed class OutboxMessage
 {
-    internal Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-    internal string Type { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
 
-    internal string Content { get; set; } = string.Empty;
+    public string Content { get; set; } = string.Empty;
 
-    internal DateTime OcurredOnUtc { get; set; }
+    public DateTime OcurredOnUtc { get; set; }
 
-    internal DateTime? ProcessedOnUtc { get; set; }
+    public DateTime? ProcessedOnUtc { get; set; }
 
-    internal string? Error { get; set; }
+    public string? Error { get; set; }
+
+    public OutboxMessage() { }
 }

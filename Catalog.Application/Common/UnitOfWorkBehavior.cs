@@ -1,11 +1,13 @@
-using System.Transactions;
-using BuildingBlocks.Application.Commands;
+﻿using BuildingBlocks.Application.Commands;
+using ErrorOr;
 using MediatR;
+using System.Transactions;
 
 namespace Catalog.Application.Common;
-internal sealed class UnitOfWorkBehavior<TRequest, TResponse>  : IPipelineBehavior<TRequest, TResponse>
+
+internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICommandRequest<TResponse>
-    where TResponse : notnull
+    where TResponse : IErrorOr
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -16,7 +18,7 @@ internal sealed class UnitOfWorkBehavior<TRequest, TResponse>  : IPipelineBehavi
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        using (var transactionScope = new TransactionScope())
+        using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             var response = await next();
 
@@ -27,5 +29,4 @@ internal sealed class UnitOfWorkBehavior<TRequest, TResponse>  : IPipelineBehavi
             return response;
         }
     }
-
 }

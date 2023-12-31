@@ -1,8 +1,7 @@
 using System;
 
 namespace BuildingBlocks.Domain;
-public interface IAggregateRoot
+public interface IAggregateRoot : IHasDomainEvents
 {
-        
 }
 

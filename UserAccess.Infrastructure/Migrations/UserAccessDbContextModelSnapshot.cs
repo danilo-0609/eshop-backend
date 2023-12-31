@@ -22,6 +22,45 @@ namespace UserAccess.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("UserAccess.Domain.Permission", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("UserAccess.Domain.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("RoleCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("UserAccess.Domain.UserRegistrations.UserRegistration", b =>
                 {
                     b.Property<Guid>("Id")
@@ -76,211 +115,17 @@ namespace UserAccess.Infrastructure.Migrations
                     b.ToTable("UserRegistrations", "users");
                 });
 
-            modelBuilder.Entity("UserAccess.Domain.Users.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Permissions", "users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "AccessUsers"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "ReadUser"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "ChangeUser"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "RemoveUser"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "DeleteComment"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "GetComments"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "UpdateComment"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "AddComment"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "GetProducts"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "ModifyProduct"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "RemoveProduct"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "GetSales"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "GetItems"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "GetOrders"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "GetBasket"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "GetBuys"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "CancelBuy"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "BuyItem"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "AddItemInBasket"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Name = "DeleteBasketItem"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "BuyBasket"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "PublishProduct"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "GetRatings"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "AddRating"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "UpdateRating"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Name = "DeleteRating"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Name = "SaleProduct"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Name = "UpdateProduct"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Name = "GetUserRegistration"
-                        });
-                });
-
-            modelBuilder.Entity("UserAccess.Domain.Users.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoleCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RolesId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Roles", "users");
-                });
-
             modelBuilder.Entity("UserAccess.Domain.Users.RolePermission", b =>
                 {
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("PermissionId", "RoleId");
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RoleId");
+                    b.HasKey("RoleId", "PermissionId");
 
-                    b.ToTable("RolePermission", "users");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("UserAccess.Domain.Users.User", b =>
@@ -341,6 +186,65 @@ namespace UserAccess.Infrastructure.Migrations
                     b.ToTable("Users", "users");
                 });
 
+            modelBuilder.Entity("UserAccess.Domain.Users.UserRole", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UsersRoles", "users");
+                });
+
+            modelBuilder.Entity("UserAccess.Infrastructure.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Error");
+
+                    b.Property<DateTime>("OcurredOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("OcurredOnUtc");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ProcessedOnUtc");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboxMessages", "users");
+                });
+
+            modelBuilder.Entity("UserAccess.Domain.Permission", b =>
+                {
+                    b.HasOne("UserAccess.Domain.Role", null)
+                        .WithMany("Permissions")
+                        .HasForeignKey("RoleId");
+                });
+
             modelBuilder.Entity("UserAccess.Domain.UserRegistrations.UserRegistration", b =>
                 {
                     b.OwnsOne("UserAccess.Domain.Common.Password", "Password", b1 =>
@@ -350,8 +254,8 @@ namespace UserAccess.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(25)
-                                .HasColumnType("nvarchar(25)")
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)")
                                 .HasColumnName("Password");
 
                             b1.HasKey("UserRegistrationId");
@@ -387,36 +291,6 @@ namespace UserAccess.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UserAccess.Domain.Users.Role", b =>
-                {
-                    b.HasOne("UserAccess.Domain.Users.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UserAccess.Domain.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserAccess.Domain.Users.RolePermission", b =>
-                {
-                    b.HasOne("UserAccess.Domain.Users.Permission", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UserAccess.Domain.Users.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("UserAccess.Domain.Users.User", b =>
                 {
                     b.OwnsOne("UserAccess.Domain.Common.Password", "Password", b1 =>
@@ -426,8 +300,8 @@ namespace UserAccess.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(25)
-                                .HasColumnType("nvarchar(25)")
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)")
                                 .HasColumnName("Password");
 
                             b1.HasKey("UserId");
@@ -440,6 +314,26 @@ namespace UserAccess.Infrastructure.Migrations
 
                     b.Navigation("Password")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("UserAccess.Domain.Users.UserRole", b =>
+                {
+                    b.HasOne("UserAccess.Domain.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserAccess.Domain.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserAccess.Domain.Role", b =>
+                {
+                    b.Navigation("Permissions");
                 });
 #pragma warning restore 612, 618
         }

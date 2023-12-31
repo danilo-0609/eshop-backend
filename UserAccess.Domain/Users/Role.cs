@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using UserAccess.Domain.Users;
 
 namespace UserAccess.Domain;
 
-public partial class Role
+public class Role
 {
     public int RoleId { get; set; }
 
@@ -11,9 +12,11 @@ public partial class Role
 
     public static Role Administrator = new Role(1, nameof(Administrator));
 
-    public static Role Customer = new Role(1, nameof(Customer));
+    public static Role Customer = new Role(2, nameof(Customer));
 
-    public static Role Seller = new Role(1, nameof(Seller));
+    public static Role Seller = new Role(3, nameof(Seller));
+
+    public ICollection<User> Users { get; } = new List<User>();
 
     public Role(int roleId, string roleCode)
     {
@@ -25,5 +28,5 @@ public partial class Role
     {
     }
 
-    public virtual ICollection<Permission> Permissions { get; } = new List<Permission>();
+    public ICollection<Permission> Permissions { get; } = new List<Permission>();
 }

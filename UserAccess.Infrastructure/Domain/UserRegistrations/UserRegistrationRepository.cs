@@ -3,7 +3,7 @@ using UserAccess.Domain.UserRegistrations;
 
 namespace UserAccess.Infrastructure.Domain.UserRegistrations;
 
-internal sealed class UserRegistrationRepository : IUserRegistrationRepository, IUsersCounter
+public sealed class UserRegistrationRepository : IUserRegistrationRepository, IUsersCounter
 {
     private readonly UserAccessDbContext _dbContext;
 

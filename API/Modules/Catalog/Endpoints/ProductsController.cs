@@ -20,7 +20,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.GetProducts)]
-    [HttpGet("{name:string}")]
+    [HttpGet("{name}")]
     public async Task<IActionResult> GetProductsByName(string name)
     {
         var query = new GetProductsByNameQuery(name);

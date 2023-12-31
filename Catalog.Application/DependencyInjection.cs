@@ -13,8 +13,6 @@ public static class DependencyInjection
         services.AddMediatR(config => 
         {
             config.RegisterServicesFromAssemblyContaining<AssemblyReference>();
-
-            config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
         });
 
         services.AddScoped(
@@ -24,6 +22,10 @@ public static class DependencyInjection
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
             typeof(LoggingPipelineBehavior<,>));
+
+        services.AddScoped(
+            typeof(IPipelineBehavior<,>),
+            typeof(UnitOfWorkBehavior<,>));
 
         services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
         

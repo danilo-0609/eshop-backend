@@ -2,7 +2,7 @@ using System;
 
 namespace BuildingBlocks.Domain;
 
-public abstract class AggregateRoot<TId, TIdType> : Entity<TId, TIdType>, IAggregateRoot
+public abstract class AggregateRoot<TId, TIdType> : Entity<TId, TIdType>, IAggregateRoot, IHasDomainEvents
     where TId : AggregateRootId<TIdType>
     where TIdType : notnull
 {

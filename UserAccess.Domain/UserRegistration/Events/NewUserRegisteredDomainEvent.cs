@@ -1,6 +1,8 @@
 using BuildingBlocks.Domain;
+using MediatR;
 
 namespace UserAccess.Domain.UserRegistrations.Events;
+
 public sealed record NewUserRegisteredDomainEvent(
     Guid DomainEventId,
     UserRegistrationId Id,
@@ -9,4 +11,4 @@ public sealed record NewUserRegisteredDomainEvent(
     string FirstName,
     string LastName,
     string Name,
-    DateTime OcurredOn) : IDomainEvent;
+    DateTime OcurredOn) : IDomainEvent, INotification;

@@ -61,8 +61,8 @@ public static class DependencyInjection
         services.AddSingleton<Microsoft.AspNetCore.Http.HttpContextAccessor>();
 
         //Common handling services
-        services.AddTransient<IMiddleware, GlobalExceptionHandlingMiddleware>();
-        services.AddTransient<ProblemDetailsFactory, EshopProblemDetailsFactory>();
+        services.AddTransient<GlobalExceptionHandlingMiddleware>();
+        services.AddTransient<EshopProblemDetailsFactory>();
         services.AddScoped<IExecutionContextAccessor, ExecutionContextAccessor>();
 
         return services;
