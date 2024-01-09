@@ -1,6 +1,7 @@
-/.containers 
-/.github
-/.vs
-/.vscode
-/msbuild.log
+*.containers 
+eshop-backend/.containers
+*.github
+*.vs
+*.vscode
+*.msbuild.log
 
