@@ -5,3 +5,7 @@ eshop-backend/.containers
 *.vscode
 *.msbuild.log
 
+.containers
+C:\Users\Usuario\Desktop\eShop-backend\.github\workflows
+C:\Users\Usuario\Desktop\eShop-backend\.vscode
+bin
