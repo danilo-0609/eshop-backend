@@ -1,6 +1,8 @@
 using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace UserAccess.Domain.UserRegistrations;
+
 public sealed record UserRegistrationId : AggregateRootId<Guid>
 {
     public override Guid Value { get; protected set; }
@@ -9,6 +11,7 @@ public sealed record UserRegistrationId : AggregateRootId<Guid>
 
     public static UserRegistrationId CreateUnique() => new UserRegistrationId(Guid.NewGuid());
 
+    [JsonConstructor]
     private UserRegistrationId(Guid value)
     {
         Value = value;
@@ -17,5 +20,4 @@ public sealed record UserRegistrationId : AggregateRootId<Guid>
     private UserRegistrationId() 
     {
     }
-
 }

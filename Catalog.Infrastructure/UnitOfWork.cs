@@ -30,11 +30,11 @@ internal sealed class UnitOfWork : IUnitOfWork
             {
                 var domainEvents = entity.DomainEvents;
 
-                entity.ClearDomainEvent();
+                entity.ClearDomainEvents();
 
                 return domainEvents;
             })
-            .Select(domainEvent => new OutboxMessage
+            .Select(domainEvent => new CatalogOutboxMessage
             {
                 Id = domainEvent.DomainEventId,
                 Type = domainEvent.GetType().Name,
@@ -47,6 +47,6 @@ internal sealed class UnitOfWork : IUnitOfWork
                     })
             }).ToList();
 
-        _dbContext.OutboxMessages.AddRange(domainEvents);
+        _dbContext.CatalogOutboxMessages.AddRange(domainEvents);
     }
 }

@@ -30,7 +30,7 @@ internal sealed class UserRegistrationConfirmedDomainEventHandler : IDomainEvent
             _logger.LogError("User creation failed: {@RequestName} @{Error} @{OcurredOn}",
                 typeof(UserRegistrationConfirmedDomainEventHandler).Name,
                 "UserRegistrationErrors.RegistrationIsNotConfirmed",
-                DateTime.UtcNow); //TODO: LOGGEAR O MANEJAR LOS ERRORES
+                DateTime.UtcNow);
 
             return;
         }

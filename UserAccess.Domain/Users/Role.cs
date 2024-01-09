@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UserAccess.Domain.Users;
+﻿using UserAccess.Domain.Users;
 
 namespace UserAccess.Domain;
 

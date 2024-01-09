@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using UserAccess.Application.Abstractions;
-using UserAccess.Application.Common;
 using UserAccess.Domain.UserRegistrations;
 using UserAccess.Domain.Users;
 using UserAccess.Infrastructure.Authentication;
@@ -22,22 +21,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        //Background jobs 
+        services.AddQuartz();
         services.AddQuartzHostedService();
+        services.ConfigureOptions<ProcessUserAccessOutboxMessageJobSetup>();
 
-        services.AddQuartz(configure =>
-        {
-            var jobKey = new JobKey(nameof(ProcessOutboxMessageJob));
-
-            configure.AddJob<ProcessOutboxMessageJob>(jobKey, job => job.StoreDurably())
-                .AddTrigger(
-                    trigger =>
-                        trigger.ForJob(jobKey)
-                            .WithSimpleSchedule(
-                                schedule =>
-                                    schedule.WithIntervalInSeconds(10)
-                                    .RepeatForever()));
-        });
-
+        //Persistence. Database context
         services.AddDbContext<UserAccessDbContext>((sp, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));

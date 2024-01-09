@@ -55,7 +55,9 @@ public abstract class Entity<TId, TIdType> : IEquatable<Entity<TId, TIdType>>, I
         _domainEvents.Add(domainEvent);
     }
 
-    public void ClearDomainEvent() => _domainEvents?.Clear();
+    public IReadOnlyList<IDomainEvent> GetDomainEvents() => _domainEvents;
+
+    public void ClearDomainEvents() => _domainEvents?.Clear();
 
     public bool Equals(Entity<TId, TIdType>? other)
     {

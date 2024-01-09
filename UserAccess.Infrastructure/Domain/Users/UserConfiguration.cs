@@ -6,7 +6,7 @@ using UserAccess.Domain.Users;
 
 namespace UserAccess.Infrastructure.Domain.Users;
 
-public sealed class UserConfiguration : IEntityTypeConfiguration<User>
+internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {

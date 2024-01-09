@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Domain;
 using Newtonsoft.Json;
-using UserAccess.Application.Common;
+using UserAccess.Application.Abstractions;
 using UserAccess.Infrastructure.Outbox;
 
 namespace UserAccess.Infrastructure;
@@ -28,15 +28,24 @@ internal sealed class UnitOfWork : IUnitOfWork
             .Select(x => x.Entity)
             .SelectMany(entity =>
             {
-                IReadOnlyList<IDomainEvent> domainEvents = entity.DomainEvents;
-
-                entity.ClearDomainEvent();
+                IReadOnlyList<IDomainEvent> domainEvents = entity.GetDomainEvents();
 
                 return domainEvents;
+
             }).ToList();
 
-        List<OutboxMessage> outboxMessages = domainEvents
-            .Select(domainEvent => new OutboxMessage
+        _dbContext.ChangeTracker
+             .Entries<IHasDomainEvents>()
+             .Where(x => x.Entity.DomainEvents.Count() > 0)
+             .Select(x =>
+             {
+                 x.Entity.ClearDomainEvents();
+
+                 return 0;
+             });
+
+        List<UserAccessOutboxMessage> outboxMessages = domainEvents
+            .Select(domainEvent => new UserAccessOutboxMessage
             {
                 Id = domainEvent.DomainEventId,
                 Type = domainEvent.GetType().Name,
@@ -50,7 +59,7 @@ internal sealed class UnitOfWork : IUnitOfWork
             }).ToList();
 
             await _dbContext
-                .OutboxMessages
+                .UserAccessOutboxMessages
                 .AddRangeAsync(outboxMessages);
     }
 }

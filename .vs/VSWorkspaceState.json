@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\UserAccess.Domain",
-    "\\UserAccess.Domain\\Users",
-    "\\UserAccess.Domain\\Users\\Enums",
+    "\\UserAccess.Application",
+    "\\UserAccess.Application\\Users",
+    "\\UserAccess.Application\\Users\\Admin",
+    "\\UserAccess.Application\\Users\\Admin\\AddAdminUser",
     "\\UserAccess.Infrastructure",
     "\\UserAccess.Infrastructure\\Domain",
-    "\\UserAccess.Infrastructure\\Domain\\Permissions",
-    "\\UserAccess.Infrastructure\\Domain\\Roles",
+    "\\UserAccess.Infrastructure\\Domain\\Users",
     "\\UserAccess.Infrastructure\\Domain\\UsersRole",
     "\\UserAccess.Infrastructure\\Migrations"
   ],
-  "SelectedNode": "\\UserAccess.Infrastructure\\UnitOfWork.cs",
+  "SelectedNode": "\\UserAccess.Application\\Users\\Admin\\AddAdminUser\\UserCreatedDomainEventHandler.cs",
   "PreviewInSolutionExplorer": false
 }

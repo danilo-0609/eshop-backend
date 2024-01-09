@@ -206,7 +206,7 @@ namespace UserAccess.Infrastructure.Migrations
                     b.ToTable("UsersRoles", "users");
                 });
 
-            modelBuilder.Entity("UserAccess.Infrastructure.Outbox.OutboxMessage", b =>
+            modelBuilder.Entity("UserAccess.Infrastructure.Outbox.UserAccessOutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -235,7 +235,7 @@ namespace UserAccess.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OutboxMessages", "users");
+                    b.ToTable("UserAccessOutboxMessages", "users");
                 });
 
             modelBuilder.Entity("UserAccess.Domain.Permission", b =>

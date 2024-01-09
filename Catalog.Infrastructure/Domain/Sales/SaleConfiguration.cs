@@ -29,7 +29,8 @@ internal sealed class SaleConfiguration : IEntityTypeConfiguration<Sale>
             .HasColumnName("AmountOfProducts");
 
         builder.Property(p => p.UnitPrice)
-            .HasColumnName("UnitPrice");
+            .HasColumnName("UnitPrice")
+            .HasColumnType("decimal(18, 2)");
 
         builder.Property(p => p.UserId)
             .HasColumnName("UserId");

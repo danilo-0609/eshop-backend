@@ -2,7 +2,7 @@ using System.Data;
 using BuildingBlocks.Application.Queries;
 using Dapper;
 using ErrorOr;
-using UserAccess.Application.Common;
+using UserAccess.Application.Abstractions;
 
 namespace UserAccess.Application.Users.GetUserById;
 internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserByIdQuery, ErrorOr<UserResponse>>

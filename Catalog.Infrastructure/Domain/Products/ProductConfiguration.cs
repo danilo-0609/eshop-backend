@@ -26,7 +26,8 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasMaxLength(300);
 
         builder.Property(p => p.Price)
-            .HasColumnName("Price");
+            .HasColumnName("Price")
+            .HasColumnType("decimal(18, 2)");
 
         builder.Property(p => p.Description)
             .HasColumnName("Description")

@@ -100,7 +100,7 @@ namespace Catalog.Infrastructure.Migrations
                         .HasColumnName("Name");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("Price");
 
                     b.Property<Guid>("SellerId")
@@ -177,7 +177,7 @@ namespace Catalog.Infrastructure.Migrations
                         .HasColumnName("ProductId");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18, 2)")
                         .HasColumnName("UnitPrice");
 
                     b.Property<Guid>("UserId")
@@ -187,6 +187,38 @@ namespace Catalog.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sales", "catalog");
+                });
+
+            modelBuilder.Entity("Catalog.Infrastructure.Outbox.CatalogOutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Error");
+
+                    b.Property<DateTime>("OcurredOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("OcurredOnUtc");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ProcessedOnUtc");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CatalogOutboxMessage", "catalog");
                 });
 
             modelBuilder.Entity("Catalog.Domain.Products.Product", b =>

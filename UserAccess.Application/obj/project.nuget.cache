@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rCdM3Xcm+vi0dqEQrhVmiTywOBf9tau0obSjsERJU53qtttXRNvh7JKx+yobTlfTiGYvIstWiBzxXBgK6Kc7dw==",
+  "dgSpecHash": "5UuqhX5dQjkPhgQ+wOqh0IR5DrLwz2vWm+AriC79Fgg6iV7CoJCjfkjBMcnyimuh0nVueo/xCh/zhg7ipRzeqA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Desktop\\eShop-backend\\UserAccess.Application\\UserAccess.Application.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\microsoft.extensions.options.7.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.diagnostics.diagnosticsource\\7.0.1\\system.diagnostics.diagnosticsource.7.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",

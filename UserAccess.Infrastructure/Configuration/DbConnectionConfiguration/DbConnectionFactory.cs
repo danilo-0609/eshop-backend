@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.Common;
-using UserAccess.Application.Common;
+using UserAccess.Application.Abstractions;
 
 namespace UserAccess.Infrastructure.Configuration.DbConnectionConfiguration;
 

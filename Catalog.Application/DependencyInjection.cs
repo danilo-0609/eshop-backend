@@ -17,15 +17,15 @@ public static class DependencyInjection
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),   
-            typeof(ValidationBehavior<,>));
+            typeof(CatalogValidationBehavior<,>));
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(LoggingPipelineBehavior<,>));
+            typeof(CatalogApplicationLoggingPipelineBehavior<,>));
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(UnitOfWorkBehavior<,>));
+            typeof(CatalogUnitOfWorkBehavior<,>));
 
         services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
         

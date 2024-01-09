@@ -1766,7 +1766,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "BuildingBlocks.Domain": "1.0.0"
+          "BuildingBlocks.Domain": "1.0.0",
+          "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
           "bin/placeholder/UserAccess.Domain.dll": {}

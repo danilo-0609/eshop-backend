@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UserAccess.Domain;
 using UserAccess.Domain.Users;

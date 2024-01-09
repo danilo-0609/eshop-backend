@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Catalog.Infrastructure;
 
-public partial class CatalogDbContext : DbContext, IApplicationDbContext, IUnitOfWork
+public sealed class CatalogDbContext : DbContext, IApplicationDbContext, IUnitOfWork
 {
     private readonly IConfiguration _configuration;
 
@@ -23,37 +23,12 @@ public partial class CatalogDbContext : DbContext, IApplicationDbContext, IUnitO
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<Sale> Sales { get; set; }
 
-    internal DbSet<OutboxMessage> OutboxMessages { get; set; }
+    internal DbSet<CatalogOutboxMessage> CatalogOutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
-
-        modelBuilder.Entity<OutboxMessage>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__OutboxMe__3214EC070737DE5A");
-
-            entity.ToTable("OutboxMessages", "catalog");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Content)
-                .HasMaxLength(2000)
-                .IsUnicode(false);
-            entity.Property(e => e.Error)
-                .HasMaxLength(400)
-                .IsUnicode(false);
-            entity.Property(e => e.OcurredOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.ProcessedOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Type)
-                .HasMaxLength(300)
-                .IsUnicode(false);
-        });
-
-        OnModelCreatingPartial(modelBuilder);
-
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

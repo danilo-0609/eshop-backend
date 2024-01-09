@@ -26,7 +26,7 @@ public sealed class UserAccessDbContext : DbContext, IApplicationDbContext
 
     public DbSet<RolePermission> RolePermissions { get; set; }
 
-    public DbSet<OutboxMessage> OutboxMessages { get; set; }
+    public DbSet<UserAccessOutboxMessage> UserAccessOutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

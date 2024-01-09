@@ -10,4 +10,6 @@ public interface IUserRepository
     Task<bool> IsEmailUniqueAsync(string email);
 
     Task<bool> IsLoginUniqueAsync(string login);
+
+    Task<User?> GetByEmailAsync(string email);
 }

@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Application.Commands;
 using ErrorOr;
-using UserAccess.Application.Common;
+using UserAccess.Application.Abstractions;
 using UserAccess.Domain.UserRegistrations;
 
 namespace UserAccess.Application.UserRegistration.RegisterNewUser;
@@ -9,13 +9,12 @@ internal sealed class RegisterNewUserCommandHandler : ICommandRequestHandler<Reg
 {
     private readonly IUserRegistrationRepository _userRegistrationRepository;
     private readonly IUsersCounter _usersCounter;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterNewUserCommandHandler(IUserRegistrationRepository userRegistrationRepository, IUsersCounter usersCounter, IUnitOfWork unitOfWork)
+    public RegisterNewUserCommandHandler(IUserRegistrationRepository userRegistrationRepository, 
+        IUsersCounter usersCounter)
     {
         _userRegistrationRepository = userRegistrationRepository;
         _usersCounter = usersCounter;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Guid>> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
@@ -37,8 +36,6 @@ internal sealed class RegisterNewUserCommandHandler : ICommandRequestHandler<Reg
         }
 
         await _userRegistrationRepository.AddAsync(registerUser.Value);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return registerUser.Value.Id.Value;
     }

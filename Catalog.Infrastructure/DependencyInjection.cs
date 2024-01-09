@@ -15,49 +15,40 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
-using static Quartz.Logging.OperationName;
 
 namespace Catalog.Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        //Background jobs
         services.AddQuartzHostedService();
+        services.AddQuartz();
+        services.ConfigureOptions<ProcessCatalogOutboxMessageJobSetup>();
 
-        services.AddQuartz(configure =>
-        {
-            var jobKey = new JobKey(nameof(ProcessOutboxMessageJob));
-
-            configure.AddJob<ProcessOutboxMessageJob>(jobKey, job => job.StoreDurably())
-                .AddTrigger(
-                    trigger =>
-                        trigger.ForJob(jobKey)
-                            .WithSimpleSchedule(
-                                schedule =>
-                                    schedule.WithIntervalInSeconds(10)
-                                    .RepeatForever()));
-        });
-        
+        //Persistence. Database context
         services.AddDbContext<CatalogDbContext>((sp, optionsBuilder) => 
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
         });
 
-        //Unit of work
-        services.AddScoped<IUnitOfWork>(sp =>
-           sp.GetRequiredService<CatalogDbContext>());
-        
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<CatalogDbContext>());
-        
 
+        //Unit of work
+        services.AddScoped<IUnitOfWork>(sp =>
+           sp.GetRequiredService<CatalogDbContext>());        
+
+        //Repositories services
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<IRatingRepository, RatingRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
 
+        //Dapper ORM connection
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
-
+        
+        //Event bus service
         services.AddTransient<IEventBus, EventBus>();
 
         return services;
