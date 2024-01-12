@@ -8,10 +8,10 @@ public sealed record ItemId : AggregateRootId<Guid>
 
     public static ItemId Create(Guid value) => new ItemId(value);
 
-    public static ItemId CreateUnique() => new ItemId(Guid.NewGuid()); 
-
     private ItemId(Guid value)
     {
         Value = value;
     }
+
+    private ItemId() { }
 }
