@@ -1,6 +1,5 @@
 ﻿using BuildingBlocks.Domain;
 using ErrorOr;
-using Shopping.Domain.Common;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
 using Shopping.Domain.Payments.DomainEvents;

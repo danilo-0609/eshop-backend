@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BuildingBlocks.Domain;
+using ErrorOr;
+using Shopping.Domain.Orders.Errors;
 
-namespace Shopping.Domain.Orders.Rules
+namespace Shopping.Domain.Orders.Rules;
+
+internal sealed class OrderItemAmountCannotBeGreaterThanItemActualAmountRule : IBusinessRule
 {
-    internal class OrderItemAmountCannotBeGreaterThanItemActualAmountRule
+    private readonly int _amountRequested;
+    private readonly int _actualStock;
+
+    public OrderItemAmountCannotBeGreaterThanItemActualAmountRule(int amountRequested, int actualStock)
     {
+        _amountRequested = amountRequested;
+        _actualStock = actualStock;
     }
+
+    public Error Error => OrderErrors.AmountRequestedGreaterThanActualStock;
+
+    public bool IsBroken() => _amountRequested > _actualStock;
+
+    public static string Message => "Order item amount cannot be greater than item actual amount";
 }

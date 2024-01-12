@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BuildingBlocks.Domain;
+using ErrorOr;
+using Shopping.Domain.Orders.Errors;
 
-namespace Shopping.Domain.Orders.Rules
+namespace Shopping.Domain.Orders.Rules;
+
+internal class OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule : IBusinessRule
 {
-    internal class OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule
+    private readonly OrderStatus _orderStatus;
+
+    public OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule(OrderStatus orderStatus)
     {
+        _orderStatus = orderStatus;
     }
+
+    public Error Error => OrderErrors.OrderStatusAlreadyConfirmed;
+
+    public bool IsBroken() => _orderStatus == OrderStatus.Confirmed;
+
+    public static string Message => "Order cannot be confirmed when order status is confirmed";
 }
