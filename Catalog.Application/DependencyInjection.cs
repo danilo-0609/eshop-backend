@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 
 namespace Catalog.Application;
 

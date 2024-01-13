@@ -30,10 +30,10 @@ C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.Extensions.Diagnostic
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.Extensions.Diagnostics.HealthChecks.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\RabbitMQ.Client.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Quartz.dll
-C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Quartz.Extensions.DependencyInjection.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.EntityFrameworkCore.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Quartz.dll
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Quartz.Extensions.DependencyInjection.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Quartz.Extensions.Hosting.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.dll

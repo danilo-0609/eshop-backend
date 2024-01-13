@@ -38,18 +38,17 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
 
     public static Basket Create(
         Guid customerId,
-        List<ItemId> itemIds,
+        ItemId itemId,
         decimal totalAmount,
         DateTime createdOn)
     {
-        var basket = new Basket(
+        Basket basket = new Basket(
             BasketId.CreateUnique(),
             customerId,
             totalAmount,
             createdOn);
 
-        itemIds.ForEach(itemId =>
-                basket._itemIds.Add(itemId));
+        basket._itemIds.Add(itemId);
 
         return basket;
     }

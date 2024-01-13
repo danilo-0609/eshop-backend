@@ -1,7 +1,5 @@
 ﻿using BuildingBlocks.Domain;
 using ErrorOr;
-using Shopping.Domain.Common;
-using Shopping.Domain.Items;
 using Shopping.Domain.Payments.Errors;
 
 namespace Shopping.Domain.Payments.Rules;
@@ -9,7 +7,7 @@ namespace Shopping.Domain.Payments.Rules;
 internal sealed class PayCannotBeMadeWhenItemAmountRequestedIsGreaterThanItemCurrentAmountRule : IBusinessRule
 {
     private readonly int _amountRequested;
-    private readonly int _actualAmount
+    private readonly int _actualAmount;
 
     public PayCannotBeMadeWhenItemAmountRequestedIsGreaterThanItemCurrentAmountRule(int amountRequested, int actualAmount)
     {
