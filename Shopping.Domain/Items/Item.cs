@@ -1,5 +1,4 @@
 using BuildingBlocks.Domain;
-using System.Runtime.InteropServices;
 
 namespace Shopping.Domain.Items;
 
@@ -57,6 +56,28 @@ public sealed class Item : AggregateRoot<ItemId, Guid>
             inStock,
             StockStatus.WithStock,
             createdOn);
+
+        return item;
+    }
+
+    public static Item Update(
+        Guid id,
+        string name,
+        Guid sellerId,
+        decimal price,
+        int inStock,
+        DateTime createdOn,
+        DateTime updatedOn)
+    {
+        var item = new Item(
+            ItemId.Create(id),
+            name,
+            sellerId,
+            price,
+            inStock,
+            StockStatus.WithStock,
+            createdOn,
+            updatedOn);
 
         return item;
     }

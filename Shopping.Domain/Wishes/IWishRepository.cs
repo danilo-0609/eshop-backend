@@ -7,4 +7,6 @@ public interface IWishRepository
     Task UpdateAsync(Wish wish);
 
     Task DeleteAsync(Wish wish);
+
+    Task<Wish?> GetByIdAsync(WishId wishId);
 }

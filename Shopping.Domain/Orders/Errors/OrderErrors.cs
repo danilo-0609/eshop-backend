@@ -25,4 +25,10 @@ public static class OrderErrors
 
     public static Error OrderStatusIsCompleted =>
         Error.Validation("Order.StatusIsCompleted", OrderCannotBeExpiredAfterCompletationRule.Message);
+
+    public static Error CannotPayedWhenStatusIsExpired =>
+        Error.Validation("Order.StatusIsExpired", OrderCannotBePayedWhenOrderStatusIsExpiredRule.Message);
+
+    public static Error CannotBePayedWhenStatusIsNotConfirmed =>
+        Error.Validation("Order.StatusIsNotConfirmed", OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule.Message);
 }

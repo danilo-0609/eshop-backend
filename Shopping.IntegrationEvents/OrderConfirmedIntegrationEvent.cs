@@ -4,6 +4,5 @@ namespace Shopping.IntegrationEvents;
 
 public sealed record OrderConfirmedIntegrationEvent(
     Guid IntegrationEventId,
-    Guid ProductId,
-    int AmountOfProducts,
+    Guid OrderId,
     DateTime OcurredOn) : IntegrationEvent(IntegrationEventId, OcurredOn);

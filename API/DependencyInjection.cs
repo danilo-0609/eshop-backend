@@ -5,7 +5,6 @@ using API.OptionsSetup;
 using BuildingBlocks.Application;
 using BuildingBlocks.Infrastructure;
 using MassTransit;
-using Catalog.Application.IntegrationEventsConsumers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Options;
@@ -52,7 +51,6 @@ public static class DependencyInjection
                 });
             });
 
-            busConfigurator.AddConsumer<OrderConfirmedIntegrationEventConsumer>();
             busConfigurator.AddConsumer<ProductPublishedIntegrationEventConsumer>();
         });
 

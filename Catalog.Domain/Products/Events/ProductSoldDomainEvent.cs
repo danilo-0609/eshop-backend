@@ -7,4 +7,5 @@ public record ProductSoldDomainEvent(Guid DomainEventId,
     int Amount,
     decimal UnitPrice,
     Guid UserId,
+    Guid OrderId,
     DateTime OcurredOn) : IDomainEvent;

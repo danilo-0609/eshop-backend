@@ -139,7 +139,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         return Unit.Value;
     }
 
-    public ErrorOr<Unit> Sell(int amountOfProducts)
+    public ErrorOr<Unit> Sell(int amountOfProducts, Guid orderId)
     {
         var isOutOfStockRule = CheckRule(new ProductCannotBeSoldWhenProductIsOutOfStockRule(InStock));
 
@@ -160,6 +160,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
             Raise(new ProductSellFailedDomainEvent(
                 Guid.NewGuid(),
                 Id,
+                orderId,
                 ProductCannotBeSoldWhenAmountOfProductsInBuyingRequestIsGreaterThanActualInStockRule.Message,
                 DateTime.UtcNow));
 
@@ -172,7 +173,8 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
             Id, 
             amountOfProducts,
             Price,
-            SellerId, 
+            SellerId,
+            orderId,
             DateTime.UtcNow));
 
         return Unit.Value;

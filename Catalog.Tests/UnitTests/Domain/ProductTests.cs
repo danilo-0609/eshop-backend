@@ -247,7 +247,7 @@ public sealed class ProductTests
             "Black");
 
         //Act
-        var sellingOperation = product.Sell(3);
+        var sellingOperation = product.Sell(3, Guid.NewGuid());
 
         bool operationFailed = sellingOperation
             .Errors.Any(r => r.Code == ProductErrors.ProductOutOfStock.Code);
@@ -278,7 +278,7 @@ public sealed class ProductTests
             "Black");
 
         //Act
-        var sellingOperation = product.Sell(3);
+        var sellingOperation = product.Sell(3, Guid.NewGuid());
 
         bool hasProductOutOfStockDomainEvent = product
             .DomainEvents
@@ -307,7 +307,7 @@ public sealed class ProductTests
             "Black");
 
         //Act
-        var sellingOperation = product.Sell(15);
+        var sellingOperation = product.Sell(15, Guid.NewGuid());
 
         bool sellingOperationFailed = sellingOperation
             .Errors
@@ -339,7 +339,7 @@ public sealed class ProductTests
             "Black");
 
         //Act
-        var sellingOperation = product.Sell(15);
+        var sellingOperation = product.Sell(15, Guid.NewGuid());
 
         bool raisedProductSellFailedDomainEvent = product
             .DomainEvents
@@ -368,7 +368,7 @@ public sealed class ProductTests
             "Yellow");
 
         //Act
-        product.Sell(3);
+        product.Sell(3, Guid.NewGuid());
 
         bool raisedProductSoldDomainEvent = product
             .DomainEvents

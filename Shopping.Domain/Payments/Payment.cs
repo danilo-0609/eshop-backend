@@ -75,6 +75,16 @@ public sealed class Payment : AggregateRoot<PaymentId, Guid>
         return payment;
     }
 
+    public static Payment Create(
+        PaymentId paymentId,
+        OrderId orderId,
+        Guid payerId,
+        decimal moneyAmount,
+        DateTime payedOn)
+    {
+        return new Payment(paymentId, payerId, orderId, moneyAmount, payedOn);
+    }
+
     private Payment()
     {
     }

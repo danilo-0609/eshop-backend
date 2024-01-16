@@ -24,6 +24,7 @@ internal sealed class ProductSoldDomainEventHandler : IDomainEventHandler<Produc
                 notification.ProductId.Value,
                 notification.Amount,
                 notification.UnitPrice,
+                notification.OrderId,
                 notification.OcurredOn));
 
         await _sender.Send(new GenerateSaleCommand(

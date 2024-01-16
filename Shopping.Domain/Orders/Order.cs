@@ -92,6 +92,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         }
 
         order.PlacedOn = placedOn;
+        order.OrderStatus = OrderStatus.Placed;
 
         order.Raise(new OrderPlacedDomainEvent(
             Guid.NewGuid(),
@@ -122,6 +123,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBeConfirmedAfterExpiration.FirstError;
         }
 
+        OrderStatus = OrderStatus.Confirmed;
         ConfirmedOn = confirmedOn;
 
         Raise(new OrderConfirmedDomainEvent(
@@ -148,6 +150,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotExpiredAfterCompletation.FirstError;
         }
 
+        OrderStatus = OrderStatus.Expired;
         ExpiredOn = expiredOn;
 
         Raise(new OrderExpiredDomainEvent(
@@ -158,8 +161,25 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         return Unit.Value;
     }
 
-    public ErrorOr<Unit> Pay(DateTime payedOn, int actualStock, StockStatus stockStatus)
+    public ErrorOr<Unit> Pay(
+        DateTime payedOn, 
+        int actualStock, 
+        StockStatus stockStatus)
     {
+        var cannotBePayedWhenOrderStatusIsExpired = CheckRule(new OrderCannotBePayedWhenOrderStatusIsExpiredRule(OrderStatus));
+        
+        if (cannotBePayedWhenOrderStatusIsExpired.IsError)
+        {
+            return cannotBePayedWhenOrderStatusIsExpired.FirstError;
+        }
+
+        var cannotBePayedWhenOrderStatusIsNotConfirmed = CheckRule(new OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule(OrderStatus));
+
+        if (cannotBePayedWhenOrderStatusIsNotConfirmed.IsError)
+        {
+            return cannotBePayedWhenOrderStatusIsNotConfirmed.FirstError;
+        }
+
         ErrorOr<Payment> pay = Payment.PayFromOrder(
             Id,
             TotalMoneyAmount,
@@ -174,11 +194,14 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return pay.FirstError;
         }
 
+        OrderStatus = OrderStatus.Payed;
         PayedOn = payedOn;
 
         Raise(new OrderPayedDomainEvent(
             Guid.NewGuid(),
             Id,
+            ItemId,
+            AmountOfItems,
             payedOn));
 
         return Unit.Value;
@@ -193,6 +216,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBeCompletedWhenOrderStatusIsNotPayed.FirstError;
         }
 
+        OrderStatus = OrderStatus.Completed;
         CompletedOn = completedOn;
 
         Raise(new OrderCompletedDomainEvent(

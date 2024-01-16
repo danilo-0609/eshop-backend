@@ -18,6 +18,7 @@ internal sealed class ProductSellFailedDomainEventHandler : IDomainEventHandler<
         await _eventBus.PublishAsync(new ProductSellFailedIntegrationEvent(
             notification.DomainEventId,
             notification.ProductId.Value,
+            notification.OrderId,
             notification.FailureCause,
             notification.OcurredOn));
     }

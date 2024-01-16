@@ -65,6 +65,11 @@ public sealed class Wish : AggregateRoot<WishId, Guid>
         _itemsId.Remove(itemId);
     }
 
+    public void ChangeVisibility(bool visibility)
+    {
+        IsPrivate = visibility;
+    }
+
     private Wish()
     {
     }

@@ -22,7 +22,7 @@ internal sealed class GetBuysByCustomerIdQueryHandler : IQueryRequestHandler<Get
             return Error.NotFound("Buys.NotFound", "Buys were not found");
         }
 
-        IReadOnlyList<BuyResponse> buyResponses = buys
+        var buyResponses = buys
             .ConvertAll(
                 buyResponse =>
                     new BuyResponse(buyResponse!.Id.Value,

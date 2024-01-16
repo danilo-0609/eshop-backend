@@ -1,4 +1,4 @@
-/mnt/c/Users/Usuario/Desktop/eshop-backend/obj/Debug/docker-compose.dcproj.CoreCompileInputs.cache
+/mnt/c/Users/Usuario/Desktop/eShop-backend/obj/Debug/docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\API.deps.json
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\API.runtimeconfig.json
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\appsettings.Development.json

@@ -23,7 +23,7 @@ internal sealed class SellProductCommandHandler
             return Error.NotFound("Product.NotFound", "Product was not found");
         }
 
-        var sellTried = product.Sell(command.AmountOfProducts);
+        var sellTried = product.Sell(command.AmountOfProducts, command.OrderId);
 
         if (sellTried.IsError)
         {
