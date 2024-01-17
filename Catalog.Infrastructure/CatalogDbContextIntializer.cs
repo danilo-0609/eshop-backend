@@ -13,7 +13,7 @@ public static class IntializerExtensions
 
         var intializer = scope.ServiceProvider.GetRequiredService<CatalogDbContextIntializer>();
 
-        await intializer.IntializeAsync();
+        await intializer.InItializeAsync();
     }
 }
 
@@ -28,7 +28,7 @@ public sealed class CatalogDbContextIntializer
         _context = context;
     }
 
-    public async Task IntializeAsync()
+    public async Task InItializeAsync()
     {
         try
         {
@@ -38,7 +38,7 @@ public sealed class CatalogDbContextIntializer
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error ocurred while intializasing the database");
+            _logger.LogError(ex, "An error ocurred while intializasing the catalog database");
             throw;
         }
     }

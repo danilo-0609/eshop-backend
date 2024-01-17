@@ -15,9 +15,9 @@ internal sealed class GetBuysByCustomerIdQueryHandler : IQueryRequestHandler<Get
 
     public async Task<ErrorOr<IReadOnlyList<BuyResponse>>> Handle(GetBuysByCustomerIdQuery request, CancellationToken cancellationToken)
     {
-        List<Buy?> buys = await _buyRepository.GetBuysByCustomerId(request.CustomerId);
+        List<Buy>? buys = await _buyRepository.GetBuysByCustomerId(request.CustomerId);
 
-        if (buys.Count == 0)
+        if (buys is null)
         {
             return Error.NotFound("Buys.NotFound", "Buys were not found");
         }

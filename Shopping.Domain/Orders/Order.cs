@@ -12,7 +12,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
 {
     public new OrderId Id { get; private set; }
 
-    public Guid CustomerId { get; private set; }
+    public Guid CustomerId { get; private set; }    
 
     public ItemId ItemId { get; private set; }
 

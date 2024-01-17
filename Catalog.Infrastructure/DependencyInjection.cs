@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
 namespace Catalog.Infrastructure;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -49,7 +50,7 @@ public static class DependencyInjection
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
         
         //Event bus service
-        services.AddTransient<IEventBus, EventBus>();
+        services.AddTransient<ICatalogEventBus, CatalogEventBus>();
 
         return services;
     }    

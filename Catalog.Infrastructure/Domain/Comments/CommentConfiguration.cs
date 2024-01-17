@@ -1,4 +1,3 @@
-using System.Drawing;
 using Catalog.Domain.Comments;
 using Catalog.Domain.Products;
 using Microsoft.EntityFrameworkCore;

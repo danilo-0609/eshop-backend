@@ -16,12 +16,12 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        ConvertDomainEventsToOutboxMessages();
+        await ConvertDomainEventsToOutboxMessages();
 
         return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private void ConvertDomainEventsToOutboxMessages()
+    private async Task ConvertDomainEventsToOutboxMessages()
     {
         var domainEvents = _dbContext.ChangeTracker
             .Entries<IHasDomainEvents>()
@@ -33,7 +33,20 @@ internal sealed class UnitOfWork : IUnitOfWork
                 entity.ClearDomainEvents();
 
                 return domainEvents;
-            })
+            }).ToList();
+
+        _dbContext.ChangeTracker
+            .Entries<IHasDomainEvents>()
+            .Where(x => x.Entity.DomainEvents.Count() > 0)
+            .Select(x =>
+            {
+                x.Entity.ClearDomainEvents();
+
+                return 0;
+            });
+            
+
+        List<CatalogOutboxMessage> outboxMessages = domainEvents
             .Select(domainEvent => new CatalogOutboxMessage
             {
                 Id = domainEvent.DomainEventId,
@@ -47,6 +60,8 @@ internal sealed class UnitOfWork : IUnitOfWork
                     })
             }).ToList();
 
-        _dbContext.CatalogOutboxMessages.AddRange(domainEvents);
+        await _dbContext
+            .CatalogOutboxMessages
+            .AddRangeAsync(outboxMessages);
     }
 }
