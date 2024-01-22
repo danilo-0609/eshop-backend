@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Application.EventBus;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +13,8 @@ using UserAccess.Infrastructure.Domain.UserRegistrations;
 using UserAccess.Infrastructure.Domain.Users;
 using UserAccess.Infrastructure.EventsBus;
 using UserAccess.Infrastructure.Outbox.BackgroundJobs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserAccess.Infrastructure;
 
@@ -54,6 +55,7 @@ public static class DependencyInjection
         services.AddAuthorization();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         services.AddSingleton<IAuthorizationPolicyProvider,  PermissionAuthorizationPolicyProvider>();
+        services.AddScoped<IPermissionService,  PermissionService>();
 
         //Event bus services
         services.AddTransient<IEventBus, EventBus>();

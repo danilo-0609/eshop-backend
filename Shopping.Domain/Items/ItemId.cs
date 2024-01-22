@@ -12,6 +12,4 @@ public sealed record ItemId : AggregateRootId<Guid>
     {
         Value = value;
     }
-
-    private ItemId() { }
 }

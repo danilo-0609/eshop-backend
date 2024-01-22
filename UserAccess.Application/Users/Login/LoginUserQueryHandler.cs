@@ -27,7 +27,7 @@ internal sealed class LoginUserQueryHandler : IQueryRequestHandler<LoginUserQuer
             return Error.NotFound("User.NotFound", "User was not found");
         }
 
-        if (Password.Create(request.Password) != user.Password)
+        if (Password.CreateUnique(request.Password) != user.Password)
         {
             return Error.Validation("Password.Incorrect", "The password is not correct");
         }

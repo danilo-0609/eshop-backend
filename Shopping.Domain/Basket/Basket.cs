@@ -14,7 +14,7 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
 
     public IReadOnlyList<ItemId> ItemIds => _itemIds.AsReadOnly();
 
-    public int AmountOfProducts => _itemIds.Count;
+    public int AmountOfProducts { get; private set; }
 
     public decimal TotalAmount { get; private set; }
 
@@ -34,6 +34,8 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
         TotalAmount = totalAmount;
         CreatedOn = createdOn;
         UpdatedOn = updatedOn;
+
+        AmountOfProducts = _itemIds.Count;
     }
 
     public static Basket Create(
@@ -73,8 +75,6 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
             TotalAmount, 
             DateTime.UtcNow));
     }
-
-
 
     private Basket(){}
 }

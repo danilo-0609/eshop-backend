@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Shopping.Application.Orders.Complete;
 
-internal sealed class ProductSoldIntegrationEventConsumer : IConsumer<ProductSoldIntegrationEvent>
+public sealed class ProductSoldIntegrationEventConsumer : IConsumer<ProductSoldIntegrationEvent>
 {
     private readonly ISender _sender;
 

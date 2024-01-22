@@ -32,11 +32,12 @@ internal sealed class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.Property(x => x.InStock)
             .HasColumnName("InStock");
 
-        builder.OwnsOne<StockStatus>("StockStatus", t =>
-        {
-            t.Property(x => x.Value).HasColumnName("StockStatus");
-        });
-
+        builder.Property(x => x.StockStatus)
+            .HasColumnName("StockStatus")
+            .HasConversion(
+            status => status.Value,
+            value => StockStatus.Create(value));
+        
 
         builder.Property(x => x.CreatedOn)
             .HasColumnName("CreatedOn");
@@ -44,5 +45,8 @@ internal sealed class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.Property(x => x.UpdatedOn)
             .HasColumnName("UpdatedOn")
             .IsRequired(false);
+
     }
+
+
 }

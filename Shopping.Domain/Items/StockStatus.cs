@@ -8,8 +8,17 @@ public sealed record StockStatus
 
     public string Value { get; private set; }
 
+    public static StockStatus Create(string value)
+    {
+        return new StockStatus(value);
+    }
+
     private StockStatus(string value)
     {
         Value = value;
+    }
+
+    private StockStatus()
+    {
     }
 }

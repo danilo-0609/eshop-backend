@@ -51,22 +51,31 @@ internal sealed class UserRepository : IUserRepository
     public async Task UpdateAsync(User user)
     {
         await _dbContext
-            .Users
-            .Where(r => r.Id == user.Id)
-            .ExecuteUpdateAsync(setters =>
-              setters
-               .SetProperty(x => x.Id, user.Id)
-               .SetProperty(x => x.Login, user.Login)
-               .SetProperty(x => x.Password, user.Password)
-               .SetProperty(x => x.Email, user.Email)
-               .SetProperty(x => x.IsActive, user.IsActive)
-               .SetProperty(x => x.FirstName, user.FirstName)
-               .SetProperty(x => x.LastName, user.LastName)
-               .SetProperty(x => x.Name, user.Name)
-               .SetProperty(x => x.Address, user.Address)
-               .SetProperty(x => x.Roles, user.Roles)
-               .SetProperty(x => x.CreatedDateTime, user.CreatedDateTime)
-               .SetProperty(x => x.UpdatedDateTime, user.UpdatedDateTime));
+            .Database
+            .ExecuteSqlRawAsync(
+            "UPDATE users.Users " +
+            "SET Login = {0}, " +
+            "Password = {1}, " +
+            "Email = {2}, " +
+            "IsActive = {3}, " +
+            "FirstName = {4}, " +
+            "LastName = {5}, " +
+            "Name = {6}, " +
+            "Address = {7}, " +
+            "CreatedDateTime = {8}, " +
+            "UpdatedDateTime = {9}  " +
+            "WHERE UserId = {10}",
+            user.Login,
+            user.Password.Value,
+            user.Email,
+            user.IsActive,
+            user.FirstName,
+            user.LastName,
+            user.Name,
+            user.Address,
+            user.CreatedDateTime,
+            user.UpdatedDateTime!,
+            user.Id.Value);
     }
 
     private async Task InsertRoles(User user)

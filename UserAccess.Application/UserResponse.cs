@@ -1,4 +1,5 @@
 namespace UserAccess.Application;
+
 public sealed record UserResponse(
     Guid UserId,
     string Login,

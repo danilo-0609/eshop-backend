@@ -12,18 +12,15 @@ internal sealed class ProcessShoppingOutboxMessageJob : IJob
     private readonly ShoppingDbContext _dbContext;
     private readonly IPublisher _publisher;
     private readonly ILogger<ProcessShoppingOutboxMessageJob> _logger;
-    private readonly CancellationToken _cancellationToken;
 
     public ProcessShoppingOutboxMessageJob(
         ShoppingDbContext dbContext,
         IPublisher publisher,
-        ILogger<ProcessShoppingOutboxMessageJob> logger,
-        CancellationToken cancellationToken)
+        ILogger<ProcessShoppingOutboxMessageJob> logger)
     {
         _dbContext = dbContext;
         _publisher = publisher;
         _logger = logger;
-        _cancellationToken = cancellationToken;
     }
 
     public async Task Execute(IJobExecutionContext context)

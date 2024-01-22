@@ -5,4 +5,5 @@ using MediatR;
 namespace UserAccess.Application.Users.ChangePassword;
 public sealed record ChangePasswordCommand(
     Guid Id, 
-    string Password) : ICommandRequest<ErrorOr<Unit>>;
+    string OldPassword,
+    string NewPassword) : ICommandRequest<ErrorOr<Unit>>;

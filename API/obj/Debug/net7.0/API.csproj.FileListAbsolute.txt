@@ -202,6 +202,9 @@ C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Application.
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.IntegrationEvents.dll
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.IntegrationEvents.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Application.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Domain.dll
@@ -209,12 +212,15 @@ C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Infrastru
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.IntegrationEvents.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Infrastructure.pdb
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\BuildingBlocks.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\BuildingBlocks.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\BuildingBlocks.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Catalog.IntegrationEvents.pdb
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Shopping.IntegrationEvents.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\UserAccess.Domain.pdb

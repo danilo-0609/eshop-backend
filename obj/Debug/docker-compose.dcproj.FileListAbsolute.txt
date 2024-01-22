@@ -24,6 +24,8 @@ C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Swashbuckle.AspNetCore.Swagger.
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\MassTransit.Abstractions.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
@@ -48,6 +50,7 @@ C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\UserAccess.IntegrationEvents.dl
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.IntegrationEvents.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\System.Configuration.ConfigurationManager.dll
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Microsoft.Identity.Client.dll
@@ -60,12 +63,15 @@ C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\UserAccess.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\UserAccess.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\BuildingBlocks.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Application.pdb
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\BuildingBlocks.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.IntegrationEvents.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\UserAccess.IntegrationEvents.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Catalog.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.IntegrationEvents.pdb
+C:\Users\Usuario\Desktop\eShop-backend\bin\Debug\Shopping.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\Usuario\Desktop\eShop-backend\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Usuario\Desktop\eShop-backend\obj\Debug\docker-compose.dcproj.CopyComplete

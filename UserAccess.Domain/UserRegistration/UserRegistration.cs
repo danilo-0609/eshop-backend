@@ -42,7 +42,7 @@ public sealed class UserRegistration : AggregateRoot<UserRegistrationId, Guid>
         IUsersCounter usersCounter,
         DateTime registeredDate)
     {
-        Password hash = Password.Create(password);
+        Password hash = Password.CreateUnique(password);
 
         UserRegistration userRegistration = new UserRegistration(
             UserRegistrationId.CreateUnique(),

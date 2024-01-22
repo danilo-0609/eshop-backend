@@ -44,7 +44,7 @@ public sealed class User : AggregateRoot<UserId, Guid>
         User user = new User(
             UserId.CreateUnique(),
             login,
-            Password.Create(password),
+            Password.CreateUnique(password),
             email,
             true,
             firstName,

@@ -3,20 +3,18 @@ using Shopping.Domain.Basket;
 
 namespace Shopping.Infrastructure.Domain.Baskets.BasketsItems;
 
-internal sealed class BasketItemsConfiguration : IEntityTypeConfiguration<BasketItems>
+internal sealed class BasketItemsConfiguration : IEntityTypeConfiguration<BasketItem>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<BasketItems> builder)
+    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<BasketItem> builder)
     {
         builder.ToTable("BasketItems", "shopping");
 
         builder.HasKey(k => new { k.BasketId, k.ItemId });
 
         builder.Property(p => p.BasketId)
-            .HasColumnName("BasketId")
-            .ValueGeneratedNever();
+            .HasColumnName("BasketId");
 
         builder.Property(p => p.ItemId)
-            .HasColumnName("ItemId")
-            .ValueGeneratedNever();
+            .HasColumnName("ItemId");
     }
 }

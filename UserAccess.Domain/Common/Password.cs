@@ -8,7 +8,12 @@ public sealed record Password : ValueObject
 {
     public string Value { get; private set; } = string.Empty;
 
-    public static Password Create(string value)
+    public static Password Create(string password)
+    {
+        return new Password(password);
+    }
+
+    public static Password CreateUnique(string value)
     {
         string hash = GenerateHash256(value);
 

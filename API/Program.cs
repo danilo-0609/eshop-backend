@@ -1,6 +1,7 @@
 using API;
 using API.Middleware;
 using API.Modules.Catalog.Startup;
+using API.Modules.Shopping.Startup;
 using API.Modules.UserAccess.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +12,13 @@ builder.Services.AddPresentation(builder.Configuration);
 //Modules startup
 builder.Services.AddUserAccess(builder.Configuration);
 builder.Services.AddCatalog(builder.Configuration);
+builder.Services.AddShopping(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 
 app.UseSwagger();
+
 app.UseSwaggerUI();
 
 app.UseExceptionHandler("/Error");

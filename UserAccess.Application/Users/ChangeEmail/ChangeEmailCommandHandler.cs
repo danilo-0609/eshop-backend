@@ -1,3 +1,4 @@
+using BuildingBlocks.Application;
 using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
@@ -7,10 +8,12 @@ namespace UserAccess.Application.Users.ChangeEmail;
 internal sealed class ChangeEmailCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ChangeEmailCommandHandler(IUserRepository userRepository)
+    public ChangeEmailCommandHandler(IUserRepository userRepository, IExecutionContextAccessor executionContextAccessor)
     {
         _userRepository = userRepository;
+        _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
@@ -20,6 +23,11 @@ internal sealed class ChangeEmailCommandHandler : ICommandRequestHandler<ChangeE
         if (user is null)
         {
             return Error.NotFound("User.NotFound", "User was not found");
+        }
+        
+        if (user.Id.Value != _executionContextAccessor.UserId)
+        {
+            return Error.Unauthorized("User.ChangeEmail", "Cannot change if you are not the same user");
         }
 
         var update = User.Update(

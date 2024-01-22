@@ -23,11 +23,15 @@
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shopping.Application\Shopping.Application.csproj" />
+    <ProjectReference Include="..\Shopping.Infrastructure\Shopping.Infrastructure.csproj" />
     <ProjectReference Include="..\UserAccess.Infrastructure\UserAccess.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Modules\Catalog\Requests\" />
+    <Folder Include="Modules\Shopping\Endpoints\" />
+    <Folder Include="Modules\Shopping\Requests\" />
   </ItemGroup>
 
 </Project>

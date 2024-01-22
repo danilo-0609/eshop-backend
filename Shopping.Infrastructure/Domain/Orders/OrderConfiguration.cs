@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
 
 namespace Shopping.Infrastructure.Domain.Orders;
@@ -23,7 +24,10 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasColumnName("CustomerId");
 
         builder.Property(x => x.ItemId)
-            .HasColumnName("ItemId");
+            .HasColumnName("ItemId")
+            .HasConversion(
+            id => id.Value,
+            value => ItemId.Create(value));
 
         builder.Property(x => x.AmountOfItems)
             .HasColumnName("AmountOfItems");

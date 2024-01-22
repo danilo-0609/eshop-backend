@@ -33,9 +33,21 @@ public sealed class ShoppingDbContext : DbContext, IApplicationDbContext
 
     internal DbSet<ShoppingOutboxMessage> ShoppingOutboxMessages { get; set; }
 
+    public DbSet<BasketItem> BasketItems { get; set; }
+
+    public DbSet<WishItem> WishItems { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingDbContext).Assembly);
+
+        modelBuilder.Entity<BasketItem>()
+            .HasKey(x => new { x.BasketId, x.ItemId });
+
+        modelBuilder.Entity<WishItem>()
+            .HasKey(x => new { x.WishId, x.ItemId });
+
+        modelBuilder.Entity<ItemId>().HasKey(x => x.Value);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

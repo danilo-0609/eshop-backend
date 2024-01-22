@@ -25,7 +25,7 @@ internal class BasketConfiguration : IEntityTypeConfiguration<Basket>
 
         builder.HasMany(r => r.ItemIds)
             .WithMany()
-            .UsingEntity<BasketItems>();
+            .UsingEntity<BasketItem>();
 
         builder.Property(d => d.AmountOfProducts)
             .HasColumnName("AmountOfProducts");

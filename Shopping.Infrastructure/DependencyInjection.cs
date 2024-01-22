@@ -41,8 +41,7 @@ public static class DependencyInjection
             sp.GetRequiredService<ShoppingDbContext>());
 
         //Unit of work
-        services.AddScoped<IUnitOfWork>(sp =>
-            sp.GetRequiredService<UnitOfWork>());
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         //Repositories
         services.AddScoped<IBasketRepository, BasketRepository>();

@@ -1,6 +1,6 @@
 ﻿namespace Shopping.Domain.Basket;
 
-public sealed class BasketItems
+public sealed class BasketItem
 {
     public Guid BasketId { get; set; }
 

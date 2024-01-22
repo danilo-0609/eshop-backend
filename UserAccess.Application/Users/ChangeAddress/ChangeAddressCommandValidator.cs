@@ -1,7 +1,7 @@
 using FluentValidation;
 
 namespace UserAccess.Application.Users.ChangeAddress;
-internal sealed class ChangeAddressCommandValidator : AbstractValidator<ChangeAddressCommand>
+internal sealed class ChangeAddressCommandValidator : AbstractValidator<ChangeEmailCommand>
 {
     public ChangeAddressCommandValidator()
     {

@@ -7,6 +7,7 @@ services:
       labels:
         com.microsoft.created-by: visual-studio
         com.microsoft.visual-studio.project-name: API
+      target: base
     container_name: API
     depends_on:
       eshop-mq:
@@ -21,10 +22,12 @@ services:
       - /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-    image: api
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: api:dev
     labels:
-      com.microsoft.visual-studio.project-name: API
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages  ""'
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages  "/app/bin/Debug/net7.0/API.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet
       com.microsoft.visualstudio.debuggee.workingdirectory: /app
@@ -37,8 +40,24 @@ services:
     tty: true
     volumes:
       - type: bind
+        source: C:\Users\Usuario\Desktop\eShop-backend\API
+        target: /app
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Usuario\Desktop\eShop-backend
+        target: /src
+        bind:
+          create_host_path: true
+      - type: bind
         source: C:\Users\Usuario\vsdbg\vs2017u5
         target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Usuario\.nuget\packages\
+        target: /.nuget/packages
+        read_only: true
         bind:
           create_host_path: true
       - type: bind

@@ -2,14 +2,13 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using UserAccess.Application.Abstractions;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Infrastructure.Authentication;
 
-internal sealed class JwtProvider : IJwtProvider
+internal sealed class JwtProvider : IJwtProvider    
 {
     private readonly JwtOptions _jwtOptions;
 
@@ -23,7 +22,8 @@ internal sealed class JwtProvider : IJwtProvider
         Claim[] claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Aud, _jwtOptions.Audience)
         };
 
         SigningCredentials signingCredentials = new SigningCredentials(
@@ -39,7 +39,8 @@ internal sealed class JwtProvider : IJwtProvider
             DateTime.UtcNow.AddMinutes(65),
             signingCredentials);
 
-        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+        string tokenValue = new JwtSecurityTokenHandler()
+            .WriteToken(token);
 
         return tokenValue;
     }

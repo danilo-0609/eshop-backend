@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UserAccess.Domain;
 
 namespace UserAccess.Infrastructure.Authorization;
 
@@ -14,18 +13,19 @@ internal sealed class PermissionService : IPermissionService
 
     public async Task<HashSet<string>> GetPermissionAsync(Guid userId)
     {
-        ICollection<Role>[] roles = await _context.Users
-            .Include(u => u.Roles)
-            .ThenInclude(x => x.Permissions)
-            .Where(d => d.Id.Value == userId)
-            .Select(d => d.Roles)
-            .ToArrayAsync();
+        var permissions = await _context.Permissions
+                .FromSqlRaw(
+                    "SELECT p.Name " +
+                    "FROM dbo.Permissions p " +
+                    "INNER JOIN RolePermissions rp ON p.PermissionId = rp.PermissionId " +
+                    "INNER JOIN Roles r ON rp.RoleId = r.RoleId " +
+                    "INNER JOIN users.UsersRoles ur ON r.RoleId = ur.RoleId " +
+                    "INNER JOIN users.Users u ON ur.UserId = u.UserId " +
+                    "WHERE u.UserId = {0}",
+                    userId.ToString())
+                .Select(p => p.Name)
+                .ToListAsync();
 
-
-        return roles
-            .SelectMany(r => r)
-            .SelectMany(r => r.Permissions)
-            .Select(r => r.Name)
-            .ToHashSet();
+        return new HashSet<string>(permissions);
     }
 }

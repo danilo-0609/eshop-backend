@@ -24,14 +24,16 @@ internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserById
             u.Login,
             u.Name,
             u.Email,
-            u.Role,
+            r.RoleCode as Role,
             u.Address,
             u.CreatedDateTime 
-            FROM Users u
+            FROM users.Users u
+            INNER JOIN users.UsersRoles ur ON u.UserId = ur.UserId
+            INNER JOIN Roles r ON ur.RoleId = r.RoleId
             WHERE u.UserId = @Id
             """;
 
-        UserResponse? userResponse = await connection.QuerySingleOrDefaultAsync(sql, new { request.Id} );
+        UserResponse? userResponse = await connection.QuerySingleOrDefaultAsync<UserResponse>(sql, new { request.Id} );
     
         if (userResponse is null)
         {

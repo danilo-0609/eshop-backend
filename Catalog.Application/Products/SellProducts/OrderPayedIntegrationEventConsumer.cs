@@ -4,7 +4,7 @@ using Shopping.IntegrationEvents;
 
 namespace Catalog.Application.Products.SellProducts;
 
-internal sealed class OrderPayedIntegrationEventConsumer : IConsumer<OrderPayedIntegrationEvent>
+public sealed class OrderPayedIntegrationEventConsumer : IConsumer<OrderPayedIntegrationEvent>
 {
     private readonly ISender _sender;
 

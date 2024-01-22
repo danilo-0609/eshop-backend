@@ -4,7 +4,7 @@ using MediatR;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.Users.ChangeAddress;
-internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<ChangeAddressCommand, ErrorOr<Unit>>
+internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,7 +13,7 @@ internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<Chang
         _userRepository = userRepository;
     }
 
-    public async Task<ErrorOr<Unit>> Handle(ChangeAddressCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Unit>> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
     {
         User? user = await _userRepository.GetByIdAsync(UserId.Create(request.Id));
 
