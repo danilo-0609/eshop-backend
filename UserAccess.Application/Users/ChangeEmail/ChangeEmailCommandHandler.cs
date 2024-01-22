@@ -3,6 +3,7 @@ using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangeEmail;
 internal sealed class ChangeEmailCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
@@ -22,12 +23,12 @@ internal sealed class ChangeEmailCommandHandler : ICommandRequestHandler<ChangeE
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
         }
         
         if (user.Id.Value != _executionContextAccessor.UserId)
         {
-            return Error.Unauthorized("User.ChangeEmail", "Cannot change if you are not the same user");
+            return UserErrorsCodes.CannotChangeEmail;
         }
 
         var update = User.Update(

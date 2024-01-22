@@ -3,6 +3,7 @@ using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Common;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangePassword;
 
@@ -21,12 +22,12 @@ internal sealed class ChangePasswordCommandHandler : ICommandRequestHandler<Chan
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
         }
 
         if (user.Password != Password.CreateUnique(request.OldPassword))
         {
-            return Error.Validation("Password.NotCorrect", "The actual password you introduced is not your actual password");
+            return UserErrorsCodes.IncorrectOldPassword;
         }
 
         var newPassword = Password.CreateUnique(request.NewPassword);

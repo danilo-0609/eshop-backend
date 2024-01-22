@@ -2,6 +2,7 @@ using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.UserRegistrations;
+using UserAccess.Domain.UserRegistrations.Errors;
 
 namespace UserAccess.Application.UserRegistration.ConfirmUserRegistration;
 internal sealed class ConfirmUserRegistrationCommandHandler 
@@ -20,7 +21,7 @@ internal sealed class ConfirmUserRegistrationCommandHandler
     
         if (userRegistration is null)
         {
-            return Error.NotFound("UserRegistration.NotFound", "User registration was not found");
+            return UserRegistrationErrors.NotFound;
         }
 
         var confirmation = userRegistration.Confirm();

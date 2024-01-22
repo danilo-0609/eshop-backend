@@ -3,6 +3,7 @@ using BuildingBlocks.Application.Queries;
 using Dapper;
 using ErrorOr;
 using UserAccess.Application.Abstractions;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.GetUserById;
 internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserByIdQuery, ErrorOr<UserResponse>>
@@ -25,7 +26,6 @@ internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserById
             u.Name,
             u.Email,
             r.RoleCode as Role,
-            u.Address,
             u.CreatedDateTime 
             FROM users.Users u
             INNER JOIN users.UsersRoles ur ON u.UserId = ur.UserId
@@ -37,7 +37,7 @@ internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserById
     
         if (userResponse is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
         }
 
         return userResponse;

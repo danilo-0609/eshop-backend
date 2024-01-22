@@ -1,16 +1,21 @@
+using BuildingBlocks.Application;
 using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangeAddress;
+
 internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ChangeAddressCommandHandler(IUserRepository userRepository)
+    public ChangeAddressCommandHandler(IUserRepository userRepository, IExecutionContextAccessor executionContextAccessor)
     {
         _userRepository = userRepository;
+        _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
@@ -19,7 +24,12 @@ internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<Chang
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
+        }
+
+        if (_executionContextAccessor.UserId != user.Id.Value)
+        {
+            return UserErrorsCodes.CannotChangeAddress;
         }
 
         var update = User.Update(

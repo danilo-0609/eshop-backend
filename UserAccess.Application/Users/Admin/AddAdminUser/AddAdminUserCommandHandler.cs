@@ -3,8 +3,8 @@ using ErrorOr;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.Users.Admin.AddAdminUser;
-internal sealed class AddAdminUserCommandHandler
-    : ICommandRequestHandler<AddAdminUserCommand, ErrorOr<Guid>>
+
+internal sealed class AddAdminUserCommandHandler : ICommandRequestHandler<AddAdminUserCommand, ErrorOr<Guid>>
 {
     private readonly IUserRepository _userRepository;
 

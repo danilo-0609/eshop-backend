@@ -34,6 +34,14 @@ internal sealed class UserRepository : IUserRepository
             .SingleOrDefaultAsync();
     }
 
+    public async Task RemoveAsync(User user)
+    {
+        await _dbContext
+            .Users
+            .Where(d => d.Id == user.Id)
+            .ExecuteDeleteAsync();
+    }
+
     public async Task<bool> IsEmailUniqueAsync(string email)
     {
         return !await _dbContext

@@ -12,4 +12,6 @@ public interface IUserRepository
     Task<bool> IsLoginUniqueAsync(string login);
 
     Task<User?> GetByEmailAsync(string email);
+
+    Task RemoveAsync(User user);
 }

@@ -1,10 +1,9 @@
-using System.Data;
 using BuildingBlocks.Application.Queries;
-using Dapper;
 using ErrorOr;
 using UserAccess.Application.Abstractions;
 using UserAccess.Domain.Common;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.Login;
 internal sealed class LoginUserQueryHandler : IQueryRequestHandler<LoginUserQuery, ErrorOr<string>>
@@ -24,12 +23,12 @@ internal sealed class LoginUserQueryHandler : IQueryRequestHandler<LoginUserQuer
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
         }
 
         if (Password.CreateUnique(request.Password) != user.Password)
         {
-            return Error.Validation("Password.Incorrect", "The password is not correct");
+            return UserErrorsCodes.IncorrectPassword;
         }
 
         string token = _jwtProvider.Generate(user);

@@ -2,7 +2,8 @@ using UserAccess.Domain.UserRegistrations.Rules;
 using ErrorOr;
 
 namespace UserAccess.Domain.UserRegistrations.Errors;
-internal static class UserRegistrationErrors 
+
+public static class UserRegistrationErrors 
 {
     internal static Error LoginIsNotUnique =>
         Error.Validation("UserRegistration.LoginIsNotUnique", UserLoginMustBeUniqueRule.Message);
@@ -18,4 +19,7 @@ internal static class UserRegistrationErrors
 
     internal static Error AlreadyExpired =>
         Error.Validation("UserRegistration.ExpiredAlready", UserRegistrationCannotBeExpiredMoreThanOnceRule.Message);
+
+    public static Error NotFound =>
+        Error.NotFound("UserRegistration.NotFound", "User registration was not found");
 }

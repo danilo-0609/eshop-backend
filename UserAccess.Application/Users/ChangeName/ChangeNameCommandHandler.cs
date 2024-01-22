@@ -3,6 +3,7 @@ using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangeName;
 
@@ -23,13 +24,12 @@ internal sealed class ChangeNameCommandHandler : ICommandRequestHandler<ChangeNa
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User was not found");
+            return UserErrorsCodes.NotFound;
         }
-
         
         if (_executionContextAccessor.UserId != user.Id.Value)
         {
-            return Error.Unauthorized("User.CannotChangeName", "Cannot change the other user's name");
+            return UserErrorsCodes.CannotChangeName;
         }
 
         var update = User.Update(

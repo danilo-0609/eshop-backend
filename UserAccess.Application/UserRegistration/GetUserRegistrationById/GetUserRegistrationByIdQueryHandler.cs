@@ -2,6 +2,7 @@
 using ErrorOr;
 using UserAccess.Application.UserRegistration.GetUserRegistrationByIda;
 using UserAccess.Domain.UserRegistrations;
+using UserAccess.Domain.UserRegistrations.Errors;
 
 namespace UserAccess.Application.UserRegistration.GetUserRegistrationById;
 
@@ -21,7 +22,7 @@ internal sealed class GetUserRegistrationByIdQueryHandler : IQueryRequestHandler
         
         if (userRegistration is null)
         {
-            return Error.NotFound("UserRegistration.NotFound", "User registration was not found");
+            return UserRegistrationErrors.NotFound;
         }
 
 
