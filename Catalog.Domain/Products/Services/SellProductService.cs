@@ -1,29 +1,30 @@
-using Catalog.Application.Common;
-using Catalog.Domain.Products;
-using ErrorOr;
+﻿using ErrorOr;
 using MediatR;
 
-namespace Catalog.Application.Products.SellProducts;
-internal sealed class SellProductCommandHandler
-    : ICommandRequestHandler<SellProductCommand, ErrorOr<Unit>>
+namespace Catalog.Domain.Products.Services;
+
+public sealed class SellProductService
 {
     private readonly IProductRepository _productRepository;
 
-    public SellProductCommandHandler(IProductRepository productRepository)
+    public SellProductService(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
 
-    public async Task<ErrorOr<Unit>> Handle(SellProductCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Unit>> TrySellProduct(
+        ProductId productId,
+        Guid orderId,
+        int amountOfProducts)
     {
-        Product? product = await _productRepository.GetByIdAsync(ProductId.Create(command.ProductId));
+        Product? product = await _productRepository.GetByIdAsync(productId);
 
         if (product is null)
         {
             return Error.NotFound("Product.NotFound", "Product was not found");
         }
 
-        var sellTried = product.Sell(command.AmountOfProducts, command.OrderId);
+        var sellTried = product.Sell(amountOfProducts, orderId);
 
         if (sellTried.IsError)
         {
@@ -48,5 +49,4 @@ internal sealed class SellProductCommandHandler
 
         return Unit.Value;
     }
-
 }

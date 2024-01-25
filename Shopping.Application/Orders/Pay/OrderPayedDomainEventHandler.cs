@@ -8,12 +8,10 @@ namespace Shopping.Application.Orders.Pay;
 
 internal sealed class OrderPayedDomainEventHandler : IDomainEventHandler<OrderPayedDomainEvent>
 {
-    private readonly ISender _sender;
     private readonly IShoppingEventBus _shoppingEventBus;
 
-    public OrderPayedDomainEventHandler(ISender sender, IShoppingEventBus shoppingEventBus)
+    public OrderPayedDomainEventHandler(IShoppingEventBus shoppingEventBus)
     {
-        _sender = sender;
         _shoppingEventBus = shoppingEventBus;
     }
 

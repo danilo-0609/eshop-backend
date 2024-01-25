@@ -1,23 +1,26 @@
-﻿using MassTransit;
-using MediatR;
+﻿using Catalog.Domain.Products;
+using Catalog.Domain.Products.Services;
+using MassTransit;
 using Shopping.IntegrationEvents;
 
 namespace Catalog.Application.Products.SellProducts;
 
 public sealed class OrderPayedIntegrationEventConsumer : IConsumer<OrderPayedIntegrationEvent>
 {
-    private readonly ISender _sender;
+    private readonly IProductRepository _productRepository;
 
-    public OrderPayedIntegrationEventConsumer(ISender sender)
+    public OrderPayedIntegrationEventConsumer(IProductRepository productRepository)
     {
-        _sender = sender;
+        _productRepository = productRepository;
     }
 
     public async Task Consume(ConsumeContext<OrderPayedIntegrationEvent> context)
     {
-        await _sender.Send(new SellProductCommand(
-            context.Message.ProductId,
+        var sellProductService = new SellProductService(_productRepository);
+
+        await sellProductService.TrySellProduct(
+            ProductId.Create(context.Message.ProductId),
             context.Message.OrderId,
-            context.Message.AmountOfProducts));        
+            context.Message.AmountOfProducts);
     }
 }

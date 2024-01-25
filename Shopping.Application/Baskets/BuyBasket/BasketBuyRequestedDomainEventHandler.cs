@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Application.Events;
-using Shopping.Domain.Basket;
 using Shopping.Domain.Basket.Events;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
