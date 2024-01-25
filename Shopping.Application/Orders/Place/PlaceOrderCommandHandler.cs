@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Application;
-using BuildingBlocks.Application.Commands;
+using Shopping.Application.Common;
 using ErrorOr;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;

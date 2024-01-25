@@ -23,14 +23,14 @@ public static class DependencyInjection
         //Validator services
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(ShoppingValidationBehavior<,>));
+            typeof(ValidationBehavior<,>));
 
         //Unit of work service
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(ShoppingUnitOfWorkBehavior<,>));
+            typeof(UnitOfWorkBehavior<,>));
 
-        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
 
         return services;
     }

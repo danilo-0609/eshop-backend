@@ -16,7 +16,7 @@ public static class DependencyInjection
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),   
-            typeof(CatalogValidationBehavior<,>));
+            typeof(ValidationBehavior<,>));
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
@@ -24,9 +24,9 @@ public static class DependencyInjection
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(CatalogUnitOfWorkBehavior<,>));
+            typeof(UnitOfWorkBehavior<,>));
 
-        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
         
         return services;
     }

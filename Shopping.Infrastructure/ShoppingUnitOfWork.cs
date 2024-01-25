@@ -5,11 +5,11 @@ using Shopping.Infrastructure.Outbox;
 
 namespace Shopping.Infrastructure;
 
-internal sealed class UnitOfWork : IUnitOfWork
+internal sealed class ShoppingUnitOfWork : IShoppingUnitOfWork
 {
     private readonly ShoppingDbContext _dbContext;
 
-    public UnitOfWork(ShoppingDbContext context)
+    public ShoppingUnitOfWork(ShoppingDbContext context)
     {
         _dbContext = context;
     }

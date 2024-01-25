@@ -28,12 +28,26 @@ public sealed class UserAccessDbContext : DbContext, IApplicationDbContext
 
     public DbSet<UserAccessOutboxMessage> UserAccessOutboxMessages { get; set; }
 
+    public DbSet<UserRole> UsersRoles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserAccessDbContext).Assembly);
 
         modelBuilder.Entity<RolePermission>()
             .HasKey(x => new { x.RoleId, x.PermissionId });
+
+        modelBuilder.Entity<UserRole>(entity =>
+        {
+            entity.HasKey(e => new { e.RoleId, e.UserId }).HasName("Pk_userRoles");
+
+            entity.ToTable("UsersRoles", "users");
+
+            entity.HasIndex(e => e.RoleId, "IX_UsersRoles_RoleId");
+
+            entity.HasIndex(e => e.UserId, "IX_UsersRoles_UserId");
+        });
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

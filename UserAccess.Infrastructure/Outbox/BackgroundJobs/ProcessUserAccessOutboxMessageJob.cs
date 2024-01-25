@@ -57,7 +57,7 @@ internal sealed class ProcessUserAccessOutboxMessageJob : IJob
                     domainEvent!.GetType().Name,
                     DateTime.UtcNow);
 
-                await _publisher.Publish(domainEvent!, context.CancellationToken);
+                await _publisher.Publish(domainEvent!);
             }
             catch (Exception ex)
             {

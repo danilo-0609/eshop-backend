@@ -1,5 +1,5 @@
 using System.Data;
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Application.Common;
 using Catalog.Application.Ratings.Catalog.Application.Ratings.GetAllRatingsByProductId;
 using Dapper;

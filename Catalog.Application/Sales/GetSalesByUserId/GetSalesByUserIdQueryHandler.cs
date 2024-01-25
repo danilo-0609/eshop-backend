@@ -1,5 +1,5 @@
 using System.Data;
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Application.Common;
 using Catalog.Application.Sales.GetAllSalesByUserId;
 using Dapper;

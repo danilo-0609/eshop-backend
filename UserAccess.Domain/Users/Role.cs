@@ -1,4 +1,5 @@
-﻿using UserAccess.Domain.Users;
+﻿using Newtonsoft.Json;
+using UserAccess.Domain.Users;
 
 namespace UserAccess.Domain;
 
@@ -14,6 +15,7 @@ public class Role
 
     public static Role Seller = new Role(3, nameof(Seller));
 
+    [JsonIgnore]
     public ICollection<User> Users { get; } = new List<User>();
 
     public Role(int roleId, string roleCode)

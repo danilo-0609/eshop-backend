@@ -24,4 +24,7 @@ public static class UserErrorsCodes
 
     public static Error CannotChangeAddress =>
         Error.Unauthorized("User.CannotChangeAddress", "Cannot change if you're not the same user");
+
+    public static Error CannotChangePassword =>
+        Error.Unauthorized("User.CannotChangePassword", "Cannot change if you're not the same user");
 }

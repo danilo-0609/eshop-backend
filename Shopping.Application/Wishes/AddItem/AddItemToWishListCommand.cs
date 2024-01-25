@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application.Commands;
+﻿using Shopping.Application.Common;
 using ErrorOr;
 
 namespace Shopping.Application.Wishes.AddItem;

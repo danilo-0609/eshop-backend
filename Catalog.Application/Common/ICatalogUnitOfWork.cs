@@ -1,6 +1,6 @@
-﻿namespace Shopping.Application.Common;
+namespace Catalog.Application.Common;
 
-public interface IUnitOfWork
+public interface ICatalogUnitOfWork
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

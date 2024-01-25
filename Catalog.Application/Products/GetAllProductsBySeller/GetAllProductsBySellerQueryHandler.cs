@@ -1,8 +1,9 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using ErrorOr;
 
 namespace Catalog.Application.Products.GetAllProductsBySeller;
+
 internal sealed class GetAllProductsBySellerQueryHandler : IQueryRequestHandler<GetAllProductsBySellerQuery, ErrorOr<IReadOnlyList<ProductResponse>>>
 {
     private readonly IProductRepository _productRepository;

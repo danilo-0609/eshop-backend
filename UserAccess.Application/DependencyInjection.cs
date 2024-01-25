@@ -1,18 +1,24 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using UserAccess.Application.Common;
 
 namespace UserAccess.Application;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            config.RegisterServicesFromAssemblyContaining<AssemblyReference>();
+
+            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
+
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddValidatorsFromAssemblyContaining<AssemblyReference>(includeInternalTypes: true);
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
@@ -20,13 +26,7 @@ public static class DependencyInjection
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
-            typeof(UserAccessValidationBehavior<,>));
-
-        services.AddScoped(
-            typeof(IPipelineBehavior<,>),
-            typeof(UserAccessUnitOfWorkBehavior<,>));
-
-        services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
+            typeof(UnitOfWorkBehavior<,>));
 
         return services;
     }

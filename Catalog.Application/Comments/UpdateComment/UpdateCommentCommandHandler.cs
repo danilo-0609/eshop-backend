@@ -1,9 +1,10 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Comments;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Comments.UpdateComment;
+
 internal sealed class UpdateCommentCommandHandler : ICommandRequestHandler<UpdateCommentCommand, ErrorOr<Unit>>
 {
     private readonly ICommentRepository _commentRepository;

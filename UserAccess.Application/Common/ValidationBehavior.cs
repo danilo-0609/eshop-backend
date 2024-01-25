@@ -1,17 +1,17 @@
-﻿using ErrorOr;
+using ErrorOr;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
+using FluentValidation.Results;
 
-namespace Shopping.Application.Common;
+namespace UserAccess.Application.Common;
 
-internal sealed class ShoppingValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest
+internal sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ShoppingValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

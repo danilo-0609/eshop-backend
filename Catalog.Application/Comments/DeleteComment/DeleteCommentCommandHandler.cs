@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Comments;
 using ErrorOr;
 using MediatR;

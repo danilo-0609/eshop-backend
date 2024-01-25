@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using Catalog.Domain.Sales;
 using ErrorOr;

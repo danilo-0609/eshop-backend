@@ -1,8 +1,9 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using ErrorOr;
 
 namespace Catalog.Application.Products.GetProductsByTag;
+
 internal sealed class GetProductsByTagQueryHandler 
     : IQueryRequestHandler<GetProductsByTagQuery, ErrorOr<IReadOnlyList<ProductResponse>>>
 {

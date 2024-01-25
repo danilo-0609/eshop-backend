@@ -1,7 +1,8 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using ErrorOr;
 
 namespace Catalog.Application.Products.PublishProducts;
+
 public sealed record PublishProductCommand(string Name,
     decimal Price,
     string Description,

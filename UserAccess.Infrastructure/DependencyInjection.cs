@@ -37,7 +37,7 @@ public static class DependencyInjection
             sp.GetRequiredService<UserAccessDbContext>());
 
         //Unit of work.
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUsersUnitOfWork, UnitOfWork>();
 
         //Repository and persistence services
         services.AddScoped<IUserRepository, UserRepository>();

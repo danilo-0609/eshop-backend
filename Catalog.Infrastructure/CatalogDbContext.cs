@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Catalog.Infrastructure;
 
-public sealed class CatalogDbContext : DbContext, IApplicationDbContext, IUnitOfWork
+public sealed class CatalogDbContext : DbContext, IApplicationDbContext, ICatalogUnitOfWork
 {
     private readonly IConfiguration _configuration;
 

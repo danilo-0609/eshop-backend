@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace Catalog.Infrastructure;
 
-internal sealed class UnitOfWork : IUnitOfWork
+internal sealed class CatalogUnitOfWork : ICatalogUnitOfWork
 {
     private readonly CatalogDbContext _dbContext;
 
-    public UnitOfWork(CatalogDbContext dbContext)
+    public CatalogUnitOfWork(CatalogDbContext dbContext)
     {
         _dbContext = dbContext;
     }

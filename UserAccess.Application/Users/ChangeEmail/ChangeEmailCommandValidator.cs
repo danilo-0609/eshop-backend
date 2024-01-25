@@ -1,15 +1,14 @@
+using BuildingBlocks.Application;
 using FluentValidation;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangeEmail;
+
 internal sealed class ChangeEmailCommandValidator : AbstractValidator<ChangeEmailCommand>
 {
-    private readonly IUserRepository _userRepository;
-
-    public ChangeEmailCommandValidator(IUserRepository userRepository)
+    public ChangeEmailCommandValidator(IUserRepository userRepository, IExecutionContextAccessor executionContextAccessor)
     {
-        _userRepository = userRepository;
-
         RuleFor(r => r.Id)
             .NotNull();
         
@@ -19,7 +18,23 @@ internal sealed class ChangeEmailCommandValidator : AbstractValidator<ChangeEmai
             .EmailAddress().WithMessage("Must be a valid email address")
             .MustAsync(async (email, _) => 
             {
-                return await _userRepository.IsEmailUniqueAsync(email);
+                return await userRepository.IsEmailUniqueAsync(email);
             }).WithMessage("Email must be unique");
+
+        RuleFor(r => r.Id)
+            .MustAsync(async (id, _) =>
+            {
+                var user = await userRepository.GetByIdAsync(UserId.Create(id));
+
+
+                if (user is null)
+                {
+                    return false;
+                }
+
+                return executionContextAccessor.UserId == user.Id.Value;
+
+            }).WithMessage(UserErrorsCodes.CannotChangeEmail.Code);
+
     }
 }

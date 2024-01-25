@@ -1,6 +1,5 @@
-﻿using BuildingBlocks.Application.Commands;
+﻿using UserAccess.Application.Common;
 using ErrorOr;
-using UserAccess.Application.Abstractions;
 using UserAccess.Domain.UserRegistrations;
 
 namespace UserAccess.Application.UserRegistration.RegisterNewUser;

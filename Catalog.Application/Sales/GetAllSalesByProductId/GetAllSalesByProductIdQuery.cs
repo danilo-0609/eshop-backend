@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using ErrorOr;
 
 namespace Catalog.Application.Sales.GetAllSalesByProductId;

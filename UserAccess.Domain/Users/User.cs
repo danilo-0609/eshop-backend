@@ -93,7 +93,7 @@ public sealed class User : AggregateRoot<UserId, Guid>
             },
             createdDateTime,
             null);
-        
+
         user.Raise(new UserCreatedDomainEvent(
             Guid.NewGuid(),
             user.Id,

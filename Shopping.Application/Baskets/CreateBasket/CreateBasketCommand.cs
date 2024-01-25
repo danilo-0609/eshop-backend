@@ -1,5 +1,5 @@
-﻿using BuildingBlocks.Application.Commands;
-using ErrorOr;
+﻿using ErrorOr;
+using Shopping.Application.Common;
 
 namespace Shopping.Application.Baskets.CreateBasket;
 

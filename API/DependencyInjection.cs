@@ -14,7 +14,6 @@ using Shopping.Application.Items.Remove;
 using Shopping.Application.Items.Update;
 using Shopping.Application.Orders.Complete;
 using Shopping.Application.Orders.Expire;
-using UserAccess.Infrastructure.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -53,6 +52,7 @@ public static class DependencyInjection
 
         services.ConfigureOptions<JwtOptionsSetup>();
         services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 
         //Message broker
         services.Configure<MessageBrokerSettings>(

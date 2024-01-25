@@ -1,5 +1,5 @@
-using BuildingBlocks.Application.Commands;
 using ErrorOr;
+using UserAccess.Application.Common;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.Users.Admin.AddAdminUser;

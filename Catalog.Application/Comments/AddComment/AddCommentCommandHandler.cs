@@ -1,5 +1,5 @@
 using BuildingBlocks.Application;
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Comments;
 using Catalog.Domain.Products;
 using ErrorOr;

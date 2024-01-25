@@ -1,5 +1,4 @@
-
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using ErrorOr;
 
 namespace Catalog.Application.Sales;

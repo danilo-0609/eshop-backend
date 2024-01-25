@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Shopping.Application.Common;
 
 internal class ShoppingApplicationLoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest
+    where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly ILogger<ShoppingApplicationLoggingPipelineBehavior<TRequest, TResponse>> _logger;

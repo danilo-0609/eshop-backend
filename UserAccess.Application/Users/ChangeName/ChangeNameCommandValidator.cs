@@ -1,6 +1,7 @@
 using BuildingBlocks.Application;
 using FluentValidation;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangeName;
 
@@ -36,14 +37,8 @@ internal sealed class ChangeNameCommandValidator : AbstractValidator<ChangeNameC
                     return false;
                 }
 
-                if (_executionContextAccessor.UserId != user.Id.Value)
-                {
-                    return false;
-                }
-
-                return true;
+                return executionContextAccessor.UserId == user.Id.Value;
             })
-            .WithErrorCode("403")
-            .WithMessage("Cannot change the other user's name");
+            .WithMessage(UserErrorsCodes.CannotChangeName.Code);
     }
 }

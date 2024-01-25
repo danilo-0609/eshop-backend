@@ -1,5 +1,5 @@
 using BuildingBlocks.Application;
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Ratings;
 using ErrorOr;
 using MediatR;

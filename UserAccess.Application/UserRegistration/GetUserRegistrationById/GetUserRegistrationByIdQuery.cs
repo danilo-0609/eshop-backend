@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application.Queries;
+﻿using UserAccess.Application.Common;
 using ErrorOr;
 
 namespace UserAccess.Application.UserRegistration.GetUserRegistrationByIda;

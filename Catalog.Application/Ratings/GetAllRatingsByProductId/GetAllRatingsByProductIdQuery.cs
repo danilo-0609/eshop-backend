@@ -1,6 +1,4 @@
-
-using BuildingBlocks.Application.Commands;
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using ErrorOr;
 
 namespace Catalog.Application.Ratings.Catalog.Application.Ratings.GetAllRatingsByProductId;

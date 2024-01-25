@@ -1,6 +1,6 @@
-using BuildingBlocks.Application.Commands;
 using ErrorOr;
 using MediatR;
+using UserAccess.Application.Common;
 
 namespace UserAccess.Application.Users.ChangeAddress;
 

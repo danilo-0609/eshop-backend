@@ -1,16 +1,17 @@
 using ErrorOr;
 using FluentValidation;
-using MediatR;
 using FluentValidation.Results;
+using MediatR;
 
-namespace UserAccess.Application.Common;
-internal sealed class UserAccessValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+namespace Catalog.Application.Common;
+
+internal sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public UserAccessValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

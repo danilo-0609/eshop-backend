@@ -5,7 +5,7 @@ using UserAccess.Infrastructure.Outbox;
 
 namespace UserAccess.Infrastructure;
 
-internal sealed class UnitOfWork : IUnitOfWork
+internal sealed class UnitOfWork : IUsersUnitOfWork
 {
     private readonly UserAccessDbContext _dbContext;
 
@@ -16,16 +16,17 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        ConvertDomainEventsToOutboxMessages();
+        await ConvertDomainEventsToOutboxMessages();
 
         return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private async void ConvertDomainEventsToOutboxMessages()
+    private async Task ConvertDomainEventsToOutboxMessages()
     {
         List<IDomainEvent> domainEvents = _dbContext.ChangeTracker
             .Entries<IHasDomainEvents>()
             .Select(x => x.Entity)
+            .Where(x => x.DomainEvents.Any())
             .SelectMany(entity =>
             {
                 IReadOnlyList<IDomainEvent> domainEvents = entity.GetDomainEvents();

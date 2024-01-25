@@ -1,10 +1,10 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
-using Catalog.Domain.Products.Rules;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyProductType;
+
 internal sealed class ModifyProductTypeCommandHandler : ICommandRequestHandler<ModifyProductTypeCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;

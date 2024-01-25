@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using UserAccess.Domain;
 using UserAccess.Domain.Users;
+using UserAccess.Infrastructure.Outbox;
 
 namespace UserAccess.Infrastructure.Domain.Users;
 
@@ -15,6 +18,7 @@ internal sealed class UserRepository : IUserRepository
     public async Task AddAsync(User user)
     {
         await InsertUser(user);
+        await InsertDomainEvent(user);
         await InsertRoles(user);
     }
 
@@ -86,9 +90,35 @@ internal sealed class UserRepository : IUserRepository
             user.Id.Value);
     }
 
+    private async Task InsertUser(User user)
+    {
+        await _dbContext.Database.ExecuteSqlRawAsync(
+            "INSERT INTO users.Users (UserId, " +
+            "Login, " +
+            "Password, " +
+            "Email, " +
+            "IsActive, " +
+            "FirstName, " +
+            "LastName, " +
+            "Name, " +
+            "Address, " +
+            "CreatedDateTime) " +
+            "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9})",
+            user.Id.Value,
+            user.Login,
+            user.Password.Value,
+            user.Email,
+            user.IsActive,
+            user.FirstName,
+            user.LastName,
+            user.Name,
+            user.Address,
+            user.CreatedDateTime);
+    }
+
     private async Task InsertRoles(User user)
     {
-        foreach (var role in user.Roles)
+        foreach (Role role in user.Roles)
         {
             await _dbContext.Database.ExecuteSqlRawAsync(
                 $"INSERT INTO[Eshop.Db].[users].[UsersRoles] (UserId, RoleId)" +
@@ -97,31 +127,26 @@ internal sealed class UserRepository : IUserRepository
         }
     }
 
-    private async Task InsertUser(User user)
+    private async Task InsertDomainEvent(User user)
     {
-        await _dbContext.Database.ExecuteSqlRawAsync(
-        "INSERT INTO users.Users (UserId, " +
-        "Login, " +
-        "Password, " +
-        "Email, " +
-        "IsActive, " +
-        "FirstName, " +
-        "LastName, " +
-        "Name, " +
-        "Address, " +
-        "CreatedDateTime, " +
-        "UpdatedDateTime) " +
-        "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})",
-        user.Id.Value,
-        user.Login,
-        user.Password.Value,
-        user.Email,
-        user.IsActive,
-        user.FirstName,
-        user.LastName,
-        user.Name,
-        user.Address,
-        user.CreatedDateTime,
-        user.UpdatedDateTime);
+        var domainEvents = user.GetDomainEvents();
+
+        List<UserAccessOutboxMessage> outboxMessages = domainEvents
+        .Select(domainEvent => new UserAccessOutboxMessage
+        {
+            Id = domainEvent.DomainEventId,
+            Type = domainEvent.GetType().Name,
+            OcurredOnUtc = domainEvent.OcurredOn,
+            Content = JsonConvert.SerializeObject(
+            domainEvent,
+            new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            })
+        }).ToList();
+
+        user.ClearDomainEvents();
+
+        await _dbContext.UserAccessOutboxMessages.AddRangeAsync(outboxMessages);
     }
 }

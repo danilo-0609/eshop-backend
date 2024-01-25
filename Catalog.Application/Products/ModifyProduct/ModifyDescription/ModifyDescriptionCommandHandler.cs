@@ -1,9 +1,10 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyDescription;
+
 internal sealed class ModifyDescriptionCommandHandler 
     : ICommandRequestHandler<ModifyDescriptionCommand, ErrorOr<Unit>>
 {

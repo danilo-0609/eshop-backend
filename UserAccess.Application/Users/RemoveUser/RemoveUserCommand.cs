@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application.Commands;
+﻿using UserAccess.Application.Common;
 using ErrorOr;
 using MediatR;
 

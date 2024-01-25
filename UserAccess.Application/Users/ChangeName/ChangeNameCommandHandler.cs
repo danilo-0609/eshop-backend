@@ -1,5 +1,5 @@
 using BuildingBlocks.Application;
-using BuildingBlocks.Application.Commands;
+using UserAccess.Application.Common;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
@@ -10,12 +10,10 @@ namespace UserAccess.Application.Users.ChangeName;
 internal sealed class ChangeNameCommandHandler : ICommandRequestHandler<ChangeNameCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IExecutionContextAccessor _executionContextAccessor;
 
-    public ChangeNameCommandHandler(IUserRepository userRepository, IExecutionContextAccessor executionContextAccessor)
+    public ChangeNameCommandHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _executionContextAccessor = executionContextAccessor;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeNameCommand request, CancellationToken cancellationToken)
@@ -25,11 +23,6 @@ internal sealed class ChangeNameCommandHandler : ICommandRequestHandler<ChangeNa
         if (user is null)
         {
             return UserErrorsCodes.NotFound;
-        }
-        
-        if (_executionContextAccessor.UserId != user.Id.Value)
-        {
-            return UserErrorsCodes.CannotChangeName;
         }
 
         var update = User.Update(

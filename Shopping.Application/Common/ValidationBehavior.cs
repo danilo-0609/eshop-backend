@@ -1,16 +1,17 @@
-using ErrorOr;
+﻿using ErrorOr;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace Catalog.Application.Common;
-public sealed class CatalogValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+namespace Shopping.Application.Common;
+
+internal sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public CatalogValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

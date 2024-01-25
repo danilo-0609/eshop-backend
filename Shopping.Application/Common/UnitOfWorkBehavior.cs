@@ -1,18 +1,16 @@
-﻿using BuildingBlocks.Application.Commands;
-using ErrorOr;
+﻿using ErrorOr;
 using MediatR;
 using System.Transactions;
-using UserAccess.Application.Abstractions;
 
-namespace UserAccess.Application.Common;
+namespace Shopping.Application.Common;
 
-internal sealed class UserAccessUnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IShoppingUnitOfWork _unitOfWork;
 
-    public UserAccessUnitOfWorkBehavior(IUnitOfWork unitOfWork)
+    public UnitOfWorkBehavior(IShoppingUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

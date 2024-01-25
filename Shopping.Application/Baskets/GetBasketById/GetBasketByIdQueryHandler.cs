@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application.Queries;
+﻿using Shopping.Application.Common;
 using ErrorOr;
 using Shopping.Domain.Basket;
 

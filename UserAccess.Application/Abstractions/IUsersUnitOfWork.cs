@@ -1,5 +1,5 @@
 namespace UserAccess.Application.Abstractions;
-public interface IUnitOfWork
+public interface IUsersUnitOfWork
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

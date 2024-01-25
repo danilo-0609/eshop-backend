@@ -188,20 +188,23 @@ namespace UserAccess.Infrastructure.Migrations
 
             modelBuilder.Entity("UserAccess.Domain.Users.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
+                    b.HasKey("RoleId", "UserId")
+                        .HasName("Pk_userRoles");
 
                     b.HasIndex("UsersId");
+
+                    b.HasIndex(new[] { "RoleId" }, "IX_UsersRoles_RoleId");
+
+                    b.HasIndex(new[] { "UserId" }, "IX_UsersRoles_UserId");
 
                     b.ToTable("UsersRoles", "users");
                 });

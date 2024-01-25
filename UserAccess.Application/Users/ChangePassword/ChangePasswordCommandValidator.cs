@@ -1,19 +1,14 @@
 using BuildingBlocks.Application;
 using FluentValidation;
 using UserAccess.Domain.Users;
+using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.ChangePassword;
 
 internal sealed class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
 {
-    private readonly IExecutionContextAccessor _executionContextAccessor;
-    private readonly IUserRepository _userRepository;
-
     public ChangePasswordCommandValidator(IExecutionContextAccessor executionContextAccessor, IUserRepository userRepository)
     {
-        _executionContextAccessor = executionContextAccessor;
-        _userRepository = userRepository;
-
         RuleFor(r => r.Id)
             .NotNull();
 
@@ -30,16 +25,15 @@ internal sealed class ChangePasswordCommandValidator : AbstractValidator<ChangeP
         RuleFor(r => r.Id)
         .MustAsync(async (id, _) =>
         {
-            var user = await _userRepository.GetByIdAsync(UserId.Create(id));
+            var user = await userRepository.GetByIdAsync(UserId.Create(id));
 
             if (user is null)
             {
                 return false;
             }
 
-            return _executionContextAccessor.UserId == user.Id.Value;
+            return executionContextAccessor.UserId == user.Id.Value;
         })
-        .WithErrorCode("403")
-        .WithMessage("Cannot change other's user password");
+        .WithMessage(UserErrorsCodes.CannotChangePassword.Code);
     }
 }

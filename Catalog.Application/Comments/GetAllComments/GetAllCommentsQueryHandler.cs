@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Domain.Comments;
 using Catalog.Domain.Products;
 using ErrorOr;

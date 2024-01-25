@@ -1,6 +1,6 @@
-﻿using BuildingBlocks.Application.Commands;
-using BuildingBlocks.Application;
+﻿using BuildingBlocks.Application;
 using ErrorOr;
+using Shopping.Application.Common;
 using Shopping.Domain.Basket;
 using Shopping.Domain.Items;
 

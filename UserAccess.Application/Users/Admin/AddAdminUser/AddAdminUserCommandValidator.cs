@@ -2,6 +2,7 @@ using FluentValidation;
 using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.Users.Admin.AddAdminUser;
+
 internal sealed class AddAdminUserCommandValidator : AbstractValidator<AddAdminUserCommand>
 {
     private readonly IUserRepository _userRepository;

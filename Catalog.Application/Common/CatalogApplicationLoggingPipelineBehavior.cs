@@ -3,8 +3,9 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Catalog.Application.Common;
-public sealed class CatalogApplicationLoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+
+internal sealed class CatalogApplicationLoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly ILogger<CatalogApplicationLoggingPipelineBehavior<TRequest, TResponse>> _logger;

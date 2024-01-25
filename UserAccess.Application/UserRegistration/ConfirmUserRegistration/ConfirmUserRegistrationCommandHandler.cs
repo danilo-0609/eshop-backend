@@ -1,10 +1,11 @@
-using BuildingBlocks.Application.Commands;
+using UserAccess.Application.Common;
 using ErrorOr;
 using MediatR;
 using UserAccess.Domain.UserRegistrations;
 using UserAccess.Domain.UserRegistrations.Errors;
 
 namespace UserAccess.Application.UserRegistration.ConfirmUserRegistration;
+
 internal sealed class ConfirmUserRegistrationCommandHandler 
     : ICommandRequestHandler<ConfirmUserRegistrationCommand, ErrorOr<Unit>>
 {

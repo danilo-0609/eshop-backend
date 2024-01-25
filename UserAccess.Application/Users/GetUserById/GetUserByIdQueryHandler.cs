@@ -1,11 +1,12 @@
 using System.Data;
-using BuildingBlocks.Application.Queries;
+using UserAccess.Application.Common;
 using Dapper;
 using ErrorOr;
 using UserAccess.Application.Abstractions;
 using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.GetUserById;
+
 internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserByIdQuery, ErrorOr<UserResponse>>
 {
     private readonly IDbConnectionFactory _dbConnectionFactory;

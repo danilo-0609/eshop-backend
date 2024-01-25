@@ -1,9 +1,10 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyName;
+
 internal sealed class ModifyNameCommandHandler : ICommandRequestHandler<ModifyNameCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;

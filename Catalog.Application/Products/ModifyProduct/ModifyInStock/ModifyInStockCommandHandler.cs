@@ -1,9 +1,10 @@
-using BuildingBlocks.Application.Commands;
+using Catalog.Application.Common;   
 using Catalog.Domain.Products;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyInStock;
+
 internal sealed class ModifyInStockCommandHandler : ICommandRequestHandler<ModifyInStockCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;

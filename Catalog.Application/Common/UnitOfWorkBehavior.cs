@@ -1,17 +1,16 @@
-﻿using BuildingBlocks.Application.Commands;
-using ErrorOr;
+﻿using ErrorOr;
 using MediatR;
 using System.Transactions;
 
 namespace Catalog.Application.Common;
 
-internal sealed class CatalogUnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICatalogUnitOfWork _unitOfWork;
 
-    public CatalogUnitOfWorkBehavior(IUnitOfWork unitOfWork)
+    public UnitOfWorkBehavior(ICatalogUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

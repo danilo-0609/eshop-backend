@@ -1,6 +1,5 @@
-using BuildingBlocks.Application.Queries;
+using Catalog.Application.Common;
 using Catalog.Domain.Products;
-using Catalog.Domain.Products.Rules;
 using ErrorOr;
 
 namespace Catalog.Application.Products.GetProductsByProductType;

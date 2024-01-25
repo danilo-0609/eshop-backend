@@ -1,9 +1,7 @@
 using BuildingBlocks.Application;
-using BuildingBlocks.Application.Commands;
 using Catalog.Domain.Products;
-using Catalog.Domain.Products.Rules;
+using Catalog.Application.Common;
 using ErrorOr;
-using MediatR;
 
 namespace Catalog.Application.Products.PublishProducts;
 internal sealed class PublishProductCommandHandler : ICommandRequestHandler<PublishProductCommand, ErrorOr<Guid>>

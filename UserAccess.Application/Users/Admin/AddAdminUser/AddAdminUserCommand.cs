@@ -1,5 +1,5 @@
-using BuildingBlocks.Application.Commands;
 using ErrorOr;
+using UserAccess.Application.Common;
 
 namespace UserAccess.Application.Users.Admin.AddAdminUser;
 public sealed record AddAdminUserCommand(

@@ -3,8 +3,9 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace UserAccess.Application.Common;
+
 internal sealed class UserAccessApplicationLoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+    where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
     private readonly ILogger<UserAccessApplicationLoggingPipelineBehavior<TRequest, TResponse>> _logger;
