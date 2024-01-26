@@ -20,7 +20,7 @@ public sealed class SalesController : ApiController
     }
 
     [HasPermission(Permissions.GetSales)]
-    [HttpGet("{id}")]
+    [HttpGet("product/{id}")]
     public async Task<IActionResult> GetAllSalesByProduct([FromHeader] Guid id)
     {
         var query = new GetAllSalesByProductIdQuery(id);

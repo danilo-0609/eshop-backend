@@ -120,7 +120,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-color/{id}")]
     public async Task<IActionResult> ModifyProductColor([FromHeader] Guid id, [FromBody] string color)
     {
         var command = new ModifyColorCommand(id, color);
@@ -133,7 +133,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-description/{id}")]
     public async Task<IActionResult> ModifyProductDescription([FromHeader] Guid id, [FromBody] string description)
     {
         var command = new ModifyDescriptionCommand(id, description);
@@ -146,7 +146,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-instock/{id}")]
     public async Task<IActionResult> ModifyProductsInStock([FromHeader] Guid id, [FromBody] int inStock)
     {
         var command = new ModifyInStockCommand(id, inStock);
@@ -159,7 +159,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-name/{id}")]
     public async Task<IActionResult> ModifyProductName([FromHeader] Guid id, [FromBody] string name)
     {
         var command = new ModifyNameCommand(id, name);
@@ -172,7 +172,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-price/{id}")]
     public async Task<IActionResult> ModifyProductPrice([FromHeader] Guid id, [FromBody] decimal price)
     {
         var command = new ModifyPriceCommand(id, price);
@@ -185,7 +185,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-type/{id}")]
     public async Task<IActionResult> ModifyProductType([FromHeader] Guid id, [FromBody] string productType)
     {
         var command = new ModifyProductTypeCommand(id, productType);
@@ -198,7 +198,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-size/{id}")]
     public async Task<IActionResult> ModifyProductSize([FromHeader] Guid id, [FromBody] string size)
     {
         var command = new ModifySizeCommand(id, size);
@@ -211,7 +211,7 @@ public class ProductsController : ApiController
     }
 
     [HasPermission(Permissions.ModifyProduct)]
-    [HttpPut("modify/{id}")]
+    [HttpPut("modify-tag/{id}")]
     public async Task<IActionResult> ModifyProductTag([FromHeader] Guid id, [FromBody] List<string> tags)
     {
         var command = new ModifyTagCommand(id, tags);
