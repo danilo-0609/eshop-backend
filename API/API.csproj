@@ -28,9 +28,4 @@
     <ProjectReference Include="..\UserAccess.Infrastructure\UserAccess.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\Shopping\Endpoints\" />
-    <Folder Include="Modules\Shopping\Requests\" />
-  </ItemGroup>
-
 </Project>

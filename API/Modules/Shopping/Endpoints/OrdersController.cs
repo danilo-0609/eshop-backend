@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Application.Orders.Confirm;
 using Shopping.Application.Orders.Expire;
+using Shopping.Application.Orders.GetById;
 using Shopping.Application.Orders.Pay;
 using Shopping.Application.Orders.Place;
 using UserAccess.Domain.Enums;
@@ -71,6 +72,19 @@ public sealed class OrdersController : ApiController
 
         return response.Match(
             success => NoContent(),
+            errors => Problem(errors));
+    }
+
+    [HasPermission(Permissions.GetOrders)]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetOrders([FromHeader] Guid id)
+    {
+        var query = new GetOrderByIdQuery(id);
+
+        var response = await _sender.Send(query);
+
+        return response.Match(
+            success => Ok(success),
             errors => Problem(errors));
     }
 }
