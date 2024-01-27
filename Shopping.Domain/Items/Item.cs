@@ -38,6 +38,8 @@ public sealed class Item : AggregateRoot<ItemId, Guid>
         StockStatus = stockStatus;
         CreatedOn = createdOn;
         UpdatedOn = updatedOn;
+
+        CheckStock();
     }
 
     public static Item Create(
@@ -85,6 +87,14 @@ public sealed class Item : AggregateRoot<ItemId, Guid>
     public void OutOfStock()
     {
         StockStatus = StockStatus.OutOfStock;
+    }
+
+    private void CheckStock()
+    {
+        if (InStock == 0)
+        {
+            StockStatus = StockStatus.OutOfStock;
+        }
     }
 
     private Item(){}
