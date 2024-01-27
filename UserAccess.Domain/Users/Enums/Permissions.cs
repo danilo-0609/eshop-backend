@@ -58,5 +58,29 @@ public enum Permissions
 
     UpdateProduct = 28,
 
-    GetUserRegistration = 29
+    GetUserRegistration = 29,
+
+    AddBasket = 30,
+
+    DeleteBasket = 31,
+
+    AddItemInWish = 32,
+
+    ChangeWishVisibility = 33,
+
+    CreateWish = 34,
+
+    DeleteWish = 35,
+
+    GetWish = 36,
+
+    RemoveItemInWish = 37,
+
+    PlaceOrder = 38,
+
+    PayOrder = 39,
+
+    ExpireOrder = 40,
+
+    ConfirmOrder = 41
 }
