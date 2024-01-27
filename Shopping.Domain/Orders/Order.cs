@@ -123,6 +123,20 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBeConfirmedAfterExpiration.FirstError;
         }
 
+        var cannotBeConfirmedWhenOrderStatusIsPayed = CheckRule(new OrderCannotBeConfirmedWhenOrderStatusIsPayedRule(OrderStatus));
+
+        if (cannotBeConfirmedWhenOrderStatusIsPayed.IsError)
+        {
+            return cannotBeConfirmedWhenOrderStatusIsPayed.FirstError;
+        }
+
+        var cannotBeConfirmedWhenOrderStatusIsCompleted = CheckRule(new OrderCannotBeConfirmedAfterCompletationRule(OrderStatus));
+
+        if (cannotBeConfirmedWhenOrderStatusIsCompleted.IsError)
+        {
+            return cannotBeConfirmedWhenOrderStatusIsCompleted.FirstError;
+        }
+
         OrderStatus = OrderStatus.Confirmed;
         ConfirmedOn = confirmedOn;
 

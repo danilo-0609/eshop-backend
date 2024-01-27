@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Domain;
 using ErrorOr;
+using Shopping.Domain.Orders.Errors;
 
 namespace Shopping.Domain.Orders.Rules;
 
@@ -12,7 +13,7 @@ internal sealed class OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule : IBus
         _orderStatus = orderStatus;
     }
 
-    public Error Error => throw new NotImplementedException();
+    public Error Error => OrderErrors.CannotBePayedWhenStatusIsNotConfirmed;
 
     public bool IsBroken() => _orderStatus != OrderStatus.Confirmed;
 

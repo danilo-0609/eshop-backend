@@ -31,4 +31,10 @@ public static class OrderErrors
 
     public static Error CannotBePayedWhenStatusIsNotConfirmed =>
         Error.Validation("Order.StatusIsNotConfirmed", OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule.Message);
+
+    public static Error CannotBeConfirmedWhenOrderStatusIsPayed =>
+        Error.Validation("Order.StatusIsPayed", OrderCannotBeConfirmedWhenOrderStatusIsPayedRule.Message);
+
+    public static Error CannotBeConfirmedAfterCompletation =>
+        Error.Validation("Order.StatusIsCompleted", OrderCannotBeConfirmedAfterCompletationRule.Message);
 }
