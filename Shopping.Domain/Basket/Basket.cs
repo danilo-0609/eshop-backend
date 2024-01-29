@@ -68,12 +68,17 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
     public void Buy()
     {
         Raise(new BasketBuyRequestedDomainEvent(
-            Guid.NewGuid(), 
-            Id, 
-            CustomerId, 
-            ItemIds, 
-            TotalAmount, 
+            Guid.NewGuid(),
+            Id,
+            CustomerId,
+            ItemIds,
+            TotalAmount,
             DateTime.UtcNow));
+    }
+
+    public void ClearBasket()
+    {
+        _itemIds.Clear();
     }
 
     private Basket(){}

@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Application.Events;
+using Shopping.Domain.Basket;
 using Shopping.Domain.Basket.Events;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
@@ -8,10 +9,12 @@ namespace Shopping.Application.Baskets.BuyBasket;
 internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler<BasketBuyRequestedDomainEvent>
 {
     private readonly IItemRepository _itemRepository;
+    private readonly IBasketRepository _basketRepository;
 
-    public BasketBuyRequestedDomainEventHandler(IItemRepository itemRepository)
+    public BasketBuyRequestedDomainEventHandler(IItemRepository itemRepository, IBasketRepository basketRepository)
     {
         _itemRepository = itemRepository;
+        _basketRepository = basketRepository;
     }
 
     public async Task Handle(BasketBuyRequestedDomainEvent notification, CancellationToken cancellationToken)
@@ -34,5 +37,9 @@ internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler
                 break;
             }
         }
+
+        Basket? basket = await _basketRepository.GetByIdAsync(notification.BasketId);
+
+        basket!.ClearBasket();
     }
 }
