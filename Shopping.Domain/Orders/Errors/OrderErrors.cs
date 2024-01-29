@@ -8,9 +8,6 @@ public static class OrderErrors
     public static Error OrderStatusIsNotPayed =>
         Error.Validation("Order.StatusIsNotPayed", OrderCannotBeCompletedWhenOrderStatusIsNotPayedRule.Message);
 
-    public static Error OrderStatusHasBeenExpired =>
-        Error.Validation("Order.StatusHasBeenExpired", OrderCannotBeConfirmedAfterExpirationRule.Message);
-
     public static Error OrderStatusAlreadyConfirmed =>
         Error.Validation("Order.StatusAlreadyConfirmed", OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule.Message);
 
@@ -24,7 +21,7 @@ public static class OrderErrors
         Error.Validation("Order.AmountRequestedGreaterThanActualStock", OrderItemAmountCannotBeGreaterThanItemActualAmountRule.Message);
 
     public static Error OrderStatusIsCompleted =>
-        Error.Validation("Order.StatusIsCompleted", OrderCannotBeExpiredAfterCompletationRule.Message);
+        Error.Validation("Order.StatusIsCompleted", OrderCannotBeExpiredAfterGetCompletedRule.Message);
 
     public static Error CannotPayedWhenStatusIsExpired =>
         Error.Validation("Order.StatusIsExpired", OrderCannotBePayedWhenOrderStatusIsExpiredRule.Message);
@@ -32,9 +29,6 @@ public static class OrderErrors
     public static Error CannotBePayedWhenStatusIsNotConfirmed =>
         Error.Validation("Order.StatusIsNotConfirmed", OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule.Message);
 
-    public static Error CannotBeConfirmedWhenOrderStatusIsPayed =>
-        Error.Validation("Order.StatusIsPayed", OrderCannotBeConfirmedWhenOrderStatusIsPayedRule.Message);
-
-    public static Error CannotBeConfirmedAfterCompletation =>
-        Error.Validation("Order.StatusIsCompleted", OrderCannotBeConfirmedAfterCompletationRule.Message);
+    public static Error CannotBeConfirmWhenOrderStatusIsNotPlaced => 
+        Error.Validation("Order.StatusIsNotPlaced", OrderCannotBeConfirmedWhenOrderStatusIsNotPlacedRule.Message);
 }

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "3fVPQAOn3lW7zXvi5Ocf3mtqmkI6LgaabIAFRIiT600LwNrQe6fUuA+eMHXQBIYa2BGQx2Z5T2xt7FRjTyKcgA==",
+  "dgSpecHash": "Ni7WBJuLEQW9SnPpwFtPzl/zVrOsEbC3VL3DRA/MRJAvQ5wBQBXHTgHhnCHAMkJso1ty9cBmvM2WWO5xxP1vHw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Desktop\\eShop-backend\\UserAccess.IntegrationEvents\\UserAccess.IntegrationEvents.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.3.0\\erroror.1.3.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.9.0\\erroror.1.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"

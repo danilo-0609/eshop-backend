@@ -209,7 +209,7 @@
           "dependencies": {
             "ErrorOr": {
               "target": "Package",
-              "version": "[1.3.0, )"
+              "version": "[1.9.0, )"
             },
             "MediatR": {
               "target": "Package",
@@ -346,7 +346,7 @@
             },
             "ErrorOr": {
               "target": "Package",
-              "version": "[1.3.0, )"
+              "version": "[1.9.0, )"
             },
             "FluentValidation": {
               "target": "Package",
@@ -424,6 +424,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "ErrorOr": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -835,6 +841,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "ErrorOr": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -1065,6 +1077,10 @@
               "target": "Package",
               "version": "[2.1.24, )"
             },
+            "ErrorOr": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[11.8.1, )"
@@ -1138,6 +1154,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "ErrorOr": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"

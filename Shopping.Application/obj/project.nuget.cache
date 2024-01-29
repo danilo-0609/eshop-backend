@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CVnGFgrXQZK3B+8wQPkJX3zaZBOLUXcBzgrFbLnjNOV5/7ZbByZpCoBAS2kg4HcPn90RrF/CmPtHRyLa0fSUqw==",
+  "dgSpecHash": "Bl6QpxCEiAFIBHgk/SnGnbb5Eh7d//Q9vMeBsNQrQemF9W76L8WMIYVzOuXgySfeDiXD2SB5sjhizm9tqsC6tA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Desktop\\eShop-backend\\Shopping.Application\\Shopping.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.3.0\\erroror.1.3.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.9.0\\erroror.1.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",

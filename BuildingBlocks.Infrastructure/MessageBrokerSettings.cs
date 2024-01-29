@@ -1,4 +1,5 @@
 ﻿namespace BuildingBlocks.Infrastructure;
+
 public sealed record MessageBrokerSettings
 {
     public string Host { get; set; } = string.Empty;

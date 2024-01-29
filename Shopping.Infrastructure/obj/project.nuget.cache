@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "rb0kOgqd8SgWuRE9Gz36jnyiCWCjwUnGj9yLZraPgmbIs7V34gJ/ozN/CdwLdqxRANuvi5Xza6cFlxPEiNzMag==",
+  "dgSpecHash": "jemxEutjleHr7kduvQ/2qo3qA0nr+hAFGjDl3fovGxc3u9IivKen4hfbF3eEjbUDKUYqSqRl20FBNXitb25uDg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Desktop\\eShop-backend\\Shopping.Infrastructure\\Shopping.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
-    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.3.0\\erroror.1.3.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.9.0\\erroror.1.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",

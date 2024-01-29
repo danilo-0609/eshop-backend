@@ -4,11 +4,15 @@ namespace UserAccess.Domain.Users.Errors;
 
 public static class UserErrorsCodes
 {
-    public static Error NotFound =>
-        Error.NotFound("User.NotFound", "User was not found");
+    public static Error NotFound =
+        Error.NotFound(
+            code: "User.NotFound", 
+            description: "User was not found");
 
-    public static Error IncorrectPassword =>
-        Error.Validation("Password.Incorrect", "The password is not correct");
+    public static Error IncorrectPassword =
+        Error.Validation(
+            code: "Password.Incorrect", 
+            description: "The password is not correct");
 
     public static Error IncorrectOldPassword =>
         Error.Validation("Password.NotCorrect", "The actual password you introduced is not your actual password");

@@ -116,25 +116,11 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBeConfirmedIfOrderStatusIsConfirmed.FirstError;
         }
 
-        var cannotBeConfirmedAfterExpiration = CheckRule(new OrderCannotBeConfirmedAfterExpirationRule(OrderStatus)); ;
+        var cannotBeConfirmedWhenOrderStatusIsNotPlaced = CheckRule(new OrderCannotBeConfirmedWhenOrderStatusIsNotPlacedRule(OrderStatus));
 
-        if (cannotBeConfirmedAfterExpiration.IsError)
+        if (cannotBeConfirmedWhenOrderStatusIsNotPlaced.IsError)
         {
-            return cannotBeConfirmedAfterExpiration.FirstError;
-        }
-
-        var cannotBeConfirmedWhenOrderStatusIsPayed = CheckRule(new OrderCannotBeConfirmedWhenOrderStatusIsPayedRule(OrderStatus));
-
-        if (cannotBeConfirmedWhenOrderStatusIsPayed.IsError)
-        {
-            return cannotBeConfirmedWhenOrderStatusIsPayed.FirstError;
-        }
-
-        var cannotBeConfirmedWhenOrderStatusIsCompleted = CheckRule(new OrderCannotBeConfirmedAfterCompletationRule(OrderStatus));
-
-        if (cannotBeConfirmedWhenOrderStatusIsCompleted.IsError)
-        {
-            return cannotBeConfirmedWhenOrderStatusIsCompleted.FirstError;
+            return cannotBeConfirmedWhenOrderStatusIsNotPlaced.FirstError;
         }
 
         OrderStatus = OrderStatus.Confirmed;
@@ -157,7 +143,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBeExpiredWhenOrderStatusIsExpired.FirstError;
         }
 
-        var cannotExpiredAfterCompletation = CheckRule(new OrderCannotBeExpiredAfterCompletationRule(OrderStatus));
+        var cannotExpiredAfterCompletation = CheckRule(new OrderCannotBeExpiredAfterGetCompletedRule(OrderStatus));
 
         if (cannotExpiredAfterCompletation.IsError)
         {

@@ -4,11 +4,11 @@ using Shopping.Domain.Orders.Errors;
 
 namespace Shopping.Domain.Orders.Rules;
 
-internal sealed class OrderCannotBeExpiredAfterCompletationRule : IBusinessRule
+internal sealed class OrderCannotBeExpiredAfterGetCompletedRule : IBusinessRule
 {
     private readonly OrderStatus _orderStatus;
 
-    public OrderCannotBeExpiredAfterCompletationRule(OrderStatus orderStatus)
+    public OrderCannotBeExpiredAfterGetCompletedRule(OrderStatus orderStatus)
     {
         _orderStatus = orderStatus;
     }
@@ -17,5 +17,5 @@ internal sealed class OrderCannotBeExpiredAfterCompletationRule : IBusinessRule
 
     public bool IsBroken() => _orderStatus == OrderStatus.Completed;
 
-    public static string Message => "Order cannot be expired after completation";
+    public static string Message => "Order cannot be expired after get completed";
 }

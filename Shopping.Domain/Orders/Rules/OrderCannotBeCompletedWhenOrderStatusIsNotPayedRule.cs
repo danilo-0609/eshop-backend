@@ -17,5 +17,5 @@ internal sealed class OrderCannotBeCompletedWhenOrderStatusIsNotPayedRule : IBus
 
     public bool IsBroken() => _orderStatus != OrderStatus.Payed;
 
-    public static string Message = "Order canot be completed when order status is not payed";
+    public static string Message = "Order cannot be completed when order status is not payed";
 }

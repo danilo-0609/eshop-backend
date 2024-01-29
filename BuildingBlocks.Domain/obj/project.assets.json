@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net7.0": {
-      "ErrorOr/1.3.0": {
+      "ErrorOr/1.9.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/ErrorOr.dll": {
@@ -64,14 +64,14 @@
     }
   },
   "libraries": {
-    "ErrorOr/1.3.0": {
-      "sha512": "Pr7fPsggiTauAXbxp8D2z/5wZvhgB1zgQ5ScsUeHrRCMT5Rzw3W6k6l1KzJPf8c0ExSSMJBLaaYiCF0hDs3EIw==",
+    "ErrorOr/1.9.0": {
+      "sha512": "M0MVobszE2WOUpZSN3v5Sy0fJ4WtT/bM0sNm/l17zbKETkp7nk8NW9enQsIUdsUXaRvrGeq0cYyel8u3xW+zJQ==",
       "type": "package",
-      "path": "erroror/1.3.0",
+      "path": "erroror/1.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "erroror.1.3.0.nupkg.sha512",
+        "erroror.1.9.0.nupkg.sha512",
         "erroror.nuspec",
         "icon-square.png",
         "lib/net6.0/ErrorOr.dll",
@@ -145,7 +145,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "ErrorOr >= 1.3.0",
+      "ErrorOr >= 1.9.0",
       "MediatR >= 12.2.0"
     ]
   },
@@ -190,7 +190,7 @@
         "dependencies": {
           "ErrorOr": {
             "target": "Package",
-            "version": "[1.3.0, )"
+            "version": "[1.9.0, )"
           },
           "MediatR": {
             "target": "Package",

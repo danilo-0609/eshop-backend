@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Queries;
+using UserAccess.Application.Common;
 using ErrorOr;
 using UserAccess.Application.Abstractions;
 using UserAccess.Domain.Common;
@@ -6,6 +6,7 @@ using UserAccess.Domain.Users;
 using UserAccess.Domain.Users.Errors;
 
 namespace UserAccess.Application.Users.Login;
+
 internal sealed class LoginUserQueryHandler : IQueryRequestHandler<LoginUserQuery, ErrorOr<string>>
 {   
     private readonly IUserRepository _userRepository;
