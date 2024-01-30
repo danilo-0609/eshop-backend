@@ -23,7 +23,7 @@ public sealed class ProductPublishedIntegrationEventConsumer : IConsumer<Product
 
         if (!user!.Roles.Any(r => r.RoleCode == "Seller"))
         {
-            user!.AddRole(Role.Seller);
+            await _userRepository.AddRole(user.Id.Value, Role.Seller);
         }
     }
 }

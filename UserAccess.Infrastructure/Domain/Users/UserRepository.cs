@@ -127,6 +127,14 @@ internal sealed class UserRepository : IUserRepository
         }
     }
 
+    public async Task AddRole(Guid userId, Role role)
+    {
+        await _dbContext.Database.ExecuteSqlRawAsync(
+            $"INSERT INTO[Eshop.Db].[users].[UsersRoles] (UserId, RoleId)" +
+            "VALUES({0}, {1})",
+            userId, role.RoleId);
+    }
+
     private async Task InsertDomainEvent(User user)
     {
         var domainEvents = user.GetDomainEvents();
