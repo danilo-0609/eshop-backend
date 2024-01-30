@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Application;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using UserAccess.Domain;
 
 namespace API.Configuration;
 
@@ -13,12 +14,13 @@ public class ExecutionContextAccessor : IExecutionContextAccessor
         _contextAccessor = contextAccessor;
     }
 
-    public Guid UserId {
+    public Guid UserId
+    {
         get
         {
-            if (_contextAccessor.HttpContext != null &&
-                _contextAccessor.HttpContext.User != null &&
-                _contextAccessor.HttpContext.User.Claims != null)
+            if (_contextAccessor.HttpContext is not null &&
+                _contextAccessor.HttpContext.User is not null &&
+                _contextAccessor.HttpContext.User.Claims is not null)
             {
                 string? subClaim = _contextAccessor.HttpContext.User.Claims
                     .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -38,6 +40,27 @@ public class ExecutionContextAccessor : IExecutionContextAccessor
 
             throw new ApplicationException("User context is not available");
         }
-    } 
+    }
+
+        public bool IsAdmin
+    {
+        get
+        {
+            if (_contextAccessor.HttpContext is not null &&
+                _contextAccessor.HttpContext.User is not null &&
+                _contextAccessor.HttpContext.User.Claims is not null)
+            {
+                bool isAdmin = _contextAccessor
+                    .HttpContext
+                    .User
+                    .Claims
+                    .Any(r => r.Value == Role.Administrator.RoleCode);
+
+                return isAdmin;
+            }
+
+            throw new ApplicationException("User context is not available");
+        }
+    }
 }
 
