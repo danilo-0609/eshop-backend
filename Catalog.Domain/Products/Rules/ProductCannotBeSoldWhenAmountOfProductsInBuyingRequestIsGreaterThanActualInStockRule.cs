@@ -17,7 +17,7 @@ internal sealed class ProductCannotBeSoldWhenAmountOfProductsInBuyingRequestIsGr
     }
 
 
-    public Error Error => ProductErrors.AmountOfProductsRequestedGreaterThanAmountOfProductsInStock;
+    public Error Error => ProductErrorCodes.AmountOfProductsRequestedGreaterThanAmountOfProductsInStock;
 
     public bool IsBroken() => _amountOfProductsInBuyingRequest > _inStock;
 

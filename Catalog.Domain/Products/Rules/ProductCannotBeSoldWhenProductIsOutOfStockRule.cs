@@ -13,7 +13,7 @@ internal sealed class ProductCannotBeSoldWhenProductIsOutOfStockRule : IBusiness
         _inStock = inStock;
     }
 
-    public Error Error => ProductErrors.ProductOutOfStock;
+    public Error Error => ProductErrorCodes.ProductOutOfStock;
 
     public bool IsBroken() => _inStock == 0;
 
