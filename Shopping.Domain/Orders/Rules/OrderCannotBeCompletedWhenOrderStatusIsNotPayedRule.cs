@@ -13,7 +13,7 @@ internal sealed class OrderCannotBeCompletedWhenOrderStatusIsNotPayedRule : IBus
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.OrderStatusIsNotPayed;
+    public Error Error => OrderErrorCodes.OrderStatusIsNotPayed;
 
     public bool IsBroken() => _orderStatus != OrderStatus.Payed;
 

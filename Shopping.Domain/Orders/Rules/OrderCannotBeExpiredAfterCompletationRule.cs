@@ -13,7 +13,7 @@ internal sealed class OrderCannotBeExpiredAfterGetCompletedRule : IBusinessRule
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.OrderStatusIsCompleted;
+    public Error Error => OrderErrorCodes.OrderStatusIsCompleted;
 
     public bool IsBroken() => _orderStatus == OrderStatus.Completed;
 

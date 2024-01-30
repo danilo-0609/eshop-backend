@@ -13,7 +13,7 @@ internal sealed class OrderCannotBeExpiredWhenOrderStatusIsExpiredRule : IBusine
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.OrderStatusAlreadyExpired;
+    public Error Error => OrderErrorCodes.OrderStatusAlreadyExpired;
 
     public bool IsBroken() => _orderStatus == OrderStatus.Expired;
 

@@ -14,7 +14,7 @@ internal sealed class OrderCannotBePlacedWhenItemIsOutOfStockRule : IBusinessRul
         _stockStatus = stockStatus;
     }
 
-    public Error Error => OrderErrors.ItemIsOutOfStock;
+    public Error Error => OrderErrorCodes.ItemIsOutOfStock;
 
     public bool IsBroken() => _stockStatus == StockStatus.OutOfStock;
 

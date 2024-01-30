@@ -13,7 +13,7 @@ internal sealed class OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule : IBus
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.CannotBePayedWhenStatusIsNotConfirmed;
+    public Error Error => OrderErrorCodes.CannotBePayedWhenStatusIsNotConfirmed;
 
     public bool IsBroken() => _orderStatus != OrderStatus.Confirmed;
 

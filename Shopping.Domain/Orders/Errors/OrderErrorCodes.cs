@@ -3,7 +3,7 @@ using Shopping.Domain.Orders.Rules;
 
 namespace Shopping.Domain.Orders.Errors;
 
-public static class OrderErrors
+public static class OrderErrorCodes
 {
     public static Error OrderStatusIsNotPayed =>
         Error.Validation("Order.StatusIsNotPayed", OrderCannotBeCompletedWhenOrderStatusIsNotPayedRule.Message);
@@ -31,4 +31,10 @@ public static class OrderErrors
 
     public static Error CannotBeConfirmWhenOrderStatusIsNotPlaced => 
         Error.Validation("Order.StatusIsNotPlaced", OrderCannotBeConfirmedWhenOrderStatusIsNotPlacedRule.Message);
+
+    public static Error NotFound =>
+        Error.NotFound("Order.NotFound", "Order was not found");
+
+    public static Error UserNotAuthorizedToAccess =>
+        Error.Unauthorized("Order.Unauthorized", "The user is not authorized to access in this content");
 }

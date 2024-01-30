@@ -13,7 +13,7 @@ internal class OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule : IBusinessR
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.OrderStatusAlreadyConfirmed;
+    public Error Error => OrderErrorCodes.OrderStatusAlreadyConfirmed;
 
     public bool IsBroken() => _orderStatus == OrderStatus.Confirmed;
 

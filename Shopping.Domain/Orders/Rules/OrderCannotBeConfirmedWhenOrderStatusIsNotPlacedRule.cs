@@ -12,7 +12,7 @@ internal sealed class OrderCannotBeConfirmedWhenOrderStatusIsNotPlacedRule : IBu
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.CannotBeConfirmWhenOrderStatusIsNotPlaced;
+    public Error Error => OrderErrorCodes.CannotBeConfirmWhenOrderStatusIsNotPlaced;
 
     public bool IsBroken() => _orderStatus != OrderStatus.Placed; 
 

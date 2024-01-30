@@ -13,7 +13,7 @@ internal sealed class OrderCannotBePayedWhenOrderStatusIsExpiredRule : IBusiness
         _orderStatus = orderStatus;
     }
 
-    public Error Error => OrderErrors.CannotPayedWhenStatusIsExpired;
+    public Error Error => OrderErrorCodes.CannotPayedWhenStatusIsExpired;
 
     public bool IsBroken() => _orderStatus == OrderStatus.Expired;
 

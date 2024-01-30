@@ -15,7 +15,7 @@ internal sealed class OrderItemAmountCannotBeGreaterThanItemActualAmountRule : I
         _actualStock = actualStock;
     }
 
-    public Error Error => OrderErrors.AmountRequestedGreaterThanActualStock;
+    public Error Error => OrderErrorCodes.AmountRequestedGreaterThanActualStock;
 
     public bool IsBroken() => _amountRequested > _actualStock;
 
