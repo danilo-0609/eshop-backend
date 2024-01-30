@@ -3,16 +3,15 @@ using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
 using UserAccess.Domain.Users.Errors;
-using Microsoft.AspNetCore.Authorization;
 
 namespace UserAccess.Application.Users.ChangeName;
 
 internal sealed class ChangeNameCommandHandler : ICommandRequestHandler<ChangeNameCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangeNameCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
+    public ChangeNameCommandHandler(IUserRepository userRepository, IAuthorizationService authorizationService)
     {
         _userRepository = userRepository;
         _authorizationService = authorizationService;

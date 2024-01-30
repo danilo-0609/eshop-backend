@@ -10,9 +10,9 @@ namespace UserAccess.Application.Users.ChangePassword;
 internal sealed class ChangePasswordCommandHandler : ICommandRequestHandler<ChangePasswordCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangePasswordCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
+    public ChangePasswordCommandHandler(IUserRepository userRepository, IAuthorizationService authorizationService)
     {
         _userRepository = userRepository;
         _authorizationService = authorizationService;

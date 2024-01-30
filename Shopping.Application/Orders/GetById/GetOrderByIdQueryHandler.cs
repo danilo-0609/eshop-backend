@@ -8,9 +8,9 @@ namespace Shopping.Application.Orders.GetById;
 internal sealed class GetOrderByIdQueryHandler : ICommandRequestHandler<GetOrderByIdQuery, ErrorOr<OrderResponse>>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetOrderByIdQueryHandler(IOrderRepository orderRepository, AuthorizationService authorizationService)
+    public GetOrderByIdQueryHandler(IOrderRepository orderRepository, IAuthorizationService authorizationService)
     {
         _orderRepository = orderRepository;
         _authorizationService = authorizationService;

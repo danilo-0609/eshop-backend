@@ -8,9 +8,9 @@ namespace Catalog.Application.Comments.DeleteComment;
 internal sealed class DeleteCommentCommandHandler : ICommandRequestHandler<DeleteCommentCommand, ErrorOr<Unit>>
 {
     private readonly ICommentRepository _commentRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public DeleteCommentCommandHandler(ICommentRepository commentRepository, AuthorizationService authorizationService)
+    public DeleteCommentCommandHandler(ICommentRepository commentRepository, IAuthorizationService authorizationService)
     {
         _commentRepository = commentRepository;
         _authorizationService = authorizationService;

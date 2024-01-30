@@ -8,9 +8,9 @@ namespace Shopping.Application.Wishes.Delete;
 internal sealed class DeleteWishListCommandHandler : ICommandRequestHandler<DeleteWishListCommand, ErrorOr<Unit>>
 {
     private readonly IWishRepository _wishRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public DeleteWishListCommandHandler(IWishRepository wishRepository, AuthorizationService authorizationService)
+    public DeleteWishListCommandHandler(IWishRepository wishRepository, IAuthorizationService authorizationService)
     {
         _wishRepository = wishRepository;
         _authorizationService = authorizationService;

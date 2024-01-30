@@ -1,5 +1,5 @@
-﻿using BuildingBlocks.Application.Queries;
-using ErrorOr;
+﻿using ErrorOr;
+using Shopping.Application.Common;
 using Shopping.Domain.Basket;
 
 namespace Shopping.Application.Baskets.GetBasketById;
@@ -7,9 +7,9 @@ namespace Shopping.Application.Baskets.GetBasketById;
 internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasketByIdQuery, ErrorOr<BasketResponse>>
 {
     private readonly IBasketRepository _basketRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetBasketByIdQueryHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
+    public GetBasketByIdQueryHandler(IBasketRepository basketRepository, IAuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
         _authorizationService = authorizationService;

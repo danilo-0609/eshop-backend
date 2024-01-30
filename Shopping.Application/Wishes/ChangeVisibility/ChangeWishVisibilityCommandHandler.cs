@@ -8,9 +8,9 @@ namespace Shopping.Application.Wishes.ChangeVisibility;
 internal sealed class ChangeWishVisibilityCommandHandler : ICommandRequestHandler<ChangeWishVisibilityCommand, ErrorOr<Unit>>
 {
     private readonly IWishRepository _wishRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangeWishVisibilityCommandHandler(IWishRepository wishRepository, AuthorizationService authorizationService)
+    public ChangeWishVisibilityCommandHandler(IWishRepository wishRepository, IAuthorizationService authorizationService)
     {
         _wishRepository = wishRepository;
         _authorizationService = authorizationService;

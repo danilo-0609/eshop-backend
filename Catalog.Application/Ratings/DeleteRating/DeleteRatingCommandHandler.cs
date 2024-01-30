@@ -9,9 +9,9 @@ namespace Catalog.Application.Ratings.DeleteRating;
 internal sealed class DeleteRatingCommandHandler : ICommandRequestHandler<DeleteRatingCommand, ErrorOr<Unit>>
 {
     private readonly IRatingRepository _ratingRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public DeleteRatingCommandHandler(IRatingRepository ratingRepository, AuthorizationService authorizationService)
+    public DeleteRatingCommandHandler(IRatingRepository ratingRepository, IAuthorizationService authorizationService)
     {
         _ratingRepository = ratingRepository;
         _authorizationService = authorizationService;

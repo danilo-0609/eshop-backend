@@ -1,10 +1,11 @@
 ﻿using BuildingBlocks.Application;
 using ErrorOr;
 using MediatR;
+using Shopping.Application.Common;
 
 namespace Shopping.Application;
 
-internal sealed class AuthorizationService
+internal sealed class AuthorizationService : IAuthorizationService
 {
     private readonly IExecutionContextAccessor _executionContextAccessor;
 
@@ -13,7 +14,7 @@ internal sealed class AuthorizationService
         _executionContextAccessor = executionContextAccessor;
     }
 
-    internal ErrorOr<Unit> IsUserAuthorized(Guid customerId)
+    public ErrorOr<Unit> IsUserAuthorized(Guid customerId)
     {
         if (_executionContextAccessor.UserId == customerId)
         {
@@ -23,7 +24,7 @@ internal sealed class AuthorizationService
         return Error.Unauthorized();
     }
 
-    internal bool IsAdmin()
+    public bool IsAdmin()
     {
         return _executionContextAccessor.IsAdmin;
     }

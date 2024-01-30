@@ -9,9 +9,9 @@ namespace Catalog.Application.Products.ModifyProduct.ModifyColor;
 internal sealed class ModifyColorCommandHandler : ICommandRequestHandler<ModifyColorCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ModifyColorCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
+    public ModifyColorCommandHandler(IProductRepository productRepository, IAuthorizationService authorizationService)
     {
         _productRepository = productRepository;
         _authorizationService = authorizationService;

@@ -32,6 +32,11 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
 
+        //Authorization service
+        services.AddScoped(
+            typeof(IAuthorizationService),
+            typeof(AuthorizationService));
+
         return services;
     }
 }

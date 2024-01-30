@@ -9,9 +9,9 @@ namespace UserAccess.Application.Users.ChangeLogin;
 internal sealed class ChangeLoginCommandHandler : ICommandRequestHandler<ChangeLoginCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangeLoginCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
+    public ChangeLoginCommandHandler(IUserRepository userRepository, IAuthorizationService authorizationService)
     {
         _userRepository = userRepository;
         _authorizationService = authorizationService;

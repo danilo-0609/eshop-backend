@@ -9,9 +9,9 @@ namespace Shopping.Application.Baskets.DeleteItem;
 internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandler<DeleteItemFromBasketCommand, ErrorOr<Unit>>
 {
     private readonly IBasketRepository _basketRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
+    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository, IAuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
         _authorizationService = authorizationService;

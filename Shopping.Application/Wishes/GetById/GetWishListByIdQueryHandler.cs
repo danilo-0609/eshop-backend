@@ -7,9 +7,9 @@ namespace Shopping.Application.Wishes.GetById;
 internal sealed class GetWishListByIdQueryHandler : IQueryRequestHandler<GetWishListByIdQuery, ErrorOr<WishResponse>>
 {
     private readonly IWishRepository _wishRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetWishListByIdQueryHandler(IWishRepository wishRepository, AuthorizationService authorizationService)
+    public GetWishListByIdQueryHandler(IWishRepository wishRepository, IAuthorizationService authorizationService)
     {
         _wishRepository = wishRepository;
         _authorizationService = authorizationService;

@@ -9,9 +9,9 @@ namespace Catalog.Application.Products.RemoveProduct;
 internal sealed class RemoveProductCommandHandler : ICommandRequestHandler<RemoveProductCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public RemoveProductCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
+    public RemoveProductCommandHandler(IProductRepository productRepository, IAuthorizationService authorizationService)
     {
         _productRepository = productRepository;
         _authorizationService = authorizationService;

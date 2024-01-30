@@ -8,9 +8,9 @@ namespace Shopping.Application.Orders.Confirm;
 internal sealed class ConfirmOrderCommandHandler : ICommandRequestHandler<ConfirmOrderCommand, ErrorOr<Guid>>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ConfirmOrderCommandHandler(IOrderRepository orderRepository, AuthorizationService orderAuthorizationService)
+    public ConfirmOrderCommandHandler(IOrderRepository orderRepository, IAuthorizationService orderAuthorizationService)
     {
         _orderRepository = orderRepository;
         _authorizationService = orderAuthorizationService;

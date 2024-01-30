@@ -9,9 +9,9 @@ namespace Catalog.Application.Products.ModifyProduct.ModifyName;
 internal sealed class ModifyNameCommandHandler : ICommandRequestHandler<ModifyNameCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ModifyNameCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
+    public ModifyNameCommandHandler(IProductRepository productRepository, IAuthorizationService authorizationService)
     {
         _productRepository = productRepository;
         _authorizationService = authorizationService;

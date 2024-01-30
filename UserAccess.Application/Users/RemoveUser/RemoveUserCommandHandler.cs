@@ -9,9 +9,9 @@ namespace UserAccess.Application.Users.RemoveUser;
 internal sealed class RemoveUserCommandHandler : ICommandRequestHandler<RemoveUserCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public RemoveUserCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
+    public RemoveUserCommandHandler(IUserRepository userRepository, IAuthorizationService authorizationService)
     {
         _userRepository = userRepository;
         _authorizationService = authorizationService;

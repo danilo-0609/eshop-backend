@@ -7,9 +7,9 @@ namespace Catalog.Application.Sales.GetAllSalesByProductId;
 internal sealed class GetAllSalesByProductIdQueryHandler : IQueryRequestHandler<GetAllSalesByProductIdQuery, ErrorOr<IReadOnlyList<SaleResponse>>>
 {
     private readonly ISaleRepository _saleRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetAllSalesByProductIdQueryHandler(ISaleRepository saleRepository, AuthorizationService authorizationService)
+    public GetAllSalesByProductIdQueryHandler(ISaleRepository saleRepository, IAuthorizationService authorizationService)
     {
         _saleRepository = saleRepository;
         _authorizationService = authorizationService;

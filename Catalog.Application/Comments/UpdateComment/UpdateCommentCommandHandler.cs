@@ -8,9 +8,9 @@ namespace Catalog.Application.Comments.UpdateComment;
 internal sealed class UpdateCommentCommandHandler : ICommandRequestHandler<UpdateCommentCommand, ErrorOr<Unit>>
 {
     private readonly ICommentRepository _commentRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public UpdateCommentCommandHandler(ICommentRepository commentRepository, AuthorizationService authorizationService)
+    public UpdateCommentCommandHandler(ICommentRepository commentRepository, IAuthorizationService authorizationService)
     {
         _commentRepository = commentRepository;
         _authorizationService = authorizationService;

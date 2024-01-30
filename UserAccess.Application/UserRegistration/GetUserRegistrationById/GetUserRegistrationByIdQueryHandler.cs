@@ -9,9 +9,9 @@ namespace UserAccess.Application.UserRegistration.GetUserRegistrationById;
 internal sealed class GetUserRegistrationByIdQueryHandler : IQueryRequestHandler<GetUserRegistrationByIdQuery, ErrorOr<UserRegistrationResponse>>
 {
     private readonly IUserRegistrationRepository _userRegistrationRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetUserRegistrationByIdQueryHandler(IUserRegistrationRepository userRegistrationRepository, AuthorizationService authorizationService)
+    public GetUserRegistrationByIdQueryHandler(IUserRegistrationRepository userRegistrationRepository, IAuthorizationService authorizationService)
     {
         _userRegistrationRepository = userRegistrationRepository;
         _authorizationService = authorizationService;

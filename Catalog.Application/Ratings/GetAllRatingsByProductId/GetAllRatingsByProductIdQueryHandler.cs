@@ -1,6 +1,5 @@
 using System.Data;
 using Catalog.Application.Common;
-using Catalog.Application.Common;
 using Catalog.Application.Ratings.Catalog.Application.Ratings.GetAllRatingsByProductId;
 using Dapper;
 using ErrorOr;

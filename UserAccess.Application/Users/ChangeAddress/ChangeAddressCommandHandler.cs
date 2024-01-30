@@ -9,9 +9,9 @@ namespace UserAccess.Application.Users.ChangeAddress;
 internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangeAddressCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
+    public ChangeAddressCommandHandler(IUserRepository userRepository, IAuthorizationService authorizationService)
     {
         _userRepository = userRepository;
         _authorizationService = authorizationService;

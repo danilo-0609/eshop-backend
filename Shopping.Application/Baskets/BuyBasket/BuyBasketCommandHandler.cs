@@ -7,9 +7,9 @@ namespace Shopping.Application.Baskets.BuyBasket;
 internal sealed class BuyBasketCommandHandler : ICommandRequestHandler<BuyBasketCommand, ErrorOr<Guid>>
 {
     private readonly IBasketRepository _basketRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public BuyBasketCommandHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
+    public BuyBasketCommandHandler(IBasketRepository basketRepository, IAuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
         _authorizationService = authorizationService;

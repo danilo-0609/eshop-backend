@@ -9,9 +9,9 @@ internal sealed class AddItemToWishListCommandHandler : ICommandRequestHandler<A
 {
     private readonly IWishRepository _wishRepository;
     private readonly IItemRepository _itemRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public AddItemToWishListCommandHandler(IWishRepository wishRepository, IItemRepository itemRepository, AuthorizationService authorizationValidator)
+    public AddItemToWishListCommandHandler(IWishRepository wishRepository, IItemRepository itemRepository, IAuthorizationService authorizationValidator)
     {
         _wishRepository = wishRepository;
         _itemRepository = itemRepository;

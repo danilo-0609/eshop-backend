@@ -10,9 +10,9 @@ namespace Catalog.Application.Sales.GetSalesByUserId;
 internal sealed class GetSalesByUserIdQueryHandler : IQueryRequestHandler<GetSalesByUserIdQuery, ErrorOr<IReadOnlyList<SaleResponse>>>
 {
     private readonly IDbConnectionFactory _dbConnectionFactory;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetSalesByUserIdQueryHandler(IDbConnectionFactory dbConnectionFactory, AuthorizationService authorizationService)
+    public GetSalesByUserIdQueryHandler(IDbConnectionFactory dbConnectionFactory, IAuthorizationService authorizationService)
     {
         _dbConnectionFactory = dbConnectionFactory;
         _authorizationService = authorizationService;

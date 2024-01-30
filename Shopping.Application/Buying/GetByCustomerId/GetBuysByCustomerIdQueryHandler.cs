@@ -7,9 +7,9 @@ namespace Shopping.Application.Buying.GetByCustomerId;
 internal sealed class GetBuysByCustomerIdQueryHandler : IQueryRequestHandler<GetBuysByCustomerIdQuery, ErrorOr<IReadOnlyList<BuyResponse>>>
 {
     private readonly IBuyRepository _buyRepository;
-    private readonly BuyAuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public GetBuysByCustomerIdQueryHandler(IBuyRepository buyRepository, BuyAuthorizationService authorizationService)
+    public GetBuysByCustomerIdQueryHandler(IBuyRepository buyRepository, IAuthorizationService authorizationService)
     {
         _buyRepository = buyRepository;
         _authorizationService = authorizationService;

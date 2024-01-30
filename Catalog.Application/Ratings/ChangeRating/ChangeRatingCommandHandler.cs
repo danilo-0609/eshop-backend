@@ -8,9 +8,9 @@ namespace Catalog.Application.Ratings.ChangeRating;
 internal sealed class ChangeRatingCommandHandler : ICommandRequestHandler<ChangeRatingCommand, ErrorOr<Unit>>
 {
     private readonly IRatingRepository _ratingRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ChangeRatingCommandHandler(IRatingRepository ratingRepository, AuthorizationService authorizationService)
+    public ChangeRatingCommandHandler(IRatingRepository ratingRepository, IAuthorizationService authorizationService)
     {
         _ratingRepository = ratingRepository;
         _authorizationService = authorizationService;

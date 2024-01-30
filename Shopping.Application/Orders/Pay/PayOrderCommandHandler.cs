@@ -10,9 +10,9 @@ internal sealed class PayOrderCommandHandler : ICommandRequestHandler<PayOrderCo
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IItemRepository _itemRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public PayOrderCommandHandler(IOrderRepository orderRepository, IItemRepository itemRepository, AuthorizationService authorizationService)
+    public PayOrderCommandHandler(IOrderRepository orderRepository, IItemRepository itemRepository, IAuthorizationService authorizationService)
     {
         _orderRepository = orderRepository;
         _itemRepository = itemRepository;

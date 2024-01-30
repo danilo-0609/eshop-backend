@@ -28,6 +28,10 @@ public static class DependencyInjection
             typeof(IPipelineBehavior<,>),
             typeof(UnitOfWorkBehavior<,>));
 
+        services.AddScoped(
+            typeof(IAuthorizationService),
+            typeof(AuthorizationService));
+
         return services;
     }
 }

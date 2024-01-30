@@ -9,9 +9,9 @@ namespace Shopping.Application.Orders.Expire;
 internal sealed class ExpireOrderCommandHandler : ICommandRequestHandler<ExpireOrderCommand, ErrorOr<Unit>>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public ExpireOrderCommandHandler(IOrderRepository orderRepository, AuthorizationService authorizationService)
+    public ExpireOrderCommandHandler(IOrderRepository orderRepository, IAuthorizationService authorizationService)
     {
         _orderRepository = orderRepository;
         _authorizationService = authorizationService;

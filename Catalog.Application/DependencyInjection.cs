@@ -27,6 +27,10 @@ public static class DependencyInjection
             typeof(UnitOfWorkBehavior<,>));
 
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
+
+        services.AddScoped(
+            typeof(IAuthorizationService),
+            typeof(AuthorizationService));
         
         return services;
     }

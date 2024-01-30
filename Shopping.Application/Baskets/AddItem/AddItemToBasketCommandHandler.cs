@@ -9,9 +9,9 @@ internal sealed class AddItemToBasketCommandHandler : ICommandRequestHandler<Add
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IItemRepository _itemRepository;
-    private readonly AuthorizationService _authorizationService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public AddItemToBasketCommandHandler(IItemRepository itemRepository, IBasketRepository basketRepository, AuthorizationService authorizationService)
+    public AddItemToBasketCommandHandler(IItemRepository itemRepository, IBasketRepository basketRepository, IAuthorizationService authorizationService)
     {
         _itemRepository = itemRepository;
         _basketRepository = basketRepository;
