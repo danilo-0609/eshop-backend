@@ -31,4 +31,7 @@ public static class UserErrorsCodes
 
     public static Error CannotChangePassword =>
         Error.Unauthorized("User.CannotChangePassword", "Cannot change if you're not the same user");
+
+    public static Error CannotRemove =>
+        Error.Unauthorized("User.CannotRemove", "Cannot remove if you're not the same user or admin");
 }
