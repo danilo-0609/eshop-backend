@@ -1,16 +1,20 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyTag;
+
 internal sealed class ModifyTagCommandHandler : ICommandRequestHandler<ModifyTagCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ModifyTagCommandHandler(IProductRepository productRepository)
+    public ModifyTagCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
     {
         _productRepository = productRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ModifyTagCommand request, CancellationToken cancellationToken)
@@ -19,9 +23,16 @@ internal sealed class ModifyTagCommandHandler : ICommandRequestHandler<ModifyTag
     
         if (product is null)
         {
-            return Error.NotFound("Product.NotFound", "Product was not found");
+            return ProductErrorCodes.NotFound;
         }
-    
+
+        var authorizationService = _authorizationService.IsUserAuthorized(product.SellerId);
+
+        if (authorizationService.IsError)
+        {
+            return ProductErrorCodes.CannotAccessToContent;
+        }
+
         List<Tag> tags = request.Tags.ConvertAll(tag => Tag.Create(tag));
 
         Product update = Product.Update(

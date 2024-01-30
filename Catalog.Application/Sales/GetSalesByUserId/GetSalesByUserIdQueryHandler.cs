@@ -1,20 +1,21 @@
 using System.Data;
 using Catalog.Application.Common;
-using Catalog.Application.Common;
 using Catalog.Application.Sales.GetAllSalesByUserId;
+using Catalog.Domain.Sales;
 using Dapper;
 using ErrorOr;
 
 namespace Catalog.Application.Sales.GetSalesByUserId;
 
-internal sealed class GetSalesByUserIdQueryHandler 
-    : IQueryRequestHandler<GetSalesByUserIdQuery, ErrorOr<IReadOnlyList<SaleResponse>>>
+internal sealed class GetSalesByUserIdQueryHandler : IQueryRequestHandler<GetSalesByUserIdQuery, ErrorOr<IReadOnlyList<SaleResponse>>>
 {
     private readonly IDbConnectionFactory _dbConnectionFactory;
+    private readonly AuthorizationService _authorizationService;
 
-    public GetSalesByUserIdQueryHandler(IDbConnectionFactory dbConnectionFactory)
+    public GetSalesByUserIdQueryHandler(IDbConnectionFactory dbConnectionFactory, AuthorizationService authorizationService)
     {
         _dbConnectionFactory = dbConnectionFactory;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<IReadOnlyList<SaleResponse>>> Handle(GetSalesByUserIdQuery query, CancellationToken cancellationToken)
@@ -40,7 +41,14 @@ internal sealed class GetSalesByUserIdQueryHandler
 
         if (response.Count == 0)
         {
-            return Error.NotFound("Sales.NotFound", "Sales with the user id provided were not found");
+            return SalesErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(response.First().UserId);
+        
+        if (authorizationService.IsError && _authorizationService.IsAdmin() is false)
+        {
+            return SalesErrorCodes.CannotAccessToContent;
         }
 
         return response.AsReadOnly();

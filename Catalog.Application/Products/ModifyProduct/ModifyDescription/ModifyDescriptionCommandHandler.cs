@@ -1,18 +1,20 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifyDescription;
 
-internal sealed class ModifyDescriptionCommandHandler 
-    : ICommandRequestHandler<ModifyDescriptionCommand, ErrorOr<Unit>>
+internal sealed class ModifyDescriptionCommandHandler : ICommandRequestHandler<ModifyDescriptionCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ModifyDescriptionCommandHandler(IProductRepository productRepository)
+    public ModifyDescriptionCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
     {
         _productRepository = productRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ModifyDescriptionCommand request, CancellationToken cancellationToken)
@@ -21,8 +23,15 @@ internal sealed class ModifyDescriptionCommandHandler
 
         if (product is null)
         {
-            return Error.NotFound("Product.NotFound", "Product with the id provided was not found");
-        } 
+            return ProductErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(product.SellerId);
+
+        if (authorizationService.IsError)
+        {
+            return ProductErrorCodes.CannotAccessToContent;
+        }
 
         var update = Product.Update(product.Id, 
             product.SellerId, 

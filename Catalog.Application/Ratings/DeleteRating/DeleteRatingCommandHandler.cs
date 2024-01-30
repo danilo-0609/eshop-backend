@@ -9,13 +9,12 @@ namespace Catalog.Application.Ratings.DeleteRating;
 internal sealed class DeleteRatingCommandHandler : ICommandRequestHandler<DeleteRatingCommand, ErrorOr<Unit>>
 {
     private readonly IRatingRepository _ratingRepository;
-    private readonly IExecutionContextAccessor _executionContextAccessor;
+    private readonly AuthorizationService _authorizationService;
 
-    public DeleteRatingCommandHandler(IRatingRepository ratingRepository, IExecutionContextAccessor executionContextAccessor)
+    public DeleteRatingCommandHandler(IRatingRepository ratingRepository, AuthorizationService authorizationService)
     {
         _ratingRepository = ratingRepository;
-        _executionContextAccessor = executionContextAccessor;
-
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteRatingCommand command, CancellationToken cancellationToken)
@@ -24,14 +23,16 @@ internal sealed class DeleteRatingCommandHandler : ICommandRequestHandler<Delete
 
         if (rating is null)
         {
-            return Error.NotFound("Rating.NotFound", "Rating was not found");
+            return RatingErrorCodes.NotFound;
         }
 
-        if (_executionContextAccessor.UserId != rating.UserId)
+        var authorizationService = _authorizationService.IsUserAuthorized(rating.UserId);
+
+        if (authorizationService.IsError)
         {
-            return Error.Unauthorized("User.NotAuthorized", "Cannot delete if you are not authorized");
+            return RatingErrorCodes.CannotAccessToContent;
         }
-
+        
         await _ratingRepository.DeleteAsync(rating);
 
         return Unit.Value;

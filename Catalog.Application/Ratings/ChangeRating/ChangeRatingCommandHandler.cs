@@ -1,20 +1,19 @@
-using BuildingBlocks.Application;
 using Catalog.Application.Common;
 using Catalog.Domain.Ratings;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Ratings.ChangeRating;
+
 internal sealed class ChangeRatingCommandHandler : ICommandRequestHandler<ChangeRatingCommand, ErrorOr<Unit>>
 {
     private readonly IRatingRepository _ratingRepository;
-    private readonly IExecutionContextAccessor _executionContextAccessor;
+    private readonly AuthorizationService _authorizationService;
 
-    public ChangeRatingCommandHandler(IRatingRepository ratingRepository, IExecutionContextAccessor executionContextAccessor)
+    public ChangeRatingCommandHandler(IRatingRepository ratingRepository, AuthorizationService authorizationService)
     {
         _ratingRepository = ratingRepository;
-        _executionContextAccessor = executionContextAccessor;
-
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeRatingCommand command, CancellationToken cancellationToken)
@@ -23,12 +22,14 @@ internal sealed class ChangeRatingCommandHandler : ICommandRequestHandler<Change
 
         if (rating is null)
         {
-            return Error.NotFound("Rating.NotFound", "Rating was not found");
+            return RatingErrorCodes.NotFound;
         }
 
-        if (_executionContextAccessor.UserId != rating.UserId)
+        var authorizationService = _authorizationService.IsUserAuthorized(rating.UserId);
+
+        if (authorizationService.IsError)
         {
-            return Error.Unauthorized("User.NotAuthorized", "Cannot update if you are not authorized");
+            return RatingErrorCodes.CannotAccessToContent;
         }
 
         var update = Rating.Update(rating.Id,

@@ -1,5 +1,6 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 
 namespace Catalog.Application.Products.GetProductsByName;
@@ -20,7 +21,7 @@ internal sealed class GetProductsByNameQueryHandler :
     
         if (products is null)
         {
-            return Error.NotFound("Products.NotFound", $"Products with the name {query.Name} were not found");
+            return ProductErrorCodes.NotFound;
         }
 
         List<ProductResponse> response = products.ConvertAll(

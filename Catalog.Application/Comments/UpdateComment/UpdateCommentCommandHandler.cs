@@ -8,10 +8,12 @@ namespace Catalog.Application.Comments.UpdateComment;
 internal sealed class UpdateCommentCommandHandler : ICommandRequestHandler<UpdateCommentCommand, ErrorOr<Unit>>
 {
     private readonly ICommentRepository _commentRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public UpdateCommentCommandHandler(ICommentRepository commentRepository)
+    public UpdateCommentCommandHandler(ICommentRepository commentRepository, AuthorizationService authorizationService)
     {
         _commentRepository = commentRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(UpdateCommentCommand command, CancellationToken cancellationToken)
@@ -20,7 +22,14 @@ internal sealed class UpdateCommentCommandHandler : ICommandRequestHandler<Updat
     
         if (comment is null)
         {
-            return Error.NotFound("Comment.NotFound", "Comment was not found");
+            return CommentErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(comment.UserId);
+
+        if (authorizationService.IsError)
+        {
+            return CommentErrorCodes.UserNoAuthorizedToAccess;
         }
 
         Comment update = Comment.Update(comment.Id,

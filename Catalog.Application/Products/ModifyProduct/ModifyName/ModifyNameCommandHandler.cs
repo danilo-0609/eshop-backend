@@ -1,5 +1,6 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 using MediatR;
 
@@ -8,10 +9,12 @@ namespace Catalog.Application.Products.ModifyProduct.ModifyName;
 internal sealed class ModifyNameCommandHandler : ICommandRequestHandler<ModifyNameCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ModifyNameCommandHandler(IProductRepository productRepository)
+    public ModifyNameCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
     {
         _productRepository = productRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ModifyNameCommand request, CancellationToken cancellationToken)
@@ -20,7 +23,14 @@ internal sealed class ModifyNameCommandHandler : ICommandRequestHandler<ModifyNa
     
         if (product is null)
         {
-            return Error.NotFound("Product.NotFound", "Product was not found");
+            return ProductErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(product.SellerId);
+
+        if (authorizationService.IsError)
+        {
+            return ProductErrorCodes.CannotAccessToContent;
         }
 
         var update = Product.Update(

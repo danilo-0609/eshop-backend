@@ -4,13 +4,16 @@ using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Comments.DeleteComment;
+
 internal sealed class DeleteCommentCommandHandler : ICommandRequestHandler<DeleteCommentCommand, ErrorOr<Unit>>
 {
     private readonly ICommentRepository _commentRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public DeleteCommentCommandHandler(ICommentRepository commentRepository)
+    public DeleteCommentCommandHandler(ICommentRepository commentRepository, AuthorizationService authorizationService)
     {
         _commentRepository = commentRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteCommentCommand command, CancellationToken cancellationToken)
@@ -19,7 +22,14 @@ internal sealed class DeleteCommentCommandHandler : ICommandRequestHandler<Delet
 
         if (comment is null)
         {
-            return Error.NotFound("Comment.NotFound", "Comment was not found");
+            return CommentErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(comment.UserId);
+
+        if (authorizationService.IsError && _authorizationService.IsAdmin() is false)
+        {
+            return CommentErrorCodes.UserNoAuthorizedToAccess;
         }
 
         await _commentRepository.DeleteAsync(comment.Id);

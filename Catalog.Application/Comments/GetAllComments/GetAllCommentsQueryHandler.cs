@@ -13,14 +13,13 @@ internal sealed class GetAllCommentsQueryHandler : IQueryRequestHandler<GetAllCo
         _commentRepository = commentRepository;
     }
 
-
     public async Task<ErrorOr<IReadOnlyList<CommentResponse>>> Handle(GetAllCommentsQuery query, CancellationToken cancellationToken)
     {
         List<Comment>? comments = await _commentRepository.GetAllCommentsByProductIdAsync(ProductId.Create(query.ProductId));
 
         if (comments is null)
         {
-            return Error.NotFound("Product.NotFound", "The comments in the product id were not found because the product was not found");
+            return CommentErrorCodes.NotFound;
         }
 
         List<CommentResponse> response = new();

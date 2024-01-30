@@ -1,18 +1,21 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 using MediatR;
 
 namespace Catalog.Application.Products.RemoveProduct;
+
 internal sealed class RemoveProductCommandHandler : ICommandRequestHandler<RemoveProductCommand, ErrorOr<Unit>>
 {
     private readonly IProductRepository _productRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public RemoveProductCommandHandler(IProductRepository productRepository)
+    public RemoveProductCommandHandler(IProductRepository productRepository, AuthorizationService authorizationService)
     {
         _productRepository = productRepository;
+        _authorizationService = authorizationService;
     }
-
 
     public async Task<ErrorOr<Unit>> Handle(RemoveProductCommand command, CancellationToken cancellationToken)
     {
@@ -20,7 +23,14 @@ internal sealed class RemoveProductCommandHandler : ICommandRequestHandler<Remov
 
         if (product is null)
         {
-            return Error.NotFound("Product.NotFound", "Product was not found");
+            return ProductErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(product.SellerId);
+
+        if (authorizationService.IsError && _authorizationService.IsAdmin() is false)
+        {
+            return ProductErrorCodes.CannotAccessToContent;
         }
 
         await _productRepository.RemoveAsync(product.Id);

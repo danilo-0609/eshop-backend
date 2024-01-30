@@ -1,5 +1,6 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.Errors;
 using ErrorOr;
 
 namespace Catalog.Application.Products.GetAllProductsBySeller;
@@ -20,7 +21,7 @@ internal sealed class GetAllProductsBySellerQueryHandler : IQueryRequestHandler<
     
         if (products is null)
         {
-            return Error.NotFound("Products.NotFound", "Products in the seller id were not found");
+            return ProductErrorCodes.NotFound;
         }
 
         List<ProductResponse> response = products.ConvertAll(
