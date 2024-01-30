@@ -6,9 +6,11 @@ namespace Shopping.Application.Baskets.BuyBasket;
 
 internal sealed class BuyBasketCommandValidator : AbstractValidator<BuyBasketCommand>
 {
-    public BuyBasketCommandValidator(IBasketRepository basketRepository, IExecutionContextAccessor executionContextAccessor)
+    public BuyBasketCommandValidator()
     {
         RuleFor(r => r.BasketId)
             .NotNull();
+
+    }
 }
 

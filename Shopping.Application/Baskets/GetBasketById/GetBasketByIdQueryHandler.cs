@@ -7,9 +7,9 @@ namespace Shopping.Application.Baskets.GetBasketById;
 internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasketByIdQuery, ErrorOr<BasketResponse>>
 {
     private readonly IBasketRepository _basketRepository;
-    private readonly BasketAuthorizationService _authorizationService;
+    private readonly AuthorizationService _authorizationService;
 
-    public GetBasketByIdQueryHandler(IBasketRepository basketRepository, BasketAuthorizationService authorizationService)
+    public GetBasketByIdQueryHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
         _authorizationService = authorizationService;
