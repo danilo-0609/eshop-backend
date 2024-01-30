@@ -1,16 +1,19 @@
 ﻿using Shopping.Application.Common;
 using ErrorOr;
 using Shopping.Domain.Orders;
+using Shopping.Domain.Orders.Errors;
 
 namespace Shopping.Application.Orders.Confirm;
 
 internal sealed class ConfirmOrderCommandHandler : ICommandRequestHandler<ConfirmOrderCommand, ErrorOr<Guid>>
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ConfirmOrderCommandHandler(IOrderRepository orderRepository)
+    public ConfirmOrderCommandHandler(IOrderRepository orderRepository, AuthorizationService orderAuthorizationService)
     {
         _orderRepository = orderRepository;
+        _authorizationService = orderAuthorizationService;
     }
 
     public async Task<ErrorOr<Guid>> Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
@@ -19,7 +22,14 @@ internal sealed class ConfirmOrderCommandHandler : ICommandRequestHandler<Confir
     
         if (order is null)
         {
-            return Error.NotFound("Order.NotFound", "Order was not found");
+            return OrderErrorCodes.NotFound;
+        }
+
+        var authorizeService = _authorizationService.IsUserAuthorized(order.CustomerId);
+        
+        if (authorizeService.IsError)
+        {
+            return OrderErrorCodes.UserNotAuthorizedToAccess;
         }
 
         var confirm = order.Confirm(DateTime.UtcNow);

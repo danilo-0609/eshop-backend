@@ -1,4 +1,4 @@
-﻿using Shopping.Application.Common;
+﻿using BuildingBlocks.Application.Queries;
 using ErrorOr;
 
 namespace Shopping.Application.Baskets.GetBasketById;

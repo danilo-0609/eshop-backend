@@ -7,10 +7,12 @@ namespace Shopping.Application.Baskets.BuyBasket;
 internal sealed class BuyBasketCommandHandler : ICommandRequestHandler<BuyBasketCommand, ErrorOr<Guid>>
 {
     private readonly IBasketRepository _basketRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public BuyBasketCommandHandler(IBasketRepository basketRepository)
+    public BuyBasketCommandHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Guid>> Handle(BuyBasketCommand request, CancellationToken cancellationToken)
@@ -19,7 +21,14 @@ internal sealed class BuyBasketCommandHandler : ICommandRequestHandler<BuyBasket
 
         if (basket is null)
         {
-            return Error.NotFound("Basket.NotFound", "Basket was not found");
+            return BasketErrorCodes.NotFound;
+        }
+
+        var authorizeValidator = _authorizationService.IsUserAuthorized(basket.CustomerId);
+
+        if (authorizeValidator.IsError)
+        {
+            return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
         basket.Buy();

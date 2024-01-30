@@ -3,5 +3,4 @@ using ErrorOr;
 
 namespace Shopping.Application.Wishes.GetById;
 
-public sealed record GetWishListByIdQuery(
-    Guid WishId) : IQueryRequest<ErrorOr<WishResponse>>;
+public sealed record GetWishListByIdQuery(Guid WishId) : IQueryRequest<ErrorOr<WishResponse>>;

@@ -7,10 +7,12 @@ namespace Shopping.Application.Wishes.GetById;
 internal sealed class GetWishListByIdQueryHandler : IQueryRequestHandler<GetWishListByIdQuery, ErrorOr<WishResponse>>
 {
     private readonly IWishRepository _wishRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public GetWishListByIdQueryHandler(IWishRepository wishRepository)
+    public GetWishListByIdQueryHandler(IWishRepository wishRepository, AuthorizationService authorizationService)
     {
         _wishRepository = wishRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<WishResponse>> Handle(GetWishListByIdQuery request, CancellationToken cancellationToken)
@@ -19,7 +21,17 @@ internal sealed class GetWishListByIdQueryHandler : IQueryRequestHandler<GetWish
 
         if (wish is null)
         {
-            return Error.NotFound("Wish.NotFound", "Wish was not found");
+            return WishErrorCodes.NotFound;
+        }
+
+        if (wish.IsPrivate is false)
+        {
+            var authorizationService = _authorizationService.IsUserAuthorized(wish.CustomerId);
+
+            if (authorizationService.IsError)
+            {
+                return WishErrorCodes.UserNotAuthorizedToAccess;
+            }
         }
 
         WishResponse wishResponse = new(

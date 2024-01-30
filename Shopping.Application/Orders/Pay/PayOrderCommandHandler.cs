@@ -2,18 +2,21 @@
 using ErrorOr;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
+using Shopping.Domain.Orders.Errors;
 
 namespace Shopping.Application.Orders.Pay;
 
-public sealed class PayOrderCommandHandler : ICommandRequestHandler<PayOrderCommand, ErrorOr<Guid>>
+internal sealed class PayOrderCommandHandler : ICommandRequestHandler<PayOrderCommand, ErrorOr<Guid>>
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IItemRepository _itemRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public PayOrderCommandHandler(IOrderRepository orderRepository, IItemRepository itemRepository)
+    public PayOrderCommandHandler(IOrderRepository orderRepository, IItemRepository itemRepository, AuthorizationService authorizationService)
     {
         _orderRepository = orderRepository;
         _itemRepository = itemRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Guid>> Handle(PayOrderCommand request, CancellationToken cancellationToken)
@@ -22,7 +25,14 @@ public sealed class PayOrderCommandHandler : ICommandRequestHandler<PayOrderComm
 
         if (order is null)
         {
-            return Error.NotFound("Order.NotFound", "Order was not found");
+            return OrderErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(order.CustomerId);
+
+        if (authorizationService.IsError)
+        {
+            return OrderErrorCodes.UserNotAuthorizedToAccess;
         }
 
         var item = await _itemRepository.GetByIdAsync(order.ItemId);

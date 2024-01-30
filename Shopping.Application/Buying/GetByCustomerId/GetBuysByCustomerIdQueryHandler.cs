@@ -7,10 +7,12 @@ namespace Shopping.Application.Buying.GetByCustomerId;
 internal sealed class GetBuysByCustomerIdQueryHandler : IQueryRequestHandler<GetBuysByCustomerIdQuery, ErrorOr<IReadOnlyList<BuyResponse>>>
 {
     private readonly IBuyRepository _buyRepository;
+    private readonly BuyAuthorizationService _authorizationService;
 
-    public GetBuysByCustomerIdQueryHandler(IBuyRepository buyRepository)
+    public GetBuysByCustomerIdQueryHandler(IBuyRepository buyRepository, BuyAuthorizationService authorizationService)
     {
         _buyRepository = buyRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<IReadOnlyList<BuyResponse>>> Handle(GetBuysByCustomerIdQuery request, CancellationToken cancellationToken)
@@ -19,7 +21,14 @@ internal sealed class GetBuysByCustomerIdQueryHandler : IQueryRequestHandler<Get
 
         if (buys is null)
         {
-            return Error.NotFound("Buys.NotFound", "Buys were not found");
+            return BuyErrorCodes.NotFound;
+        }
+
+        var authorizeService = _authorizationService.IsUserAuthorized(buys.First().BuyerId);
+
+        if (authorizeService.IsError && _authorizationService.IsAdmin() is false)
+        {
+            return authorizeService.FirstError;
         }
 
         var buyResponses = buys

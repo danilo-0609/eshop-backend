@@ -9,11 +9,13 @@ internal sealed class AddItemToWishListCommandHandler : ICommandRequestHandler<A
 {
     private readonly IWishRepository _wishRepository;
     private readonly IItemRepository _itemRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public AddItemToWishListCommandHandler(IWishRepository wishRepository, IItemRepository itemRepository)
+    public AddItemToWishListCommandHandler(IWishRepository wishRepository, IItemRepository itemRepository, AuthorizationService authorizationValidator)
     {
         _wishRepository = wishRepository;
         _itemRepository = itemRepository;
+        _authorizationService = authorizationValidator;
     }
 
     public async Task<ErrorOr<Guid>> Handle(AddItemToWishListCommand request, CancellationToken cancellationToken)
@@ -22,7 +24,14 @@ internal sealed class AddItemToWishListCommandHandler : ICommandRequestHandler<A
 
         if (wish is null)
         {
-            return Error.NotFound("Wish.NotFound", "Wish list was not found");
+            return WishErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(wish.CustomerId);
+
+        if (authorizationService.IsError)
+        {
+            return WishErrorCodes.UserNotAuthorizedToAccess;
         }
 
         Item? item = await _itemRepository.GetByIdAsync(ItemId.Create(request.ItemId));

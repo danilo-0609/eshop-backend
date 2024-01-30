@@ -8,10 +8,12 @@ namespace Shopping.Application.Wishes.Delete;
 internal sealed class DeleteWishListCommandHandler : ICommandRequestHandler<DeleteWishListCommand, ErrorOr<Unit>>
 {
     private readonly IWishRepository _wishRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public DeleteWishListCommandHandler(IWishRepository wishRepository)
+    public DeleteWishListCommandHandler(IWishRepository wishRepository, AuthorizationService authorizationService)
     {
         _wishRepository = wishRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteWishListCommand request, CancellationToken cancellationToken)
@@ -20,7 +22,14 @@ internal sealed class DeleteWishListCommandHandler : ICommandRequestHandler<Dele
 
         if (wish is null)
         {
-            return Error.NotFound("Wish.NotFound", "Wish was not found");
+            return WishErrorCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(wish.CustomerId);
+
+        if (authorizationService.IsError)
+        {
+            return WishErrorCodes.UserNotAuthorizedToAccess;
         }
 
         await _wishRepository.DeleteAsync(wish);

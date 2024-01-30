@@ -1,4 +1,4 @@
-﻿using Shopping.Application.Common;
+﻿using BuildingBlocks.Application.Queries;
 using ErrorOr;
 using Shopping.Domain.Basket;
 
@@ -7,10 +7,12 @@ namespace Shopping.Application.Baskets.GetBasketById;
 internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasketByIdQuery, ErrorOr<BasketResponse>>
 {
     private readonly IBasketRepository _basketRepository;
+    private readonly BasketAuthorizationService _authorizationService;
 
-    public GetBasketByIdQueryHandler(IBasketRepository basketRepository)
+    public GetBasketByIdQueryHandler(IBasketRepository basketRepository, BasketAuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<BasketResponse>> Handle(GetBasketByIdQuery request, CancellationToken cancellationToken)
@@ -19,7 +21,14 @@ internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasket
 
         if (basket is null)
         {
-            return Error.NotFound("Basket.NotFound", "Basket was not found");
+            return BasketErrorCodes.NotFound;
+        }
+
+        var authorizeService = _authorizationService.IsUserAuthorized(basket.CustomerId);
+
+        if (authorizeService.IsError && _authorizationService.IsAdmin() is false)
+        {
+            return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
         BasketResponse basketResponse = new(
@@ -36,4 +45,3 @@ internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasket
         return basketResponse;
     }
 }
-

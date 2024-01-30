@@ -9,11 +9,13 @@ internal sealed class AddItemToBasketCommandHandler : ICommandRequestHandler<Add
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IItemRepository _itemRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public AddItemToBasketCommandHandler(IItemRepository itemRepository, IBasketRepository basketRepository)
+    public AddItemToBasketCommandHandler(IItemRepository itemRepository, IBasketRepository basketRepository, AuthorizationService authorizationService)
     {
         _itemRepository = itemRepository;
         _basketRepository = basketRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Guid>> Handle(AddItemToBasketCommand request, CancellationToken cancellationToken)
@@ -22,7 +24,14 @@ internal sealed class AddItemToBasketCommandHandler : ICommandRequestHandler<Add
 
         if (basket is null)
         {
-            return Error.NotFound("Basket.NotFound", "Basket was not found");
+            return BasketErrorCodes.NotFound;
+        }
+
+        var authorizeService = _authorizationService.IsUserAuthorized(basket.CustomerId);
+
+        if (authorizeService.IsError)
+        {
+            return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
         Item? item = await _itemRepository.GetByIdAsync(ItemId.Create(request.ItemId));

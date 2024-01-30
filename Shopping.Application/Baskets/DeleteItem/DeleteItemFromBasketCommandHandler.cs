@@ -9,10 +9,12 @@ namespace Shopping.Application.Baskets.DeleteItem;
 internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandler<DeleteItemFromBasketCommand, ErrorOr<Unit>>
 {
     private readonly IBasketRepository _basketRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository)
+    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository, AuthorizationService authorizationService)
     {
         _basketRepository = basketRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteItemFromBasketCommand request, CancellationToken cancellationToken)
@@ -21,7 +23,14 @@ internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandle
 
         if (basket is null)
         {
-            return Error.NotFound("Basket.NotFound", "Basket was not found");
+            return BasketErrorCodes.NotFound;
+        }
+
+        var authorizeService = _authorizationService.IsUserAuthorized(basket.CustomerId);
+
+        if (authorizeService.IsError)
+        {
+            return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
         if (!basket.ItemIds.Any(r => r.Value == request.ItemId))
