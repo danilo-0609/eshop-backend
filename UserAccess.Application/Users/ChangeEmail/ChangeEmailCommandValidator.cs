@@ -20,21 +20,5 @@ internal sealed class ChangeEmailCommandValidator : AbstractValidator<ChangeEmai
             {
                 return await userRepository.IsEmailUniqueAsync(email);
             }).WithMessage("Email must be unique");
-
-        RuleFor(r => r.Id)
-            .MustAsync(async (id, _) =>
-            {
-                var user = await userRepository.GetByIdAsync(UserId.Create(id));
-
-
-                if (user is null)
-                {
-                    return false;
-                }
-
-                return executionContextAccessor.UserId == user.Id.Value;
-
-            }).WithMessage(UserErrorsCodes.CannotChangeEmail.Code);
-
     }
 }

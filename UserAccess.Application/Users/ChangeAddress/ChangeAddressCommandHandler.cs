@@ -9,10 +9,12 @@ namespace UserAccess.Application.Users.ChangeAddress;
 internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<ChangeEmailCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ChangeAddressCommandHandler(IUserRepository userRepository)
+    public ChangeAddressCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
     {
         _userRepository = userRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,13 @@ internal sealed class ChangeAddressCommandHandler : ICommandRequestHandler<Chang
         if (user is null)
         {
             return UserErrorsCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(user.Id.Value);
+
+        if (authorizationService.IsError)
+        {
+            return UserErrorsCodes.CannotChangeAddress;
         }
 
         var update = User.Update(

@@ -20,19 +20,5 @@ internal sealed class ChangeLoginCommandValidator : AbstractValidator<ChangeLogi
 
             }).WithMessage("Login must be unique")
             .MaximumLength(40);
-
-        RuleFor(r => r.Id)
-            .MustAsync(async (id, _) =>
-            {
-                var user = await userRepository.GetByIdAsync(UserId.Create(id));
-
-                if (user is null)
-                {
-                    return false;
-                }
-
-                return executionContextAccessor.UserId == user.Id.Value;
-            })
-            .WithMessage(UserErrorsCodes.CannotChangeLogin.Code);
     }
 }

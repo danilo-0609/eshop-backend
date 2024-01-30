@@ -1,4 +1,3 @@
-using BuildingBlocks.Application;
 using UserAccess.Application.Common;
 using ErrorOr;
 using MediatR;
@@ -10,10 +9,12 @@ namespace UserAccess.Application.Users.ChangeLogin;
 internal sealed class ChangeLoginCommandHandler : ICommandRequestHandler<ChangeLoginCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ChangeLoginCommandHandler(IUserRepository userRepository)
+    public ChangeLoginCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
     {
         _userRepository = userRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangeLoginCommand request, CancellationToken cancellationToken)
@@ -23,6 +24,13 @@ internal sealed class ChangeLoginCommandHandler : ICommandRequestHandler<ChangeL
         if (user is null)
         {
             return UserErrorsCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(user.Id.Value);
+
+        if (authorizationService.IsError)
+        {
+            return UserErrorsCodes.CannotChangeLogin;
         }
 
         var update = User.Update(

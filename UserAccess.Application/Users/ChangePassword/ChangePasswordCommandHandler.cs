@@ -10,10 +10,12 @@ namespace UserAccess.Application.Users.ChangePassword;
 internal sealed class ChangePasswordCommandHandler : ICommandRequestHandler<ChangePasswordCommand, ErrorOr<Unit>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly AuthorizationService _authorizationService;
 
-    public ChangePasswordCommandHandler(IUserRepository userRepository)
+    public ChangePasswordCommandHandler(IUserRepository userRepository, AuthorizationService authorizationService)
     {
         _userRepository = userRepository;
+        _authorizationService = authorizationService;
     }
 
     public async Task<ErrorOr<Unit>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
@@ -23,6 +25,13 @@ internal sealed class ChangePasswordCommandHandler : ICommandRequestHandler<Chan
         if (user is null)
         {
             return UserErrorsCodes.NotFound;
+        }
+
+        var authorizationService = _authorizationService.IsUserAuthorized(user.Id.Value);
+
+        if (authorizationService.IsError)
+        {
+            return UserErrorsCodes.CannotChangePassword;
         }
 
         if (user.Password != Password.CreateUnique(request.OldPassword))

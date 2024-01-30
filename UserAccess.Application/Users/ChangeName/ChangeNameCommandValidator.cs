@@ -26,19 +26,5 @@ internal sealed class ChangeNameCommandValidator : AbstractValidator<ChangeNameC
         RuleFor(r => r.LastName)
             .NotNull()
             .MaximumLength(30);
-
-        RuleFor(r => r.Id)
-            .MustAsync(async (id, _) =>
-            {
-                var user = await _userRepository.GetByIdAsync(UserId.Create(id));
-
-                if (user is null)
-                {
-                    return false;
-                }
-
-                return executionContextAccessor.UserId == user.Id.Value;
-            })
-            .WithMessage(UserErrorsCodes.CannotChangeName.Code);
     }
 }
