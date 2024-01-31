@@ -1,6 +1,7 @@
 using FluentValidation;
 
 namespace Catalog.Application.Products.GetAllProductsBySeller;
+
 internal sealed class GetAllProductsBySellerQueryValidator : AbstractValidator<GetAllProductsBySellerQuery>
 {
     public GetAllProductsBySellerQueryValidator()

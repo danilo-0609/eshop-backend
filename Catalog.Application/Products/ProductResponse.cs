@@ -1,4 +1,5 @@
 namespace Catalog.Application.Products;
+
 public sealed record ProductResponse(Guid Id,
     Guid SellerId,
     string Name,

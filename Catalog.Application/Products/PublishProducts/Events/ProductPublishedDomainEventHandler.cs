@@ -1,15 +1,15 @@
-using BuildingBlocks.Application.EventBus;
 using BuildingBlocks.Application.Events;
+using Catalog.Application.Common;
 using Catalog.Domain.Products.Events;
 using Catalog.IntegrationEvents;
 
 namespace Catalog.Application.Products.PublishProducts.Events;
-internal sealed class ProductPublishedDomainEventHandler 
-    : IDomainEventHandler<ProductPublishedDomainEvent>
-{
-    private readonly IEventBus _eventBus;
 
-    public ProductPublishedDomainEventHandler(IEventBus eventBus)
+internal sealed class ProductPublishedDomainEventHandler : IDomainEventHandler<ProductPublishedDomainEvent>
+{
+    private readonly ICatalogEventBus _eventBus;
+
+    public ProductPublishedDomainEventHandler(ICatalogEventBus eventBus)
     {
         _eventBus = eventBus;
     }

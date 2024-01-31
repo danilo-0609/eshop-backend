@@ -4,6 +4,7 @@ using Catalog.Application.Common;
 using ErrorOr;
 
 namespace Catalog.Application.Products.PublishProducts;
+
 internal sealed class PublishProductCommandHandler : ICommandRequestHandler<PublishProductCommand, ErrorOr<Guid>>
 {
     private readonly IProductRepository _productRepository;
