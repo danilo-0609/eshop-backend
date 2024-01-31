@@ -38,13 +38,23 @@ internal sealed class ProcessCatalogOutboxMessageJob : IJob
 
         foreach (CatalogOutboxMessage message in messages)
         {
-            var domainEvent = JsonConvert
-                .DeserializeObject(message.Content);
+            IDomainEvent? domainEvent = JsonConvert
+            .DeserializeObject<IDomainEvent>(
+                message.Content,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
+
+            if (domainEvent is null)
+            {
+                _logger.LogError("Domain event is null when publishing");
+            }
 
             try
             {
                 _logger.LogInformation("Starting publishing domain event {Name}, {OcurredOn}",
-                    domainEvent.GetType().Name,
+                    domainEvent.GetType().FullName,
                     DateTime.UtcNow);
 
                 await _publisher.Publish(domainEvent);
