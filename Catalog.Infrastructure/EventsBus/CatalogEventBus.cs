@@ -23,7 +23,7 @@ internal sealed class CatalogEventBus : ICatalogEventBus
             @event.GetType().Name,
             DateTime.UtcNow);
 
-        await _publishEndpoint.Publish(@event);
+         await _publishEndpoint.Publish(@event);
 
         _logger.LogInformation("Integration event has published in event bus already, {event}, {OcurredOn}",
             @event.GetType().Name,
