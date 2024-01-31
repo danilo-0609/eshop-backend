@@ -16,6 +16,7 @@ using Shopping.Application.Orders.Complete;
 using Shopping.Application.Orders.Expire;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Shopping.Application.Items.Create;
 
 namespace API;
 
@@ -65,24 +66,20 @@ public static class DependencyInjection
         {
             busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-            busConfigurator.UsingRabbitMq((context, configurator) =>
-            {
-                MessageBrokerSettings settings = context.GetRequiredService<MessageBrokerSettings>();
-
-                configurator.Host(new Uri(settings.Host), h =>
-                {   
-                    h.Username(settings.Username);
-                    h.Password(settings.Password);
-                });
-            });
-
             busConfigurator.AddConsumer<OrderPayedIntegrationEventConsumer>();
-            busConfigurator.AddConsumer<ProductPublishedIntegrationEventConsumer>();
+            busConfigurator.AddConsumer<UserAccess.Application.IntegrationEventCostumers.ProductPublishedIntegrationEventConsumer>();
+            busConfigurator.AddConsumer<Shopping.Application.Items.Create.ProductPublishedIntegrationEventConsumer>();
             busConfigurator.AddConsumer<ProductOutOfStockIntegrationEventConsumer>();
             busConfigurator.AddConsumer<ProductRemovedIntegrationEventConsumer>();
             busConfigurator.AddConsumer<ProductUpdatedIntegrationConsumer>();
             busConfigurator.AddConsumer<ProductSoldIntegrationEventConsumer>();
             busConfigurator.AddConsumer<ProductSellFailedIntegrationEventConsumer>();
+
+            busConfigurator.UsingInMemory((context, cfg) =>
+            {
+                cfg.ConfigureEndpoints(context);
+            });
+            
         });
 
         //Seed of work
