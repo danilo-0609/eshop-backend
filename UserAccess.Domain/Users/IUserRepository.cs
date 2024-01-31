@@ -15,4 +15,8 @@ public interface IUserRepository
     Task<User?> GetByEmailAsync(string email);
 
     Task RemoveAsync(User user);
+
+    Task AddRole(Guid userId, Role role);
+
+    Task<List<Role>> GetRolesAsync(Guid userId);
 }
