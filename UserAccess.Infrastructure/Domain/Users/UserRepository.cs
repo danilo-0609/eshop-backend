@@ -135,6 +135,21 @@ internal sealed class UserRepository : IUserRepository
             userId, role.RoleId);
     }
 
+    public async Task<List<Role>> GetRolesAsync(Guid userId)
+    {
+        return await _dbContext.Roles.FromSqlRaw(
+            """
+            SELECT TOP (3)
+            	r.RoleId,
+            	r.RoleCode
+            FROM [Eshop.Db].dbo.Roles r
+            INNER JOIN users.UsersRoles ur ON r.RoleId = ur.RoleId
+            INNER JOIN users.Users u ON ur.UserId = u.UserId
+            WHERE u.UserId = {0}            
+            """,
+            userId).ToListAsync();
+    }
+
     private async Task InsertDomainEvent(User user)
     {
         var domainEvents = user.GetDomainEvents();
