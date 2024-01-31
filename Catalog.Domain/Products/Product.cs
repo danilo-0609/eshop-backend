@@ -197,6 +197,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         : base(id)
     {
         Id = id;
+        SellerId = sellerId;
         Name = name;
         Price = price;
         Description = description;
