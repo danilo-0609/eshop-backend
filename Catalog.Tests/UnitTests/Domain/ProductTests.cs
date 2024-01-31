@@ -250,7 +250,7 @@ public sealed class ProductTests
         var sellingOperation = product.Sell(3, Guid.NewGuid());
 
         bool operationFailed = sellingOperation
-            .Errors.Any(r => r.Code == ProductErrors.ProductOutOfStock.Code);
+            .Errors.Any(r => r.Code == ProductErrorCodes.ProductOutOfStock.Code);
 
         //Assert
         Assert.True(operationFailed);
@@ -311,7 +311,7 @@ public sealed class ProductTests
 
         bool sellingOperationFailed = sellingOperation
             .Errors
-            .Any(r => r.Code == ProductErrors.AmountOfProductsRequestedGreaterThanAmountOfProductsInStock.Code);
+            .Any(r => r.Code == ProductErrorCodes.AmountOfProductsRequestedGreaterThanAmountOfProductsInStock.Code);
 
         //Assert
         Assert.True(sellingOperationFailed);
