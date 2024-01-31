@@ -1,5 +1,6 @@
 using System;
 using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace Catalog.Domain.Products;
 
@@ -7,6 +8,7 @@ public sealed record ProductId : AggregateRootId<Guid>
 {
     public override Guid Value { get; protected set; }
 
+    [JsonConstructor]
     private ProductId(Guid value)
         : base(value)
     {
