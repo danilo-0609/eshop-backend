@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Catalog.Infrastructure;
 
-public sealed class CatalogDbContext : DbContext, IApplicationDbContext, ICatalogUnitOfWork
+public sealed class CatalogDbContext : DbContext, IApplicationDbContext
 {
     private readonly IConfiguration _configuration;
 
@@ -35,11 +35,6 @@ public sealed class CatalogDbContext : DbContext, IApplicationDbContext, ICatalo
         base.OnConfiguring(optionsBuilder);
 
         optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Database"));
-    }
-
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-    {
-        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
     public CatalogDbContext(){}

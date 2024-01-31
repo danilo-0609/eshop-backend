@@ -30,9 +30,8 @@ internal sealed class CatalogUnitOfWork : ICatalogUnitOfWork
             {
                 var domainEvents = entity.DomainEvents;
 
-                entity.ClearDomainEvents();
-
                 return domainEvents;
+
             }).ToList();
 
         _dbContext.ChangeTracker

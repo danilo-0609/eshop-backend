@@ -37,8 +37,7 @@ public static class DependencyInjection
             sp.GetRequiredService<CatalogDbContext>());
 
         //Unit of work
-        services.AddScoped<ICatalogUnitOfWork>(sp =>
-           sp.GetRequiredService<CatalogDbContext>());        
+        services.AddScoped<ICatalogUnitOfWork, CatalogUnitOfWork>();    
 
         //Repositories services
         services.AddScoped<IProductRepository, ProductRepository>();
