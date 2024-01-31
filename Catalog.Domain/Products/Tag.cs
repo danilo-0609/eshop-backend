@@ -1,4 +1,5 @@
 using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace Catalog.Domain.Products;
 
@@ -11,6 +12,7 @@ public sealed record Tag : ValueObject
         return new Tag(value);
     }
 
+    [JsonConstructor]
     private Tag(string value) 
     {
         Value = value;

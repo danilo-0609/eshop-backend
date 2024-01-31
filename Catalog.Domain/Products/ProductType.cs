@@ -1,4 +1,4 @@
-using System;
+using Newtonsoft.Json;
 
 namespace Catalog.Domain.Products;
 
@@ -37,6 +37,7 @@ public sealed record ProductType
         return new ProductType(value);
     }
 
+    [JsonConstructor]
     private ProductType(string value)
     {
         Value = value;
