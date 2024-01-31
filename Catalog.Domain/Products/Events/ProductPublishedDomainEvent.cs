@@ -1,5 +1,4 @@
 using BuildingBlocks.Domain;
-using Catalog.Domain.Products.Rules;
 
 namespace Catalog.Domain.Products.Events;
 
