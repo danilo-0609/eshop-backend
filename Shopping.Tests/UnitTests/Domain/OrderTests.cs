@@ -22,6 +22,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             0,
             item.InStock,
@@ -55,6 +56,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             amountRequested,
             item.InStock,
@@ -85,6 +87,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -116,6 +119,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -150,6 +154,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -186,6 +191,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -216,6 +222,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -249,6 +256,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -282,6 +290,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -312,6 +321,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -343,6 +353,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -372,6 +383,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -401,6 +413,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
@@ -431,6 +444,7 @@ public sealed class OrderTests
         ErrorOr<Order> order = Order.Place(
             item.Id,
             Guid.NewGuid(),
+            item.SellerId,
             DateTime.UtcNow,
             2,
             item.InStock,
