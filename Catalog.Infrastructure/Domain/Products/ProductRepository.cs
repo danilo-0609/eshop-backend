@@ -1,10 +1,11 @@
-using System.Linq;
 using Catalog.Domain.Products;
-using Catalog.Domain.Products.Rules;
-using Catalog.Infrastructure.Persistence;
+using Catalog.Infrastructure.Outbox;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Catalog.Infrastructure.Domain.Products;
+
 internal sealed class ProductRepository : IProductRepository
 {
     private readonly CatalogDbContext _dbContext;
@@ -99,23 +100,88 @@ internal sealed class ProductRepository : IProductRepository
 
     public async Task UpdateAsync(Product product)
     {
-        await _dbContext
+        await UpdateProduct(product);
+        await InsertTags(product.Tags, product.Id);
+        await InsertUpdateDomainEvent(product);
+    }
+
+    private async Task UpdateProduct(Product product)
+    {
+        await _dbContext.Database.ExecuteSqlRawAsync(
+     @"UPDATE [Eshop.Db].[catalog].[Products] 
+      SET SellerId = @SellerId,
+          Name = @Name,
+          Price = @Price,
+          Description = @Description,
+          Size = @Size,
+          Color = @Color,
+          ProductTypeValue = @ProductTypeValue,
+          InStock = @InStock,
+          IsActive = @IsActive,
+          CreatedDateTime = @CreatedDateTime,
+          UpdatedDateTime = @UpdatedDateTime
+      WHERE ProductId = @ProductId",
+     new SqlParameter("@SellerId", product.SellerId),
+     new SqlParameter("@Name", product.Name),
+     new SqlParameter("@Price", product.Price),
+     new SqlParameter("@Description", product.Description),
+     new SqlParameter("@Size", product.Size),
+     new SqlParameter("@Color", product.Color),
+     new SqlParameter("@ProductTypeValue", product.ProductType.Value),
+     new SqlParameter("@InStock", product.InStock),
+     new SqlParameter("@IsActive", product.IsActive),
+     new SqlParameter("@CreatedDateTime", product.CreatedDateTime),
+     new SqlParameter("@UpdatedDateTime", product.UpdatedDateTime),
+     new SqlParameter("@ProductId", product.Id.Value));
+
+    }
+
+    private async Task InsertTags(List<Tag> tags, ProductId productId)
+    {
+        List<string> tagsList = await _dbContext
             .Products
-            .Where(g => g.Id == product.Id)
-            .ExecuteUpdateAsync(setters => setters
-                .SetProperty(b => b.Id, product.Id)
-                .SetProperty(b => b.SellerId, product.SellerId)
-                .SetProperty(b => b.Name, product.Name)
-                .SetProperty(b => b.Price, product.Price)
-                .SetProperty(b => b.Size, product.Size)
-                .SetProperty(b => b.Color, product.Color)
-                .SetProperty(b => b.ProductType, product.ProductType)
-                .SetProperty(b => b.Tags, product.Tags)
-                .SetProperty(b => b.InStock, product.InStock)
-                .SetProperty(b => b.IsActive, product.IsActive)
-                .SetProperty(b => b.CreatedDateTime, product.CreatedDateTime)
-                .SetProperty(b => b.UpdatedDateTime, product.UpdatedDateTime)
-                .SetProperty(b => b.ExpiredDateTime, product.ExpiredDateTime));
+            .Where(q => q.Id == productId)
+            .SelectMany(r => r.Tags
+                .Select(r => r.Value))
+            .ToListAsync();
+
+        foreach (var tag in tags)
+        {
+            if (!tagsList.Contains(tag.Value))
+            {
+                await _dbContext
+                    .Database
+                    .ExecuteSqlRawAsync(
+                    """
+                    INSERT INTO catalog.Tags (ProductId, Value)
+                    VALUES ({0}, {1});
+                    """,
+                    productId.Value, tag.Value);
+            }
+        }
+    }
+
+    private async Task InsertUpdateDomainEvent(Product product)
+    {
+        var domainEvents = product.GetDomainEvents();
+
+        List<CatalogOutboxMessage> outboxMessage = domainEvents
+            .Select(domainEvent => new CatalogOutboxMessage
+            {
+                Id = domainEvent.DomainEventId,
+                Type = domainEvent.GetType().Name,
+                OcurredOnUtc = domainEvent.OcurredOn,
+                Content = JsonConvert.SerializeObject(
+                domainEvent,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                })
+            }).ToList();
+
+        product.ClearDomainEvents();
+
+        await _dbContext.CatalogOutboxMessages.AddRangeAsync(outboxMessage);
     }
 }
 
