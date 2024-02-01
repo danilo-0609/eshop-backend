@@ -104,10 +104,15 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
                 inStock,
                 isActive: true,
                 createdOn,
-                updatedOn);
+                updatedOn,
+                null);
 
             ProductUpdatedDomainEvent productUpdatedDomainEvent = new(Guid.NewGuid(),
                 product.Id,
+                product.Name,
+                product.SellerId,
+                product.Price,
+                product.InStock,
                 product.UpdatedDateTime!.Value);
 
             product.Raise(productUpdatedDomainEvent);
