@@ -9,4 +9,6 @@ public interface IItemRepository
     Task UpdateAsync(Item item);
 
     Task DeleteAsync(ItemId id);
+
+    Guid? GetSellerIdAsync(ItemId itemId);
 }

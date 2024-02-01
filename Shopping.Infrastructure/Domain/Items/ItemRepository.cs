@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Shopping.Domain.Items;
 
 namespace Shopping.Infrastructure.Domain.Items;
@@ -58,18 +60,36 @@ internal sealed class ItemRepository : IItemRepository
     public async Task UpdateAsync(Item item)
     {
         await _dbContext
+            .Database
+            .ExecuteSqlRawAsync(
+            @"
+            UPDATE shopping.Items
+            SET Name = @Name,
+                SellerId = @SellerId,
+                Price = @Price,
+                InStock = @InStock,
+                StockStatus = @StockStatus,
+                CreatedOn = @CreatedOn,
+                UpdatedOn = @UpdatedOn
+            WHERE ItemId = @ItemId
+            ",
+            new SqlParameter("@Name", item.Name),
+            new SqlParameter("@SellerId", item.SellerId),
+            new SqlParameter("@Price", item.Price),
+            new SqlParameter("@InStock", item.InStock),
+            new SqlParameter("@StockStatus", item.StockStatus.Value),
+            new SqlParameter("@CreatedOn", item.CreatedOn),
+            new SqlParameter("@UpdatedOn", item.UpdatedOn),
+            new SqlParameter("@ItemId", item.Id.Value));
+    }
+
+    public Guid? GetSellerIdAsync(ItemId itemId)
+    {
+        return _dbContext
             .Items
-            .Where(d => d.Id == item.Id)
-            .ExecuteUpdateAsync(setters =>
-            setters
-                .SetProperty(x => x.Id, item.Id)
-                .SetProperty(x => x.Name, item.Name)
-                .SetProperty(x => x.SellerId, item.SellerId)
-                .SetProperty(x => x.Price, item.Price)
-                .SetProperty(x => x.InStock, item.InStock)
-                .SetProperty(x => x.StockStatus, item.StockStatus)
-                .SetProperty(x => x.CreatedOn, item.CreatedOn)
-                .SetProperty(x => x.UpdatedOn, item.UpdatedOn));
+            .Where(r => r.Id == itemId)
+            .Select(f => f.SellerId)
+            .FirstOrDefault();
     }
 }
 
