@@ -31,6 +31,7 @@ internal sealed class PlaceOrderCommandHandler : ICommandRequestHandler<PlaceOrd
         ErrorOr<Order> order = Order.Place(
             item.Id,
             _executionContextAccessor.UserId,
+            item.SellerId,
             DateTime.UtcNow,
             request.AmountRequested,
             item.InStock,
