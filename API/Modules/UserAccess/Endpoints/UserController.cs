@@ -89,7 +89,7 @@ public class UserController : ApiController
 
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/name/{id}")]
-    public async Task<IActionResult> ChangeUserName([FromBody] ChangeNameRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserName([FromBody] ChangeUserNameRequest request, Guid id)
     {
         var response = await _sender
             .Send(new ChangeNameCommand(id, request.FirstName, request.LastName));
