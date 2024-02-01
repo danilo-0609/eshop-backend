@@ -15,7 +15,7 @@ public static class DependencyInjection
             config.RegisterServicesFromAssemblyContaining<AssemblyReference>();
         });
 
-        //Logging service
+        //Logging services
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
             typeof(ShoppingApplicationLoggingPipelineBehavior<,>));
