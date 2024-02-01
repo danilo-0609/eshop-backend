@@ -37,4 +37,7 @@ public static class OrderErrorCodes
 
     public static Error UserNotAuthorizedToAccess =>
         Error.Unauthorized("Order.Unauthorized", "The user is not authorized to access in this content");
+
+    public static Error CannotBePlacedBySeller =>
+        Error.Validation("Order.CannotBePlacedBySeller", OrderCannotBePlacedByItemSellerRule.Message);
 }

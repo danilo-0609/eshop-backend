@@ -26,6 +26,7 @@ internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler
             var order = Order.Place(
                 item!.Id,
                 notification.CustomerId,
+                item.SellerId,
                 DateTime.UtcNow,
                 1,
                 item.InStock,

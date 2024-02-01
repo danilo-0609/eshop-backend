@@ -62,6 +62,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
     public static ErrorOr<Order> Place(
         ItemId itemId,
         Guid customerId,
+        Guid sellerId,
         DateTime placedOn,
         int amountRequested,
         int actualStock,
@@ -89,6 +90,13 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         if (amountCannotBeGreaterThanActualAmount.IsError)
         {
             return amountCannotBeGreaterThanActualAmount.FirstError;
+        }
+
+        var cannotBePlacedBySellerItem = order.CheckRule(new OrderCannotBePlacedByItemSellerRule(customerId, sellerId));
+
+        if (cannotBePlacedBySellerItem.IsError)
+        {
+            return cannotBePlacedBySellerItem.FirstError;
         }
 
         order.PlacedOn = placedOn;
