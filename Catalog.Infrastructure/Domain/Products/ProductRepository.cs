@@ -90,11 +90,11 @@ internal sealed class ProductRepository : IProductRepository
         return products;
     }
 
-    public async Task RemoveAsync(ProductId productId)
+    public async Task RemoveAsync(Product product, CancellationToken cancellationToken)
     {
         await _dbContext
             .Products
-            .Where(t => t.Id == productId)
+            .Where(d => d.Id == product.Id)
             .ExecuteDeleteAsync();
     }
 
@@ -102,7 +102,7 @@ internal sealed class ProductRepository : IProductRepository
     {
         await UpdateProduct(product);
         await InsertTags(product.Tags, product.Id);
-        await InsertUpdateDomainEvent(product);
+        await InsertDomainEvents(product);
     }
 
     private async Task UpdateProduct(Product product)
@@ -161,7 +161,7 @@ internal sealed class ProductRepository : IProductRepository
         }
     }
 
-    private async Task InsertUpdateDomainEvent(Product product)
+    private async Task InsertDomainEvents(Product product)
     {
         var domainEvents = product.GetDomainEvents();
 
