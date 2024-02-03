@@ -5,11 +5,12 @@ public interface IProductRepository
 {
     Task AddAsync(Product product);
 
-    Task RemoveAsync(ProductId productId);
+    Task RemoveAsync(Product product, CancellationToken cancellationToken);
 
     Task UpdateAsync(Product product);
 
     Task<List<Product>?> GetBySellerAsync(Guid sellerId);
+
     Task<Product?> GetByIdAsync(ProductId productId);      
 
     Task<List<Product>?> GetByNameAsync(string name);

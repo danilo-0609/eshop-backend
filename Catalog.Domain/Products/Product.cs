@@ -122,12 +122,9 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
 
     public void Remove()
     {
-        ExpiredDateTime = DateTime.UtcNow;
-        IsActive = false;
-
         ProductRemovedDomainEvent productRemovedDomainEvent = new(Guid.NewGuid(), 
             Id,
-            ExpiredDateTime.Value);
+            DateTime.UtcNow);
 
         Raise(productRemovedDomainEvent);
     }
@@ -215,6 +212,11 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         CreatedDateTime = createdDateTime;
         UpdatedDateTime = updatedDateTime;
         ExpiredDateTime = expiredDateTime;
+
+        if (InStock == 0)
+        {
+            OutOfStock();
+        }
     }
 
     private Product(){}

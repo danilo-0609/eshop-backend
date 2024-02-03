@@ -33,7 +33,9 @@ internal sealed class RemoveProductCommandHandler : ICommandRequestHandler<Remov
             return ProductErrorCodes.CannotAccessToContent;
         }
 
-        await _productRepository.RemoveAsync(product.Id);
+        product.Remove();
+
+        await _productRepository.RemoveAsync(product, cancellationToken);
 
         return Unit.Value;
     }
