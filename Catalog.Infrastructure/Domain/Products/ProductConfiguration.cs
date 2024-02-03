@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Catalog.Infrastructure.Persistence.Configuration;
+
 internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
         builder.ToTable("Products", "catalog");
-    
+
         builder.HasKey(k => k.Id);
 
         builder.Property(p => p.Id)
@@ -45,12 +46,12 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
         {
             b.Property(p => p.Value).HasColumnName("ProductTypeValue");
         });
-        
-        builder.OwnsMany<Tag>("Tags", y => 
+
+        builder.OwnsMany<Tag>("Tags", y =>
         {
             y.WithOwner().HasForeignKey("ProductId");
             y.ToTable("Tags", "catalog");
-            
+
             y.Property(y => y.Value)
                 .HasColumnName("Value");
         });
