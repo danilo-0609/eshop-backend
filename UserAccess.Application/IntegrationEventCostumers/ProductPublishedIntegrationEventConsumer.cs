@@ -20,20 +20,20 @@ public sealed class ProductPublishedIntegrationEventConsumer : IConsumer<Product
     public async Task Consume(ConsumeContext<ProductPublishedIntegrationEvent> context)
     {
         _logger.LogInformation("Start consuming: {Name}, {DateTime}",
-            context.GetType().FullName,
+            context.GetType().Name,
             DateTime.UtcNow);
 
         var userId = context.Message.SellerId;
 
         var roles = await _userRepository.GetRolesAsync(userId);
 
-        if (roles!.Any(r => r.RoleCode != Role.Seller.RoleCode))
+        if (roles!.Any(r => r.RoleCode == Role.Seller.RoleCode) is false)
         {
             await _userRepository.AddRole(userId, Role.Seller);
         }
 
         _logger.LogInformation("Consuming finished: {Name}, {DateTime}",
-            context.GetType().FullName,
+            context.GetType().Name,
             DateTime.UtcNow);
     }
 }
