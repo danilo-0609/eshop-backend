@@ -164,6 +164,8 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         Raise(new OrderExpiredDomainEvent(
             Guid.NewGuid(),
             Id,
+            OrderStatus,
+            expiredOn,
             DateTime.UtcNow));
 
         return Unit.Value;
@@ -191,7 +193,7 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         OrderStatus = OrderStatus.Payed;
         PayedOn = payedOn;
 
-        ErrorOr<Payment> pay = Payment.PayFromOrder(
+        ErrorOr<Unit> pay = Payment.CheckPayment(
         Id,
         TotalMoneyAmount,
         AmountOfItems,
@@ -208,9 +210,13 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         Raise(new OrderPayedDomainEvent(
             Guid.NewGuid(),
             Id,
+            CustomerId,
             ItemId,
             AmountOfItems,
-            payedOn));
+            actualStock,
+            stockStatus,
+            TotalMoneyAmount,
+            DateTime.UtcNow));
 
         return Unit.Value;
     }

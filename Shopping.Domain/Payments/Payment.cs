@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Domain;
 using ErrorOr;
+using MediatR;
 using Shopping.Domain.Items;
 using Shopping.Domain.Orders;
 using Shopping.Domain.Payments.DomainEvents;
@@ -33,8 +34,7 @@ public sealed class Payment : AggregateRoot<PaymentId, Guid>
         PayedOn = payedOn;
     }
 
-    internal static ErrorOr<Payment> PayFromOrder(
-        OrderId orderId,
+    public static ErrorOr<Unit> CheckPayment(OrderId orderId,
         decimal moneyAmount,
         int itemAmount,
         ItemId itemId,
@@ -50,7 +50,7 @@ public sealed class Payment : AggregateRoot<PaymentId, Guid>
             DateTime.UtcNow);
 
         var itemAmountGreaterThanActualAmount = payment.CheckRule(new PayCannotBeMadeWhenItemAmountRequestedIsGreaterThanItemCurrentAmountRule(itemAmount, actualAmount));
-    
+
         if (itemAmountGreaterThanActualAmount.IsError)
         {
             return itemAmountGreaterThanActualAmount.FirstError;
@@ -62,6 +62,25 @@ public sealed class Payment : AggregateRoot<PaymentId, Guid>
         {
             return itemIsOutOfStock.FirstError;
         }
+
+        return Unit.Value;
+    }
+
+    public static ErrorOr<Payment> PayFromOrder(
+        OrderId orderId,
+        decimal moneyAmount,
+        int itemAmount,
+        ItemId itemId,
+        Guid payerId,
+        int actualAmount,
+        StockStatus stockStatus)
+    {
+        var payment = new Payment(
+            PaymentId.CreateUnique(),
+            payerId,
+            orderId,
+            moneyAmount,
+            DateTime.UtcNow);
 
         payment.Raise(new PayMadeDomainEvent(
             Guid.NewGuid(),
