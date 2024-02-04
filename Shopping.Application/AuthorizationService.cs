@@ -14,9 +14,9 @@ internal sealed class AuthorizationService : IAuthorizationService
         _executionContextAccessor = executionContextAccessor;
     }
 
-    public ErrorOr<Unit> IsUserAuthorized(Guid customerId)
+    public ErrorOr<Unit> IsUserAuthorized(Guid userAuthorizedId)
     {
-        if (_executionContextAccessor.UserId == customerId)
+        if (_executionContextAccessor.UserId == userAuthorizedId)
         {
             return Unit.Value;
         }
