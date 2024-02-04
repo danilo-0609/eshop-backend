@@ -1,6 +1,5 @@
 ﻿using API.Common.Http;
 using ErrorOr;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -19,7 +18,7 @@ public abstract class ApiController : ControllerBase
 
         if (errors.All(error => error.Type == ErrorType.Validation))
         {
-            return ValidationProblem();
+            return ValidationProblem(errors);
         }
 
         HttpContext.Items[HttpContextItemKeys.Errors] = errors;
@@ -49,7 +48,7 @@ public abstract class ApiController : ControllerBase
             modelStateDictionary.AddModelError(error.Code, error.Description);
         }
 
-        return ValidationProblem(errors);
+        return ValidationProblem(modelStateDictionary);
     }
 }
 
