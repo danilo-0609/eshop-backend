@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Application.Events;
 using Shopping.Application.Common;
+using Shopping.Domain.Orders;
 using Shopping.Domain.Orders.Events;
 using Shopping.IntegrationEvents;
 
