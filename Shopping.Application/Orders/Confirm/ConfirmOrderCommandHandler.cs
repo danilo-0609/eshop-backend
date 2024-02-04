@@ -2,6 +2,7 @@
 using ErrorOr;
 using Shopping.Domain.Orders;
 using Shopping.Domain.Orders.Errors;
+using Shopping.Domain.Items;
 
 namespace Shopping.Application.Orders.Confirm;
 
@@ -9,11 +10,13 @@ internal sealed class ConfirmOrderCommandHandler : ICommandRequestHandler<Confir
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IAuthorizationService _authorizationService;
+    private readonly IItemRepository _itemRepository;
 
-    public ConfirmOrderCommandHandler(IOrderRepository orderRepository, IAuthorizationService orderAuthorizationService)
+    public ConfirmOrderCommandHandler(IOrderRepository orderRepository, IAuthorizationService orderAuthorizationService, IItemRepository itemRepository)
     {
         _orderRepository = orderRepository;
         _authorizationService = orderAuthorizationService;
+        _itemRepository = itemRepository;
     }
 
     public async Task<ErrorOr<Guid>> Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
@@ -25,7 +28,9 @@ internal sealed class ConfirmOrderCommandHandler : ICommandRequestHandler<Confir
             return OrderErrorCodes.NotFound;
         }
 
-        var authorizeService = _authorizationService.IsUserAuthorized(order.CustomerId);
+        Guid? sellerId = _itemRepository.GetSellerId(order.ItemId);
+
+        var authorizeService = _authorizationService.IsUserAuthorized((Guid)sellerId!);
         
         if (authorizeService.IsError)
         {
