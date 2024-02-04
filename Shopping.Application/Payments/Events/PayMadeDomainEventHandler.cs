@@ -1,32 +1,28 @@
 ﻿using BuildingBlocks.Application.Events;
 using Shopping.Application.Common;
-using Shopping.Domain.Payments;
 using Shopping.Domain.Payments.DomainEvents;
+using Shopping.IntegrationEvents;
 
 namespace Shopping.Application.Payments.Events;
 
 internal sealed class PayMadeDomainEventHandler : IDomainEventHandler<PayMadeDomainEvent>
 {
-    private readonly IPaymentRepository _paymentRepository;
-    private readonly IShoppingUnitOfWork _unitOfWork;
+    private readonly IShoppingEventBus _eventBus;
 
-    public PayMadeDomainEventHandler(IPaymentRepository paymentRepository, IShoppingUnitOfWork unitOfWork)
+    public PayMadeDomainEventHandler(IShoppingEventBus eventBus)
     {
-        _paymentRepository = paymentRepository;
-        _unitOfWork = unitOfWork;
+        _eventBus = eventBus;
     }
 
     public async Task Handle(PayMadeDomainEvent notification, CancellationToken cancellationToken)
     {
-        Payment payment = Payment.Create(
-            notification.PaymentId,
-            notification.OrderId,
+        await _eventBus.PublishAsync(new PayMadeIntegrationEvent(
+            notification.DomainEventId,
+            notification.PaymentId.Value,
+            notification.OrderId.Value,
             notification.PayerId,
             notification.MoneyAmount,
-            notification.OcurredOn);
-
-        await _paymentRepository.AddAsync(payment);
-
-        await _unitOfWork.SaveChangesAsync();
+            notification.ProductId,
+            notification.OcurredOn));
     }
 }
