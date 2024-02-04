@@ -10,5 +10,5 @@ public interface IItemRepository
 
     Task DeleteAsync(ItemId id);
 
-    Guid? GetSellerIdAsync(ItemId itemId);
+    Guid? GetSellerId(ItemId itemId);
 }

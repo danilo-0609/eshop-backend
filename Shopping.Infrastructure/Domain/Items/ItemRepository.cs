@@ -83,7 +83,7 @@ internal sealed class ItemRepository : IItemRepository
             new SqlParameter("@ItemId", item.Id.Value));
     }
 
-    public Guid? GetSellerIdAsync(ItemId itemId)
+    public Guid? GetSellerId(ItemId itemId)
     {
         return _dbContext
             .Items
