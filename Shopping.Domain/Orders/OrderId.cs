@@ -1,4 +1,5 @@
 using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace Shopping.Domain.Orders;
 
@@ -10,6 +11,7 @@ public sealed record OrderId : AggregateRootId<Guid>
 
     public static OrderId CreateUnique() => new OrderId(Guid.NewGuid());
 
+    [JsonConstructor]
     private OrderId(Guid value)
     {
         Value = value;

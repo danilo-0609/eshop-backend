@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace Shopping.Domain.Orders;
 
@@ -16,6 +17,7 @@ public sealed record OrderStatus : ValueObject
 
     public string Value { get; set; }
 
+    [JsonConstructor]
     private OrderStatus(string value)
     {
         Value = value;
