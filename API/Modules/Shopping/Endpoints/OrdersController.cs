@@ -24,10 +24,10 @@ public sealed class OrdersController : ApiController
     }
 
     [HasPermission(Permissions.PlaceOrder)]
-    [HttpPost("place")]
-    public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequest request)
+    [HttpPost("place/{id}")]
+    public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequest request, Guid id)
     {
-        var command = new PlaceOrderCommand(request.ItemId, request.AmountRequested);
+        var command = new PlaceOrderCommand(id, request.AmountRequested);
 
         var response = await _sender.Send(command);
 
@@ -38,7 +38,7 @@ public sealed class OrdersController : ApiController
 
     [HasPermission(Permissions.PayOrder)]
     [HttpPost("pay/{id}")]
-    public async Task<IActionResult> PayOrder([FromHeader] Guid id)
+    public async Task<IActionResult> PayOrder(Guid id)
     {
         var command = new PayOrderCommand(id);
 
@@ -51,7 +51,7 @@ public sealed class OrdersController : ApiController
 
     [HasPermission(Permissions.ExpireOrder)]
     [HttpPut("expire/{id}")]
-    public async Task<IActionResult> ExpireOrder([FromHeader] Guid id)
+    public async Task<IActionResult> ExpireOrder(Guid id)
     {
         var command = new ExpireOrderCommand(id);
 
@@ -64,7 +64,7 @@ public sealed class OrdersController : ApiController
 
     [HasPermission(Permissions.ConfirmOrder)]
     [HttpPut("confirm/{id}")]
-    public async Task<IActionResult> ConfirmOrder([FromHeader] Guid id)
+    public async Task<IActionResult> ConfirmOrder(Guid id)
     {
         var command = new ConfirmOrderCommand(id);
 
@@ -77,7 +77,7 @@ public sealed class OrdersController : ApiController
 
     [HasPermission(Permissions.GetOrders)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrders([FromHeader] Guid id)
+    public async Task<IActionResult> GetOrders(Guid id)
     {
         var query = new GetOrderByIdQuery(id);
 
