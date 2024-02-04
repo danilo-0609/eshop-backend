@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Application.Events;
-using MediatR;
 using Shopping.Application.Common;
 using Shopping.Domain.Orders.Events;
 using Shopping.IntegrationEvents;
