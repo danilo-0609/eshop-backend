@@ -188,22 +188,22 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return cannotBePayedWhenOrderStatusIsNotConfirmed.FirstError;
         }
 
+        OrderStatus = OrderStatus.Payed;
+        PayedOn = payedOn;
+
         ErrorOr<Payment> pay = Payment.PayFromOrder(
-            Id,
-            TotalMoneyAmount,
-            AmountOfItems,
-            ItemId,
-            CustomerId,
-            actualStock,
-            stockStatus);
+        Id,
+        TotalMoneyAmount,
+        AmountOfItems,
+        ItemId,
+        CustomerId,
+        actualStock,
+        stockStatus);
 
         if (pay.IsError)
         {
             return pay.FirstError;
         }
-
-        OrderStatus = OrderStatus.Payed;
-        PayedOn = payedOn;
 
         Raise(new OrderPayedDomainEvent(
             Guid.NewGuid(),
