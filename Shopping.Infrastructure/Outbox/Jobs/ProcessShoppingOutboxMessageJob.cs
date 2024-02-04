@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BuildingBlocks.Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -36,8 +37,13 @@ internal sealed class ProcessShoppingOutboxMessageJob : IJob
 
         foreach (ShoppingOutboxMessage message in messages)
         {
-            var domainEvent = JsonConvert
-                .DeserializeObject(message.Content);
+            IDomainEvent? domainEvent = JsonConvert
+                .DeserializeObject<IDomainEvent>(
+                message.Content,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
 
             try
             {
