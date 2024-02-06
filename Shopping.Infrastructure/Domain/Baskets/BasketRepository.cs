@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit.NewIdProviders;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Shopping.Domain.Basket;
+using Shopping.Domain.Items;
+using Shopping.Domain.Orders;
 
 namespace Shopping.Infrastructure.Domain.Baskets;
 
@@ -34,6 +38,30 @@ internal sealed class BasketRepository : IBasketRepository
             .SingleOrDefaultAsync();
     }
 
+    public async Task<List<Guid>> GetBasketItemIdsAsync(Guid basketId)
+    {
+        List<Item> items = await _context
+            .Items
+            .FromSqlRaw(
+            @"SELECT TOP (100) PERCENT 
+	            i.ItemId,
+            FROM shopping.Items i 
+            INNER JOIN shopping.BasketItems bi ON i.ItemId = bi.ItemId
+            INNER JOIN shopping.Baskets b ON bi.BasketId = b.BasketId
+            WHERE b.BasketId = @BasketId;", 
+            new SqlParameter("@BasketId", basketId))
+            .ToListAsync();
+
+        var itemIds = new List<Guid>();
+
+        foreach (var item in items)
+        {
+            itemIds.Add(item.Id.Value);
+        }
+
+        return itemIds;
+    }
+
     public async Task UpdateAsync(Basket basket)
     {
         await _context
@@ -52,20 +80,24 @@ internal sealed class BasketRepository : IBasketRepository
 
     private async Task InsertBasket(Basket basket)
     {
+        SqlParameter updatedOn = basket.UpdatedOn != null ?
+            new SqlParameter("@UpdatedOn", basket.UpdatedOn) :
+            new SqlParameter("@UpdatedOn", DBNull.Value);
+
         await _context.Database.ExecuteSqlRawAsync(
-            "INSERT INTO shopping.Baskets (BasketId," +
+            @"INSERT INTO shopping.Baskets (BasketId, " +
             "CustomerId, " +
             "AmountOfProducts, " +
             "TotalAmount, " +
             "CreatedOn, " +
             "UpdatedOn)" +
-            "VALUES({0}, {1}, {2}, {3}, {4}, {5})",
-            basket.Id.Value,
-            basket.CustomerId,
-            basket.AmountOfProducts,
-            basket.TotalAmount,
-            basket.CreatedOn,
-            basket.UpdatedOn);
+            "VALUES(@Id, @CustomerId, @AmountOfProducts, @TotalAmount, @CreatedOn, @UpdatedOn)",
+            new SqlParameter("@Id", basket.Id.Value),
+            new SqlParameter("@CustomerId", basket.CustomerId),
+            new SqlParameter("@AmountOfProducts", basket.AmountOfProducts),
+            new SqlParameter("@TotalAmount", basket.TotalAmount),
+            new SqlParameter("@CreatedOn", basket.CreatedOn),
+            updatedOn);
     }
 
     private async Task InsertBasketItems(Basket basket)
@@ -73,10 +105,10 @@ internal sealed class BasketRepository : IBasketRepository
         foreach (var itemId in basket.ItemIds)
         {
             await _context.Database.ExecuteSqlRawAsync(
-            "INSERT INTO shopping.BasketItems (BasketId, ItemId) " +
-            "VALUES ({0}, {1})",
-            basket.Id.Value,
-            itemId);
+            @"INSERT INTO shopping.BasketItems (BasketId, ItemId) " +
+            "VALUES (@BasketId, @ItemId)",
+            new SqlParameter("@BasketId", basket.Id.Value),
+            new SqlParameter("@ItemId", itemId.Value));
         }
     }
 }
