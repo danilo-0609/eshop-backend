@@ -1,45 +1,37 @@
 using System.Data;
 using UserAccess.Application.Common;
-using Dapper;
 using ErrorOr;
-using UserAccess.Application.Abstractions;
 using UserAccess.Domain.Users.Errors;
+using UserAccess.Domain.Users;
 
 namespace UserAccess.Application.Users.GetUserById;
 
 internal sealed class GetUserByIdQueryHandler : IQueryRequestHandler<GetUserByIdQuery, ErrorOr<UserResponse>>
 {
-    private readonly IDbConnectionFactory _dbConnectionFactory;
+    private readonly IUserRepository _userRepository;
 
-    public GetUserByIdQueryHandler(IDbConnectionFactory dbConnectionFactory)
+    public GetUserByIdQueryHandler(IUserRepository userRepository)
     {
-        _dbConnectionFactory = dbConnectionFactory;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<UserResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        using IDbConnection connection = _dbConnectionFactory.CreateOpenConnection();
+        var user = await _userRepository.GetByIdAsync(UserId.Create(request.Id));
+        var roles = await _userRepository.GetRolesAsync(request.Id);
 
-        const string sql = 
-            """
-            SELECT u.UserId,
-            u.Login,
-            u.Name,
-            u.Email,
-            r.RoleCode as Role,
-            u.CreatedDateTime 
-            FROM users.Users u
-            INNER JOIN users.UsersRoles ur ON u.UserId = ur.UserId
-            INNER JOIN Roles r ON ur.RoleId = r.RoleId
-            WHERE u.UserId = @Id
-            """;
-
-        UserResponse? userResponse = await connection.QuerySingleOrDefaultAsync<UserResponse>(sql, new { request.Id} );
-    
-        if (userResponse is null)
+        if (user is null)
         {
             return UserErrorsCodes.NotFound;
         }
+
+        UserResponse userResponse = new UserResponse(
+            user.Id.Value,
+            user.Login,
+            user.Name,
+            user.Email,
+            roles.Select(d => d.RoleCode).ToList(),
+            user.CreatedDateTime);
 
         return userResponse;
     }
