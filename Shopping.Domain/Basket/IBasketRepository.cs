@@ -8,5 +8,7 @@ public interface IBasketRepository
 
     Task UpdateAsync(Basket basket);
 
-    Task DeleteAsync(Basket basket);    
+    Task DeleteAsync(Basket basket);
+
+    Task<List<Guid>> GetBasketItemIdsAsync(Guid basketId);
 }
