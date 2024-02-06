@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using API.Modules.Catalog.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Application.Baskets.AddItem;
@@ -25,9 +26,9 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.AddItemInBasket)]
     [HttpPost("add-item/{id}")]
-    public async Task<IActionResult> AddItemInBasket([FromHeader] Guid id, [FromBody] Guid itemId)
+    public async Task<IActionResult> AddItemInBasket(Guid id, [FromBody] BasketRequest request)
     {
-        var command = new AddItemToBasketCommand(id, itemId);
+        var command = new AddItemToBasketCommand(id, request.ItemId);
 
         var response = await _sender.Send(command);
 
@@ -38,7 +39,7 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.BuyBasket)]
     [HttpPost("buy/{id}")]
-    public async Task<IActionResult> BuyBasket([FromHeader] Guid id)
+    public async Task<IActionResult> BuyBasket(Guid id)
     {
         var command = new BuyBasketCommand(id);
 
@@ -51,9 +52,9 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.AddBasket)]
     [HttpPost("create")]
-    public async Task<IActionResult> CreateBasket([FromBody] Guid itemId)
+    public async Task<IActionResult> CreateBasket([FromBody] BasketRequest request)
     {
-        var command = new CreateBasketCommand(itemId);
+        var command = new CreateBasketCommand(request.ItemId);
 
         var response = await _sender.Send(command);
 
@@ -64,7 +65,7 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.DeleteBasket)]
     [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteBasket([FromHeader] Guid id)
+    public async Task<IActionResult> DeleteBasket(Guid id)
     {
         var command = new DeleteBasketCommand(id);
 
@@ -77,9 +78,9 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.DeleteBasketItem)]
     [HttpDelete("delete-item/{id}")]
-    public async Task<IActionResult> DeleteBasketItem([FromHeader] Guid id, Guid itemId)
+    public async Task<IActionResult> DeleteBasketItem(Guid id, [FromBody] BasketRequest request)
     {
-        var command = new DeleteItemFromBasketCommand(id, itemId);
+        var command = new DeleteItemFromBasketCommand(id, request.ItemId);
 
         var response = await _sender.Send(command);
 
@@ -90,7 +91,7 @@ public sealed class BasketsController : ApiController
 
     [HasPermission(Permissions.GetBasket)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetBasket([FromHeader] Guid id)
+    public async Task<IActionResult> GetBasket(Guid id)
     {
         var query = new GetBasketByIdQuery(id);
 

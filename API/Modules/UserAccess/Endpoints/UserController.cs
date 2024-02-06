@@ -1,7 +1,6 @@
 ﻿using API.Controllers;
 using API.Modules.UserAccess.Requests;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAccess.Application.Users.ChangeAddress;
 using UserAccess.Application.Users.ChangeLogin;
@@ -27,10 +26,10 @@ public class UserController : ApiController
     }
 
     [HttpGet("login")]
-    public async Task<IActionResult> LoginUser(LoginUserRequest loginUserRequest)
+    public async Task<IActionResult> LoginUser(LoginUserRequest loginUserRequest, CancellationToken cancellationToken)
     {
          var response = await _sender
-            .Send(new LoginUserQuery(loginUserRequest.Email, loginUserRequest.Password));
+            .Send(new LoginUserQuery(loginUserRequest.Email, loginUserRequest.Password), cancellationToken);
 
         if (response.IsError)
         {
@@ -42,10 +41,10 @@ public class UserController : ApiController
 
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/address/{id}")]
-    public async Task<IActionResult> ChangeUserAddress(ChangeAddressRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserAddress(ChangeAddressRequest request, Guid id, CancellationToken cancellationToken)
     {
         var response = await _sender
-            .Send(new ChangeEmailCommand(id, request.Address));
+            .Send(new ChangeEmailCommand(id, request.Address), cancellationToken);
 
         if (response.IsError)
         {
@@ -55,13 +54,12 @@ public class UserController : ApiController
         return NoContent();
     }
 
-    [Authorize]
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/email/{id}")]
-    public async Task<IActionResult> ChangeUserEmail([FromBody] ChangeEmailRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserEmail([FromBody] ChangeEmailRequest request, Guid id, CancellationToken cancellationToken)
     {
         var response = await _sender
-            .Send(new ChangeEmailCommand(id, request.Email));
+            .Send(new ChangeEmailCommand(id, request.Email), cancellationToken);
 
         if (response.IsError)
         {
@@ -71,13 +69,12 @@ public class UserController : ApiController
         return NoContent();
     }
 
-    [Authorize]
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/login/{id}")]
-    public async Task<IActionResult> ChangeUserLogin([FromBody] ChangeLoginRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserLogin([FromBody] ChangeLoginRequest request, Guid id, CancellationToken cancellationToken)
     {
         var response = await _sender
-            .Send(new ChangeLoginCommand(id, request.Login));
+            .Send(new ChangeLoginCommand(id, request.Login), cancellationToken);
 
         if (response.IsError)
         {
@@ -89,10 +86,10 @@ public class UserController : ApiController
 
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/name/{id}")]
-    public async Task<IActionResult> ChangeUserName([FromBody] ChangeUserNameRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserName([FromBody] ChangeUserNameRequest request, Guid id, CancellationToken cancellationToken)
     {
         var response = await _sender
-            .Send(new ChangeNameCommand(id, request.FirstName, request.LastName));
+            .Send(new ChangeNameCommand(id, request.FirstName, request.LastName), cancellationToken);
 
         if (response.IsError)
         {
@@ -104,10 +101,10 @@ public class UserController : ApiController
 
     [HasPermission(Permissions.ChangeUser)]
     [HttpPut("change/password/{id}")]
-    public async Task<IActionResult> ChangeUserPassword(ChangePasswordRequest request, Guid id)
+    public async Task<IActionResult> ChangeUserPassword(ChangePasswordRequest request, Guid id, CancellationToken cancellationToken)
     {
         var response = await _sender
-            .Send(new ChangePasswordCommand(id, request.ActualPassword, request.NewPassword));
+            .Send(new ChangePasswordCommand(id, request.ActualPassword, request.NewPassword), cancellationToken);
 
         if (response.IsError)
         {
@@ -118,10 +115,10 @@ public class UserController : ApiController
     }
 
     [HasPermission(Permissions.ReadUser)]
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(Guid id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _sender.Send(new GetUserByIdQuery(id));
+        var response = await _sender.Send(new GetUserByIdQuery(id), cancellationToken);
 
         if (response.IsError)
         {
@@ -133,9 +130,9 @@ public class UserController : ApiController
 
     [HasPermission(Permissions.RemoveUser)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> RemoveUser(Guid id)
+    public async Task<IActionResult> RemoveUser(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _sender.Send(new RemoveUserCommand(id));
+        var response = await _sender.Send(new RemoveUserCommand(id), cancellationToken);
         
         if (response.IsError)
         {

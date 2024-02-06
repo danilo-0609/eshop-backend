@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using API.Modules.Catalog.Requests;
 using Catalog.Application.Comments.AddComment;
 using Catalog.Application.Comments.DeleteComment;
 using Catalog.Application.Comments.GetAllComments;
@@ -23,9 +24,9 @@ public sealed class CommentsController : ApiController
 
     [HasPermission(Permissions.AddComment)]
     [HttpPost("publish/{id}")]
-    public async Task<IActionResult> AddComment([FromHeader] Guid id, [FromBody] string comment)
+    public async Task<IActionResult> AddComment(Guid id, [FromBody] CommentRequest request)
     {
-        var command = new AddCommentCommand(id, comment);
+        var command = new AddCommentCommand(id, request.Comment);
 
         var response = await _sender.Send(command);
 
@@ -36,7 +37,7 @@ public sealed class CommentsController : ApiController
 
     [HasPermission(Permissions.DeleteComment)]
     [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteComment([FromHeader] Guid id)
+    public async Task<IActionResult> DeleteComment(Guid id)
     {
         var command = new DeleteCommentCommand(id);
 
@@ -49,7 +50,7 @@ public sealed class CommentsController : ApiController
 
     [HasPermission(Permissions.GetComments)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAllComments([FromHeader] Guid id)
+    public async Task<IActionResult> GetAllComments(Guid id)
     {
         var query = new GetAllCommentsQuery(id);
 
@@ -62,9 +63,9 @@ public sealed class CommentsController : ApiController
 
     [HasPermission(Permissions.UpdateComment)]
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateComment([FromHeader] Guid id, [FromBody] string comment)
+    public async Task<IActionResult> UpdateComment(Guid id, [FromBody] CommentRequest request)
     {
-        var command = new UpdateCommentCommand(id, comment);
+        var command = new UpdateCommentCommand(id, request.Comment);
 
         var response = await _sender.Send(command);
 

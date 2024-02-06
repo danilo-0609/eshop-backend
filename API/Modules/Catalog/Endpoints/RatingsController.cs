@@ -24,7 +24,7 @@ public sealed class RatingsController : ApiController
 
     [HasPermission(Permissions.AddRating)]
     [HttpPost("publish/{id}")]
-    public async Task<IActionResult> AddRating([FromHeader] Guid id, [FromBody] AddRatingRequest request)
+    public async Task<IActionResult> AddRating(Guid id, [FromBody] AddRatingRequest request)
     {
         var command = new AddRatingCommand(id, request.Rate, request.Feedback);
 
@@ -37,7 +37,7 @@ public sealed class RatingsController : ApiController
 
     [HasPermission(Permissions.UpdateRating)]
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateRating([FromHeader] Guid id, [FromBody] AddRatingRequest request)
+    public async Task<IActionResult> UpdateRating(Guid id, [FromBody] AddRatingRequest request)
     {
         var command = new ChangeRatingCommand(id, request.Rate, request.Feedback);
 
@@ -50,7 +50,7 @@ public sealed class RatingsController : ApiController
 
     [HasPermission(Permissions.DeleteRating)]
     [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteRating([FromHeader] Guid id)
+    public async Task<IActionResult> DeleteRating(Guid id)
     {
         var command = new DeleteRatingCommand(id);
 
@@ -63,7 +63,7 @@ public sealed class RatingsController : ApiController
 
     [HasPermission(Permissions.GetRatings)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAllRatings([FromHeader] Guid id)
+    public async Task<IActionResult> GetAllRatings(Guid id)
     {
         var query = new GetAllRatingsByProductIdQuery(id);
 
