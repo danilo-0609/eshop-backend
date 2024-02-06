@@ -3,7 +3,7 @@
 public sealed record BasketResponse(
     Guid BasketId,
     Guid CustomerId,
-    IReadOnlyList<Guid> ItemIds,
+    List<Guid> ItemIds,
     int AmountOfProducts,
     decimal TotalAmount,
     DateTime CreatedOn);
