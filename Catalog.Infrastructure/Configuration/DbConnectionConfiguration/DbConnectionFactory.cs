@@ -1,6 +1,7 @@
 ﻿using Catalog.Application.Common;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Data;
 
 namespace Catalog.Infrastructure.Configuration.DbConnectionConfiguration;
