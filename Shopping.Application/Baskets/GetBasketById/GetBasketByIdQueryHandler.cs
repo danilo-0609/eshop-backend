@@ -31,13 +31,12 @@ internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasket
             return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
+        List<Guid> itemIds = await _basketRepository.GetBasketItemIdsAsync(request.BasketId);
+
         BasketResponse basketResponse = new(
             basket.Id.Value,
             basket.CustomerId,
-            basket.ItemIds
-                .Select(r => r.Value)
-                .ToList()
-                .AsReadOnly(),
+            itemIds,
             basket.AmountOfProducts,
             basket.TotalAmount,
             basket.CreatedOn);
