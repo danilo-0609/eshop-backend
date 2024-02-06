@@ -1,6 +1,5 @@
-using Catalog.Domain.Products.Rules;
-
 namespace Catalog.Domain.Products;
+
 public interface IProductRepository
 {
     Task AddAsync(Product product);
@@ -17,5 +16,7 @@ public interface IProductRepository
 
     Task<List<Product>?> GetByTagAsync(string tag);
 
-    Task<List<Product>?> GetByProductTypeAsync(ProductType productType); 
+    Task<List<Product>?> GetByProductTypeAsync(ProductType productType);
+
+    Task<bool> ExistsAsync(ProductId productId, CancellationToken cancellationToken);
 }
