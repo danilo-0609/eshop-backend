@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "UjQ/v1teYpOasP1GlW42T/HJ3Gf2F48/+4ksYpqvSGPNrif57XONaoqWVCVQPKpdNmBZHNlXBx+kS87lgUnYeg==",
+  "dgSpecHash": "DZsAWAtrvr/wR9hz/v1DDd+kS95obPmi2oCZp6/WBu8hTDK1vi506nInPei2wTPpW9WjhZrK/DA/NnmZYwmtwA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Desktop\\eShop-backend\\Catalog.Domain\\Catalog.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\erroror\\1.9.0\\erroror.1.9.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
-    "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+    "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

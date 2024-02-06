@@ -403,3 +403,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\refint\Cat
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\Catalog.Tests.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\Catalog.Tests.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\ref\Catalog.Tests.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\bin\Debug\net7.0\Azure.Security.KeyVault.Secrets.dll

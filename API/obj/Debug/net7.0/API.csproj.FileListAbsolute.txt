@@ -246,3 +246,4 @@ C:\Users\Usuario\Desktop\eShop-backend\API\obj\Debug\net7.0\refint\API.dll
 C:\Users\Usuario\Desktop\eShop-backend\API\obj\Debug\net7.0\API.pdb
 C:\Users\Usuario\Desktop\eShop-backend\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\eShop-backend\API\obj\Debug\net7.0\ref\API.dll
+C:\Users\Usuario\Desktop\eShop-backend\API\bin\Debug\net7.0\Azure.Security.KeyVault.Secrets.dll

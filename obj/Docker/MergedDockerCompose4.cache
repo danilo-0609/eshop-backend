@@ -1,0 +1,68 @@
+name: dockercompose12793996165672063462
+services:
+  api:
+    build:
+      context: C:\Users\Usuario\Desktop\eShop-backend
+      dockerfile: API/Dockerfile
+    depends_on:
+      eshop-mq:
+        condition: service_started
+        required: true
+      eshop.db:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: api
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        protocol: tcp
+      - mode: ingress
+        target: 80
+        published: "5000"
+        protocol: tcp
+  eshop-mq:
+    container_name: Queue
+    environment:
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: guest
+    hostname: eshop-queue
+    image: rabbitmq:3.11.7-management
+    networks:
+      default: null
+    volumes:
+      - type: bind
+        source: C:\Users\Usuario\Desktop\eShop-backend\.containers\queue\data
+        target: /var/lib/rabbitmq
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Usuario\Desktop\eShop-backend\.containers\queue\data
+        target: /var/log/rabbitmq
+        bind:
+          create_host_path: true
+  eshop.db:
+    container_name: Eshop.Db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: SqlP@ssword123
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Usuario\Desktop\eShop-backend\.containers\database
+        target: /var/opt/mssql/data
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose12793996165672063462_default

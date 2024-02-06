@@ -20,6 +20,14 @@ internal sealed class ProductRepository : IProductRepository
         await _dbContext.Products.AddAsync(product);
     }
 
+    public async Task<bool> ExistsAsync(ProductId productId, CancellationToken cancellationToken)
+    {
+        return await _dbContext
+            .Products
+            .AnyAsync(r => r.Id == productId, 
+                cancellationToken);
+    }
+
     public async Task<Product?> GetByIdAsync(ProductId productId)
     {
         return await _dbContext

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: api:dev
+    image: danilo0609/api:dev
     container_name: "API"
     build:
       target: base
