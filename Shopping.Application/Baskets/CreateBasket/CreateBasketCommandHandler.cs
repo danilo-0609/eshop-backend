@@ -31,6 +31,7 @@ internal sealed class CreateBasketCommandHandler : ICommandRequestHandler<Create
         Basket basket = Basket.Create(_executionContextAccessor.UserId,
             item.Id,
             item.Price,
+            request.Amount,
             DateTime.UtcNow);
 
         await _basketRepository.AddAsync(basket);

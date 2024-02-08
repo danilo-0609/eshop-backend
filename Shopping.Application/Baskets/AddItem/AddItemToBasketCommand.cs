@@ -5,4 +5,5 @@ namespace Shopping.Application.Baskets.AddItem;
 
 public sealed record AddItemToBasketCommand(
     Guid BasketId, 
-    Guid ItemId) : ICommandRequest<ErrorOr<Guid>>;
+    Guid ItemId,
+    int Amount) : ICommandRequest<ErrorOr<Guid>>;

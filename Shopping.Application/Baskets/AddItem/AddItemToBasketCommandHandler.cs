@@ -41,9 +41,9 @@ internal sealed class AddItemToBasketCommandHandler : ICommandRequestHandler<Add
             return Error.NotFound("Item.NotFound", "Item was not found. Cannot be added to the basket");
         }
 
-        basket.AddItem(item.Id);
+        var update = basket.Update(DateTime.UtcNow, item.Id, basket.AmountOfProducts, request.Amount);
 
-        await _basketRepository.UpdateAsync(basket);
+        await _basketRepository.UpdateAsync(update);
 
         return basket.Id.Value;
     }
