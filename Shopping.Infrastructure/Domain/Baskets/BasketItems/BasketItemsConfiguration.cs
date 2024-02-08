@@ -16,5 +16,8 @@ internal sealed class BasketItemsConfiguration : IEntityTypeConfiguration<Basket
 
         builder.Property(p => p.ItemId)
             .HasColumnName("ItemId");
+
+        builder.Property(p => p.AmountPerItem)
+            .HasColumnName("AmountPerItem");
     }
 }
