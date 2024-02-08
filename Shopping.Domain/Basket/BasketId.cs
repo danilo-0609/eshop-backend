@@ -1,6 +1,7 @@
 using BuildingBlocks.Domain;
 
 namespace Shopping.Domain.Basket;
+
 public sealed record BasketId : AggregateRootId<Guid>
 {
     public override Guid Value { get; protected set; }
