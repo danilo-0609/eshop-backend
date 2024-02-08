@@ -28,7 +28,7 @@ public sealed class BasketsController : ApiController
     [HttpPost("add-item/{id}")]
     public async Task<IActionResult> AddItemInBasket(Guid id, [FromBody] BasketRequest request)
     {
-        var command = new AddItemToBasketCommand(id, request.ItemId);
+        var command = new AddItemToBasketCommand(id, request.ItemId, request.Amount);
 
         var response = await _sender.Send(command);
 
@@ -54,7 +54,7 @@ public sealed class BasketsController : ApiController
     [HttpPost("create")]
     public async Task<IActionResult> CreateBasket([FromBody] BasketRequest request)
     {
-        var command = new CreateBasketCommand(request.ItemId);
+        var command = new CreateBasketCommand(request.ItemId, request.Amount);
 
         var response = await _sender.Send(command);
 
