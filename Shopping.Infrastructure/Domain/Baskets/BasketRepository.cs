@@ -36,28 +36,21 @@ internal sealed class BasketRepository : IBasketRepository
             .SingleOrDefaultAsync();
     }
 
-    public async Task<List<Guid>> GetBasketItemIdsAsync(Guid basketId)
+    public async Task<Dictionary<Guid, int>> GetBasketItemIdsAsync(Guid basketId)
     {
-        List<Item> itemIds = await _context.Items
-        .FromSqlRaw(
-        @"SELECT    
-            i.ItemId,
-            i.Name,
-            i.SellerId,
-            i.Price,
-            i.InStock,
-            i.StockStatus,
-            i.CreatedOn,
-            i.UpdatedOn
-          FROM shopping.Items i 
-          INNER JOIN shopping.BasketItems bi ON i.ItemId = bi.ItemId
-          INNER JOIN shopping.Baskets b ON bi.BasketId = b.BasketId
-          WHERE b.BasketId = {0}",
-        basketId)
-       .ToListAsync();
+        Dictionary<Guid, int> amountsPerItem = await _context
+            .BasketItems
+            .FromSqlRaw(
+            @"SELECT TOP (100) PERCENT
+                bi.ItemId,
+                bi.AmountPerItem
+            FROM shopping.BasketItems bi
+            WHERE BasketId = @BasketId",
+            new SqlParameter("@BasketId", basketId))
+            .Select(r => new { r.ItemId, r.AmountPerItem })
+            .ToDictionaryAsync(i => i.ItemId, o => o.AmountPerItem);
 
-
-        return itemIds.Select(r => r.Id.Value).ToList();
+        return amountsPerItem;
     }
 
     public async Task UpdateAsync(Basket basket)

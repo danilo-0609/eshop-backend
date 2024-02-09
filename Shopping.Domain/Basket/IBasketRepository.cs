@@ -10,5 +10,5 @@ public interface IBasketRepository
 
     Task DeleteAsync(Basket basket);
 
-    Task<List<Guid>> GetBasketItemIdsAsync(Guid basketId);
+    Task<Dictionary<Guid, int>> GetBasketItemIdsAsync(Guid basketId);
 }

@@ -104,13 +104,13 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
         _itemIds.Remove(itemId);
     }
 
-    public void Buy()
+    public void Buy(Dictionary<Guid, int> amountsPerItem)
     {
         Raise(new BasketBuyRequestedDomainEvent(
             Guid.NewGuid(),
             Id,
             CustomerId,
-            ItemIds,
+            amountsPerItem,
             TotalAmount,
             DateTime.UtcNow));
     }
