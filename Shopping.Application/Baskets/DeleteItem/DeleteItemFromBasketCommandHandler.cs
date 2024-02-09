@@ -35,7 +35,7 @@ internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandle
 
         if (!basket.ItemIds.Any(r => r.Value == request.ItemId))
         {
-            return Error.NotFound("Item.NotFoundInBasket", "Item was not found in the basket");
+            return ItemErrorCodes.NotFound;
         }
 
         basket.RemoveItem(ItemId.Create(request.ItemId));

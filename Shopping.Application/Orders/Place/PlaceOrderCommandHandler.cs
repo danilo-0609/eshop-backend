@@ -25,7 +25,7 @@ internal sealed class PlaceOrderCommandHandler : ICommandRequestHandler<PlaceOrd
 
         if (item is null)
         {
-            return Error.NotFound("Item.NotFound", "Item was not found");
+            return ItemErrorCodes.NotFound;
         }
 
         ErrorOr<Order> order = Order.Place(

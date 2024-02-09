@@ -38,7 +38,7 @@ internal sealed class AddItemToWishListCommandHandler : ICommandRequestHandler<A
 
         if (item is null)
         {
-            return Error.NotFound("Item.NotFound", "Item was not found");
+            return ItemErrorCodes.NotFound;
         }
 
         wish.AddItem(item.Id);

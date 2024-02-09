@@ -33,6 +33,13 @@ internal sealed class RemoveItemFromWishListCommandHandler : ICommandRequestHand
             return WishErrorCodes.UserNotAuthorizedToAccess;
         }
 
+        bool item = wish.Items.Any(r => r.Value == request.ItemId);
+
+        if (item is false)
+        {
+            return ItemErrorCodes.NotFound;
+        }
+
         wish.RemoveItem(ItemId.Create(request.ItemId));
 
         await _wishRepository.UpdateAsync(wish);

@@ -31,7 +31,9 @@ internal sealed class BuyBasketCommandHandler : ICommandRequestHandler<BuyBasket
             return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
-        basket.Buy();
+        Dictionary<Guid, int> amountPerItems = await _basketRepository.GetBasketItemIdsAsync(basket.Id.Value);
+
+        basket.Buy(amountPerItems);
 
         return basket.Id.Value;
     }

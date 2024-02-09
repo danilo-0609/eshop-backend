@@ -26,7 +26,7 @@ internal sealed class CreateWishListCommandHandler : ICommandRequestHandler<Crea
 
         if (item is null)
         {
-            return Error.NotFound("Item.NotFound", "Item was not found");
+            return ItemErrorCodes.NotFound;
         }
 
         Wish wish = Wish.Create(

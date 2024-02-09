@@ -25,7 +25,7 @@ internal sealed class CreateBasketCommandHandler : ICommandRequestHandler<Create
 
         if (item is null)
         {
-            return Error.NotFound("Item.NotFound", "Item was not found and cannot be added to the basket");
+            return ItemErrorCodes.NotFound;
         }
 
         Basket basket = Basket.Create(_executionContextAccessor.UserId,

@@ -39,7 +39,7 @@ internal sealed class PayOrderCommandHandler : ICommandRequestHandler<PayOrderCo
 
         if (item is null)
         {
-            return Error.NotFound("Item.NotFound", "Item in the order was not found");
+            return ItemErrorCodes.NotFound;
         }
 
         var pay = order.Pay(DateTime.UtcNow,
