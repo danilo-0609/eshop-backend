@@ -24,6 +24,11 @@ internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler
 
     public async Task Handle(BasketBuyRequestedDomainEvent notification, CancellationToken cancellationToken)
     {
+        await PlaceOrders(notification);
+    }
+
+    private async Task PlaceOrders(BasketBuyRequestedDomainEvent notification)
+    {
         foreach (Guid itemId in notification.ItemIds.Keys)
         {
             var item = await _itemRepository.GetByIdAsync(ItemId.Create(itemId));
@@ -33,10 +38,10 @@ internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler
                 notification.CustomerId,
                 item.SellerId,
                 DateTime.UtcNow,
-                1,
+                notification.ItemIds[itemId],
                 item.InStock,
-                notification.TotalAmount,
-                item.StockStatus); 
+                item.Price,
+                item.StockStatus);
 
             if (order.IsError)
             {
@@ -46,12 +51,8 @@ internal sealed class BasketBuyRequestedDomainEventHandler : IDomainEventHandler
             }
 
             await _orderRepository.AddAsync(order.Value);
-            
-            await _unitOfWork.SaveChangesAsync();
         }
 
-        Basket? basket = await _basketRepository.GetByIdAsync(notification.BasketId);
-
-        basket!.ClearBasket();
+        await _unitOfWork.SaveChangesAsync();
     }
 }
