@@ -8,9 +8,9 @@ internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavio
     where TRequest : ICommandRequest<TResponse>
     where TResponse : IErrorOr
 {
-    private readonly IShoppingUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UnitOfWorkBehavior(IShoppingUnitOfWork unitOfWork)
+    public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
