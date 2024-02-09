@@ -1,4 +1,5 @@
 using BuildingBlocks.Domain;
+using Newtonsoft.Json;
 
 namespace Shopping.Domain.Basket;
 
@@ -10,6 +11,7 @@ public sealed record BasketId : AggregateRootId<Guid>
 
     public static BasketId CreateUnique() => new BasketId(Guid.NewGuid());
 
+    [JsonConstructor]
     private BasketId(Guid value)
     {
         Value = value;
