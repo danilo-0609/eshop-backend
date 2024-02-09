@@ -10,11 +10,13 @@ internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandle
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IAuthorizationService _authorizationService;
+    private readonly IItemRepository _itemRepository;
 
-    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository, IAuthorizationService authorizationService)
+    public DeleteItemFromBasketCommandHandler(IBasketRepository basketRepository, IAuthorizationService authorizationService, IItemRepository itemRepository)
     {
         _basketRepository = basketRepository;
         _authorizationService = authorizationService;
+        _itemRepository = itemRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteItemFromBasketCommand request, CancellationToken cancellationToken)
@@ -33,12 +35,20 @@ internal sealed class DeleteItemFromBasketCommandHandler : ICommandRequestHandle
             return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
-        if (!basket.ItemIds.Any(r => r.Value == request.ItemId))
+        Dictionary<Guid, int>? items = await _basketRepository.GetBasketItemIdsAsync(request.BasketId);
+
+        if (!items.Any(r => r.Key == request.ItemId))
         {
             return ItemErrorCodes.NotFound;
         }
 
-        basket.RemoveItem(ItemId.Create(request.ItemId));
+        var item = await _itemRepository.GetByIdAsync(ItemId.Create(request.ItemId));
+
+        await _basketRepository.DeleteItemInBasketIdAsync(
+            request.ItemId, 
+            request.BasketId, 
+            basket.AmountOfProducts - items[request.ItemId],
+            basket.TotalAmount - item!.Price);
 
         return Unit.Value;
     }
