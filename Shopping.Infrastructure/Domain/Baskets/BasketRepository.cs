@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Shopping.Domain.Basket;
 using Shopping.Domain.Items;
 
@@ -22,10 +23,8 @@ internal sealed class BasketRepository : IBasketRepository
 
     public async Task DeleteAsync(Basket basket)
     {
-        await _context
-            .Baskets
-            .Where(d => d.Id == basket.Id)
-            .ExecuteDeleteAsync();
+        await DeleteBasketItemIdsAsync(basket.Id.Value);
+        await DeleteBasket(basket.Id.Value);
     }
 
     public async Task<Basket?> GetByIdAsync(BasketId basketId)
@@ -51,6 +50,47 @@ internal sealed class BasketRepository : IBasketRepository
             .ToDictionaryAsync(i => i.ItemId, o => o.AmountPerItem);
 
         return amountsPerItem;
+    }
+
+    private async Task DeleteBasket(Guid basketId)
+    {
+        await _context
+            .Database
+            .ExecuteSqlRawAsync(
+            @"DELETE FROM shopping.Baskets 
+              WHERE BasketId = @BasketId",
+            new SqlParameter("@BasketId", basketId));
+    }
+
+    public async Task DeleteBasketItemIdsAsync(Guid basketId)
+    {
+        await _context
+            .Database
+            .ExecuteSqlRawAsync(
+            @"DELETE FROM shopping.BasketItems
+            WHERE BasketId = @BasketId",
+            new SqlParameter("@BasketId", basketId));
+    }
+
+    public async Task DeleteItemInBasketIdAsync(Guid itemId, Guid basketId, int amount, decimal moneyAmount)
+    {
+        await _context
+        .Database
+        .ExecuteSqlRawAsync(
+        @"DELETE FROM shopping.BasketItems
+          WHERE ItemId = @ItemId AND 
+                BasketId = @BasketId",
+        new SqlParameter("@ItemId", itemId),
+        new SqlParameter("@BasketId", basketId));
+
+        await _context
+            .Database
+            .ExecuteSqlRawAsync(
+            @"UPDATE shopping.Baskets
+            SET AmountOfProducts = @AmountOfProducts,
+            TotalAmount = @TotalAmount",
+            new SqlParameter("@AmountOfProducts", amount),
+            new SqlParameter("@TotalAmount", moneyAmount));
     }
 
     public async Task UpdateAsync(Basket basket)
@@ -109,6 +149,13 @@ internal sealed class BasketRepository : IBasketRepository
                 .BasketItems
                 .Any(r => r.ItemId == itemId.Value && r.BasketId == basket.Id.Value))
             {
+                await _context.Database.ExecuteSqlRawAsync(
+                @"UPDATE shopping.BasketItems 
+                  SET AmountPerItem = @AmountPerItem 
+                  WHERE ItemId = @ItemId",
+                new SqlParameter("@AmountPerItem", basket.AmountPerItem[itemId.Value]),
+                new SqlParameter("@ItemId", itemId.Value));
+                    
                 continue;
             }
 
