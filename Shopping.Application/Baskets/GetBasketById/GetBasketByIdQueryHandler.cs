@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using MassTransit.Initializers;
 using Shopping.Application.Common;
 using Shopping.Domain.Basket;
 
@@ -31,12 +32,12 @@ internal sealed class GetBasketByIdQueryHandler : IQueryRequestHandler<GetBasket
             return BasketErrorCodes.UserNotAuthorizedToAccess;
         }
 
-        List<Guid> itemIds = await _basketRepository.GetBasketItemIdsAsync(request.BasketId);
+        Dictionary<Guid, int> itemIds = await _basketRepository.GetBasketItemIdsAsync(request.BasketId);
 
         BasketResponse basketResponse = new(
             basket.Id.Value,
             basket.CustomerId,
-            itemIds,
+            itemIds.AsReadOnly(),
             basket.AmountOfProducts,
             basket.TotalAmount,
             basket.CreatedOn);
