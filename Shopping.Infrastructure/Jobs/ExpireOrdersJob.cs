@@ -12,9 +12,9 @@ internal sealed class ExpireOrdersJob : IJob
     private readonly ShoppingDbContext _dbContext;
     private readonly ILogger<ExpireOrdersJob> _logger;
     private readonly IOrderRepository _orderRepository;
-    private readonly IShoppingUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ExpireOrdersJob(ShoppingDbContext dbContext, ILogger<ExpireOrdersJob> logger, IOrderRepository orderRepository, IShoppingUnitOfWork unitOfWork)
+    public ExpireOrdersJob(ShoppingDbContext dbContext, ILogger<ExpireOrdersJob> logger, IOrderRepository orderRepository, IUnitOfWork unitOfWork)
     {
         _dbContext = dbContext;
         _logger = logger;

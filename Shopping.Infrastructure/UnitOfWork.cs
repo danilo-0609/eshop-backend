@@ -5,7 +5,7 @@ using Shopping.Infrastructure.Outbox;
 
 namespace Shopping.Infrastructure;
 
-internal sealed class UnitOfWork : IShoppingUnitOfWork
+internal sealed class UnitOfWork : IUnitOfWork
 {
     private readonly ShoppingDbContext _dbContext;
 
