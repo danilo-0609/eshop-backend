@@ -75,12 +75,16 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
         return basket;
     }
 
-    public Basket Update(DateTime updatedOn, ItemId itemId, int actualAmountOfProducts, int amountRequested)
+    public Basket Update(DateTime updatedOn, 
+        ItemId itemId, 
+        int actualAmountOfProducts, 
+        int amountRequested,
+        decimal moneyAmount)
     {
         Basket basket = new Basket(
             Id,
             CustomerId,
-            TotalAmount,
+            TotalAmount + moneyAmount,
             CreatedOn,
             actualAmountOfProducts,
             updatedOn);
@@ -118,6 +122,7 @@ public sealed class Basket : AggregateRoot<BasketId, Guid>
     public void ClearBasket()
     {
         _itemIds.Clear();
+        _amountPerItem.Clear();
     }
 
     private Basket(){}

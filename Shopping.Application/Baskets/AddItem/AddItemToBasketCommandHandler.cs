@@ -41,7 +41,7 @@ internal sealed class AddItemToBasketCommandHandler : ICommandRequestHandler<Add
             return ItemErrorCodes.NotFound;
         }
 
-        var update = basket.Update(DateTime.UtcNow, item.Id, basket.AmountOfProducts, request.Amount);
+        var update = basket.Update(DateTime.UtcNow, item.Id, basket.AmountOfProducts, request.Amount, item.Price);
 
         await _basketRepository.UpdateAsync(update);
 
