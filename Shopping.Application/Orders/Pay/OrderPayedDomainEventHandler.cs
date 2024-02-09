@@ -10,10 +10,10 @@ namespace Shopping.Application.Orders.Pay;
 internal sealed class OrderPayedDomainEventHandler : IDomainEventHandler<OrderPayedDomainEvent>
 {
     private readonly IShoppingEventBus _shoppingEventBus;
-    private readonly IShoppingUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPaymentRepository _paymentRepository;
 
-    public OrderPayedDomainEventHandler(IShoppingEventBus shoppingEventBus, IShoppingUnitOfWork unitOfWork, IPaymentRepository paymentRepository)
+    public OrderPayedDomainEventHandler(IShoppingEventBus shoppingEventBus, IUnitOfWork unitOfWork, IPaymentRepository paymentRepository)
     {
         _shoppingEventBus = shoppingEventBus;
         _unitOfWork = unitOfWork;
