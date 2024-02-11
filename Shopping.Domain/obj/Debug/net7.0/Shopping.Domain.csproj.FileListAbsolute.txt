@@ -28,3 +28,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Shopping.Domain\obj\Debug\net7.0\Shopping
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Domain\obj\Debug\net7.0\refint\Shopping.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Domain\obj\Debug\net7.0\Shopping.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Domain\obj\Debug\net7.0\ref\Shopping.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.Domain\obj\Debug\net7.0\Shopping.Domain.sourcelink.json

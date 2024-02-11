@@ -44,3 +44,4 @@ C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Application\obj\Debug\net7.0\U
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Application\obj\Debug\net7.0\refint\UserAccess.Application.dll
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Application\obj\Debug\net7.0\UserAccess.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Application\obj\Debug\net7.0\ref\UserAccess.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Application\obj\Debug\net7.0\UserAccess.Application.sourcelink.json

@@ -25,3 +25,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Shopping.Infrastructure\obj\Debug\net7.0\
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Infrastructure\obj\Debug\net7.0\refint\Shopping.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Infrastructure\obj\Debug\net7.0\Shopping.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Infrastructure\obj\Debug\net7.0\ref\Shopping.Infrastructure.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.Infrastructure\obj\Debug\net7.0\Shopping.Infrastructure.sourcelink.json

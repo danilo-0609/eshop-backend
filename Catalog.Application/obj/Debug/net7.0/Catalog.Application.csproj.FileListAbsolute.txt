@@ -44,3 +44,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Catalog.Application\obj\Debug\net7.0\Cata
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Application\obj\Debug\net7.0\refint\Catalog.Application.dll
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Application\obj\Debug\net7.0\Catalog.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Application\obj\Debug\net7.0\ref\Catalog.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Application\obj\Debug\net7.0\Catalog.Application.sourcelink.json

@@ -32,3 +32,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Catalog.IntegrationEvents\obj\Debug\net7.
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.IntegrationEvents\obj\Debug\net7.0\refint\Catalog.IntegrationEvents.dll
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.IntegrationEvents\obj\Debug\net7.0\Catalog.IntegrationEvents.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.IntegrationEvents\obj\Debug\net7.0\ref\Catalog.IntegrationEvents.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.IntegrationEvents\obj\Debug\net7.0\Catalog.IntegrationEvents.sourcelink.json

@@ -15,6 +15,8 @@ using UserAccess.Infrastructure.EventsBus;
 using UserAccess.Infrastructure.Outbox.BackgroundJobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using UserAccess.Application.Common;
+using UserAccess.Infrastructure.Blobs;
 
 namespace UserAccess.Infrastructure;
 
@@ -45,6 +47,8 @@ public static class DependencyInjection
         services.AddScoped<IUserRegistrationRepository, UserRegistrationRepository>();
 
         services.AddScoped<IUsersCounter, UserRegistrationRepository>();
+
+        services.AddScoped<IBlobRepository, BlobRepository>();
 
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
 

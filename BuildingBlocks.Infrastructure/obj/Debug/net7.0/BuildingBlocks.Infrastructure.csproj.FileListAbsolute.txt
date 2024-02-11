@@ -21,3 +21,4 @@ C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Infrastructure\obj\Debug\n
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Infrastructure\obj\Debug\net7.0\refint\BuildingBlocks.Infrastructure.dll
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Infrastructure\obj\Debug\net7.0\BuildingBlocks.Infrastructure.pdb
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Infrastructure\obj\Debug\net7.0\ref\BuildingBlocks.Infrastructure.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Infrastructure\obj\Debug\net7.0\BuildingBlocks.Infrastructure.sourcelink.json

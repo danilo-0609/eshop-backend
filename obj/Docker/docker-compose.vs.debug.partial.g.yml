@@ -5,6 +5,8 @@ services:
     image: danilo0609/api:dev
     container_name: "API"
     build:
+      args:
+        BUILD_CONFIGURATION: Debug
       target: base
       labels:
         com.microsoft.created-by: "visual-studio"

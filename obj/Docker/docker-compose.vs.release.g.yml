@@ -4,6 +4,8 @@ services:
   api:
     container_name: "API"
     build:
+      args:
+        BUILD_CONFIGURATION: Release
       labels:
         com.microsoft.created-by: "visual-studio"
         com.microsoft.visual-studio.project-name: "API"

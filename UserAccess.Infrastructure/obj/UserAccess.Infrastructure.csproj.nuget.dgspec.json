@@ -300,6 +300,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.19.1, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.1.24, )"
@@ -459,6 +463,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.19.1, )"
+            },
             "MassTransit": {
               "target": "Package",
               "version": "[8.1.2, )"

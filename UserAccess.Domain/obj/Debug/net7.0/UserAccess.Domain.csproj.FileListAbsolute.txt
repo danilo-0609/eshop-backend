@@ -28,3 +28,4 @@ C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Domain\obj\Debug\net7.0\UserAc
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Domain\obj\Debug\net7.0\refint\UserAccess.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Domain\obj\Debug\net7.0\UserAccess.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Domain\obj\Debug\net7.0\ref\UserAccess.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\UserAccess.Domain\obj\Debug\net7.0\UserAccess.Domain.sourcelink.json

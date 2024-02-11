@@ -404,3 +404,7 @@ C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\Catalog.Te
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\Catalog.Tests.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\ref\Catalog.Tests.dll
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\bin\Debug\net7.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\obj\Debug\net7.0\Catalog.Tests.sourcelink.json
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\bin\Debug\net7.0\Microsoft.Bcl.TimeProvider.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\bin\Debug\net7.0\Polly.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Tests\bin\Debug\net7.0\Polly.Core.dll

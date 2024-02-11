@@ -22,3 +22,4 @@ C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\Bu
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\refint\BuildingBlocks.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\ref\BuildingBlocks.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\BuildingBlocks.Domain\obj\Debug\net7.0\BuildingBlocks.Domain.sourcelink.json

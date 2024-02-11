@@ -28,3 +28,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Catalog.Domain\obj\Debug\net7.0\Catalog.D
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Domain\obj\Debug\net7.0\refint\Catalog.Domain.dll
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Domain\obj\Debug\net7.0\Catalog.Domain.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Catalog.Domain\obj\Debug\net7.0\ref\Catalog.Domain.dll
+C:\Users\Usuario\Desktop\eShop-backend\Catalog.Domain\obj\Debug\net7.0\Catalog.Domain.sourcelink.json

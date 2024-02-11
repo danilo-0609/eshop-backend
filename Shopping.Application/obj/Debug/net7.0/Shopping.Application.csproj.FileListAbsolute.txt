@@ -44,3 +44,4 @@ C:\Users\Usuario\Desktop\eShop-backend\Shopping.Application\obj\Debug\net7.0\Sho
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Application\obj\Debug\net7.0\refint\Shopping.Application.dll
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Application\obj\Debug\net7.0\Shopping.Application.pdb
 C:\Users\Usuario\Desktop\eShop-backend\Shopping.Application\obj\Debug\net7.0\ref\Shopping.Application.dll
+C:\Users\Usuario\Desktop\eShop-backend\Shopping.Application\obj\Debug\net7.0\Shopping.Application.sourcelink.json
