@@ -17,6 +17,10 @@ using Shopping.Application.Orders.Expire;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Shopping.Application.Items.Create;
+using Azure.Storage.Blobs;
+using Azure.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using UserAccess.Application.Common;
 
 namespace API;
 
@@ -82,6 +86,9 @@ public static class DependencyInjection
             
         });
 
+        //Azure Blob Storage
+        services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("AzureBlobConnectionString")));
+        
         //Seed of work
         services.AddSingleton<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>();
         services.AddSingleton<HttpContextAccessor>();
