@@ -92,11 +92,11 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
             return amountCannotBeGreaterThanActualAmount.FirstError;
         }
 
-        var cannotBePlacedBySellerItem = order.CheckRule(new OrderCannotBePlacedByItemSellerRule(customerId, sellerId));
+        var cannotBePlacedByItemSeller = order.CheckRule(new OrderCannotBePlacedByItemSellerRule(customerId, sellerId));
 
-        if (cannotBePlacedBySellerItem.IsError)
+        if (cannotBePlacedByItemSeller.IsError)
         {
-            return cannotBePlacedBySellerItem.FirstError;
+            return cannotBePlacedByItemSeller.FirstError;
         }
 
         order.PlacedOn = placedOn;
@@ -117,13 +117,6 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
 
     public ErrorOr<Unit> Confirm(DateTime confirmedOn)
     {
-        var cannotBeConfirmedIfOrderStatusIsConfirmed = CheckRule(new OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule(OrderStatus));
-
-        if (cannotBeConfirmedIfOrderStatusIsConfirmed.IsError)
-        {
-            return cannotBeConfirmedIfOrderStatusIsConfirmed.FirstError;
-        }
-
         var cannotBeConfirmedWhenOrderStatusIsNotPlaced = CheckRule(new OrderCannotBeConfirmedWhenOrderStatusIsNotPlacedRule(OrderStatus));
 
         if (cannotBeConfirmedWhenOrderStatusIsNotPlaced.IsError)
@@ -176,13 +169,6 @@ public sealed class Order : AggregateRoot<OrderId, Guid>
         int actualStock, 
         StockStatus stockStatus)
     {
-        var cannotBePayedWhenOrderStatusIsExpired = CheckRule(new OrderCannotBePayedWhenOrderStatusIsExpiredRule(OrderStatus));
-        
-        if (cannotBePayedWhenOrderStatusIsExpired.IsError)
-        {
-            return cannotBePayedWhenOrderStatusIsExpired.FirstError;
-        }
-
         var cannotBePayedWhenOrderStatusIsNotConfirmed = CheckRule(new OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule(OrderStatus));
 
         if (cannotBePayedWhenOrderStatusIsNotConfirmed.IsError)
