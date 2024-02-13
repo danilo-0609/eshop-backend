@@ -8,9 +8,6 @@ public static class OrderErrorCodes
     public static Error OrderStatusIsNotPayed =>
         Error.Validation("Order.StatusIsNotPayed", OrderCannotBeCompletedWhenOrderStatusIsNotPayedRule.Message);
 
-    public static Error OrderStatusAlreadyConfirmed =>
-        Error.Validation("Order.StatusAlreadyConfirmed", OrderCannotBeConfirmedWhenOrderStatusIsConfirmedRule.Message);
-
     public static Error OrderStatusAlreadyExpired =>
         Error.Validation("Order.StatusAlreadyExpired", OrderCannotBeExpiredWhenOrderStatusIsExpiredRule.Message);
 
@@ -22,9 +19,6 @@ public static class OrderErrorCodes
 
     public static Error OrderStatusIsCompleted =>
         Error.Validation("Order.StatusIsCompleted", OrderCannotBeExpiredAfterGetCompletedRule.Message);
-
-    public static Error CannotPayedWhenStatusIsExpired =>
-        Error.Validation("Order.StatusIsExpired", OrderCannotBePayedWhenOrderStatusIsExpiredRule.Message);
 
     public static Error CannotBePayedWhenStatusIsNotConfirmed =>
         Error.Validation("Order.StatusIsNotConfirmed", OrderCannotBePayedWhenOrderStatusIsNotConfirmedRule.Message);
