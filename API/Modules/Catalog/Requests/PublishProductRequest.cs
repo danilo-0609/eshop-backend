@@ -1,6 +1,5 @@
 ﻿namespace API.Modules.Catalog.Requests;
 
-
 public sealed record PublishProductRequest(string Name,
     decimal Price,
     string Description,

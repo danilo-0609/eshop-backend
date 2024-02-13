@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Mvc;
 using UserAccess.Domain.Enums;
 using UserAccess.Infrastructure.Authorization;
 
-
 namespace API.Modules.Catalog.Endpoints;
 
 [Route("api/[controller]")]
