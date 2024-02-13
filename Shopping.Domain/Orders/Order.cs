@@ -8,6 +8,7 @@ using Shopping.Domain.Payments;
 
 namespace Shopping.Domain.Orders;
 
+
 public sealed class Order : AggregateRoot<OrderId, Guid>
 {
     public new OrderId Id { get; private set; }

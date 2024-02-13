@@ -3,6 +3,7 @@ using Shopping.Domain.Orders.Rules;
 
 namespace Shopping.Domain.Orders.Errors;
 
+
 public static class OrderErrorCodes
 {
     public static Error OrderStatusIsNotPayed =>
