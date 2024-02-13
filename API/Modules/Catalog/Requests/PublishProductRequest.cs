@@ -3,8 +3,8 @@
 public sealed record PublishProductRequest(string Name,
     decimal Price,
     string Description,
-    string Size,
+    List<string> Sizes,
     string ProductType,
     List<string> Tags,
     int InStock,
-    string Color = "");
+    List<string> Colors);

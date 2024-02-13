@@ -41,11 +41,11 @@ public class ProductsController : ApiController
             request.Name,
             request.Price,
             request.Description,
-            request.Size,
+            request.Sizes,
             request.ProductType,
             request.Tags,
             request.InStock,
-            request.Color);
+            request.Colors);
 
         var response = await _sender.Send(command);
 
@@ -137,7 +137,7 @@ public class ProductsController : ApiController
     [HttpPut("modify-color/{id}")]
     public async Task<IActionResult> ModifyProductColor(Guid id, [FromBody] ChangeColorRequest request)
     {
-        var command = new ModifyColorCommand(id, request.Color);
+        var command = new ModifyColorCommand(id, request.Colors);
 
         var response = await _sender.Send(command);
 
@@ -215,7 +215,7 @@ public class ProductsController : ApiController
     [HttpPut("modify-size/{id}")]
     public async Task<IActionResult> ModifyProductSize(Guid id, [FromBody] ChangeSizeRequest request)
     {
-        var command = new ModifySizeCommand(id, request.Size);
+        var command = new ModifySizeCommand(id, request.Sizes);
 
         var response = await _sender.Send(command);
 
