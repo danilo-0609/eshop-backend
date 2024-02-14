@@ -1,6 +1,7 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using Catalog.Domain.Products.Errors;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -33,18 +34,20 @@ internal sealed class ModifyColorCommandHandler : ICommandRequestHandler<ModifyC
             return ProductErrorCodes.CannotAccessToContent;
         }
 
+        List<Color> colors = request.Colors.ConvertAll(color => new Color(color));
+
         var update = Product.Update(product.Id, 
             product.SellerId, 
             product.Name, 
             product.Price,
             product.Description, 
-            product.Size,
+            product.Sizes,
             product.ProductType, 
             product.Tags,
             product.InStock, 
             product.CreatedDateTime, 
             DateTime.UtcNow, 
-            request.Color);
+            colors);
 
         await _productRepository.UpdateAsync(update);
 

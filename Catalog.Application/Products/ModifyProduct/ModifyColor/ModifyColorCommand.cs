@@ -1,4 +1,5 @@
 using Catalog.Application.Common;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -6,4 +7,4 @@ namespace Catalog.Application.Products.ModifyProduct.ModifyColor;
 
 public sealed record ModifyColorCommand(
     Guid ProductId,
-    string Color) : ICommandRequest<ErrorOr<Unit>>;
+    List<string> Colors) : ICommandRequest<ErrorOr<Unit>>;

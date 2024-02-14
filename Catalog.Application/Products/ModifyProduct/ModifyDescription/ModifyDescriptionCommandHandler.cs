@@ -38,13 +38,13 @@ internal sealed class ModifyDescriptionCommandHandler : ICommandRequestHandler<M
             product.Name, 
             product.Price,
             request.Description, 
-            product.Size,
+            product.Sizes,
             product.ProductType, 
             product.Tags,
             product.InStock, 
             product.CreatedDateTime, 
             DateTime.UtcNow, 
-            product.Color);
+            product.Colors);
 
         await _productRepository.UpdateAsync(update);
 

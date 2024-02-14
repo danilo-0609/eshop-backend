@@ -39,13 +39,13 @@ internal sealed class ModifyInStockCommandHandler : ICommandRequestHandler<Modif
             product.Name, 
             product.Price,
             product.Description, 
-            product.Size,
+            product.Sizes,
             product.ProductType, 
             product.Tags,
             request.InStock, 
             product.CreatedDateTime, 
             DateTime.UtcNow, 
-            product.Color);
+            product.Colors);
 
         await _productRepository.UpdateAsync(update);
     

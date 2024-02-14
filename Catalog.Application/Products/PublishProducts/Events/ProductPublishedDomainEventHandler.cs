@@ -7,9 +7,9 @@ namespace Catalog.Application.Products.PublishProducts.Events;
 
 internal sealed class ProductPublishedDomainEventHandler : IDomainEventHandler<ProductPublishedDomainEvent>
 {
-    private readonly ICatalogEventBus _eventBus;
+    private readonly IEventBus _eventBus;
 
-    public ProductPublishedDomainEventHandler(ICatalogEventBus eventBus)
+    public ProductPublishedDomainEventHandler(IEventBus eventBus)
     {
         _eventBus = eventBus;
     }
@@ -25,10 +25,6 @@ internal sealed class ProductPublishedDomainEventHandler : IDomainEventHandler<P
             notification.Description,
             notification.Price,
             notification.InStock,
-            notification.Size,
-            notification.ProductType.Value,
-            notification.Tags.Select(v => v.Value).ToList(),
-            notification.OcurredOn,
-            notification.Color));
+            notification.OcurredOn));
     }
 }

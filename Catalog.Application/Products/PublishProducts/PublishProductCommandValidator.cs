@@ -20,10 +20,9 @@ internal sealed class PublishProductCommandValidator : AbstractValidator<Publish
             .NotEmpty().WithMessage("Description cannot be empty")
             .MaximumLength(9000).WithMessage("Description too long");
 
-        RuleFor(r => r.Size)
+        RuleFor(r => r.Sizes)
             .NotNull().WithMessage("Size cannot be null")
-            .NotEmpty().WithMessage("Size cannot be empty")
-            .MaximumLength(100);
+            .NotEmpty().WithMessage("Size cannot be empty");
 
         RuleFor(r => r.ProductType)
             .NotNull().WithMessage("Product type cannot be null")
@@ -36,6 +35,10 @@ internal sealed class PublishProductCommandValidator : AbstractValidator<Publish
         RuleFor(r => r.InStock)
             .NotNull().WithMessage("In stock cannot be null")
             .NotEmpty().WithMessage("In stock cannot be empty");
+
+        RuleFor(r => r.Colors)
+            .NotNull()
+            .NotEmpty();
     }
 }
 

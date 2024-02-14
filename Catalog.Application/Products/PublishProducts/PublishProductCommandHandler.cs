@@ -2,6 +2,7 @@ using BuildingBlocks.Application;
 using Catalog.Domain.Products;
 using Catalog.Application.Common;
 using ErrorOr;
+using Catalog.Domain.Products.ValueObjects;
 
 namespace Catalog.Application.Products.PublishProducts;
 
@@ -21,29 +22,30 @@ internal sealed class PublishProductCommandHandler : ICommandRequestHandler<Publ
     public async Task<ErrorOr<Guid>> Handle(PublishProductCommand command, CancellationToken cancellationToken)
     {
         ProductType productType = ProductType.Create(command.ProductType);
-        List<Tag> tags = new();
+        List<Tag> tags = command.Tags.ConvertAll(tag => Tag.Create(tag));
+        List<Size> sizes = command.Sizes.ConvertAll(size => new Size(size));
+        List<Color> colors = command.Colors.ConvertAll(color => new Color(color));
 
-        foreach (string tag in command.Tags)
-        {
-            Tag _tag = Tag.Create(tag);
 
-            tags.Add(_tag);
-        }
-
-        Product product = Product.Publish(_executionContextAccessor.UserId,
+        ErrorOr<Product> product = Product.Publish(_executionContextAccessor.UserId,
             command.Name,
             command.Price,
             command.Description,
-            command.Size,
+            sizes,
             productType,
             tags,
             command.InStock,
             DateTime.UtcNow,
-            command.Color);
+            colors);
 
-        await _productRepository.AddAsync(product);
+        if (product.IsError)
+        {
+            return product.FirstError;
+        }
 
-        return product.Id.Value;
+        await _productRepository.AddAsync(product.Value);
+
+        return product.Value.Id.Value;
     }
 
 }

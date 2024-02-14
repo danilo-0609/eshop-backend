@@ -9,7 +9,7 @@ internal sealed class ModifyColorCommandValidator : AbstractValidator<ModifyColo
             .NotNull().WithMessage("Product id cannot be null")
             .NotEmpty().WithMessage("Product id cannot be empty");
 
-        RuleFor(r => r.Color)
+        RuleFor(r => r.Colors)
             .NotNull().WithMessage("Color cannot be null")
             .NotEmpty().WithMessage("Color cannot be empty");
     }

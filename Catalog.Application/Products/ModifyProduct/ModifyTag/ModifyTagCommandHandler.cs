@@ -1,6 +1,7 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using Catalog.Domain.Products.Errors;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -41,13 +42,13 @@ internal sealed class ModifyTagCommandHandler : ICommandRequestHandler<ModifyTag
             product.Name, 
             product.Price,
             product.Description, 
-            product.Size,
+            product.Sizes,
             product.ProductType, 
             tags,
             product.InStock, 
             product.CreatedDateTime, 
             DateTime.UtcNow, 
-            product.Color);
+            product.Colors);
 
         await _productRepository.UpdateAsync(update);
 

@@ -6,8 +6,8 @@ namespace Catalog.Application.Products.PublishProducts;
 public sealed record PublishProductCommand(string Name,
     decimal Price,
     string Description,
-    string Size,
+    List<string> Sizes,
     string ProductType,
     List<string> Tags,
     int InStock,
-    string Color = "") : ICommandRequest<ErrorOr<Guid>>;
+    List<string> Colors) : ICommandRequest<ErrorOr<Guid>>;

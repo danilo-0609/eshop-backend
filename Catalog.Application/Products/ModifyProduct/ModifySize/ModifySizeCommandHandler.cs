@@ -1,8 +1,11 @@
 using Catalog.Application.Common;
 using Catalog.Domain.Products;
 using Catalog.Domain.Products.Errors;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 using MediatR;
+using System.Drawing;
+using Size = Catalog.Domain.Products.ValueObjects.Size;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifySize;
 internal sealed class ModifySizeCommandHandler : ICommandRequestHandler<ModifySizeCommand, ErrorOr<Unit>>
@@ -32,19 +35,21 @@ internal sealed class ModifySizeCommandHandler : ICommandRequestHandler<ModifySi
             return ProductErrorCodes.CannotAccessToContent;
         }
 
+        List<Size> sizes = request.Sizes.ConvertAll(size => new Size(size));
+
         Product update = Product.Update(
             product.Id, 
             product.SellerId, 
             product.Name, 
             product.Price,
             product.Description, 
-            request.Size,
+            sizes,
             product.ProductType, 
             product.Tags,
             product.InStock, 
             product.CreatedDateTime, 
             DateTime.UtcNow, 
-            product.Color);
+            product.Colors);
 
         await _productRepository.UpdateAsync(update);
 

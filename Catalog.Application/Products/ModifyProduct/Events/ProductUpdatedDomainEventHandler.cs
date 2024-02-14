@@ -7,9 +7,9 @@ namespace Catalog.Application.Products.ModifyProduct.Events;
 
 internal sealed class ProductUpdatedDomainEventHandler : IDomainEventHandler<ProductUpdatedDomainEvent>
 {
-    private readonly ICatalogEventBus _eventBus;
+    private readonly IEventBus _eventBus;
 
-    public ProductUpdatedDomainEventHandler(ICatalogEventBus eventBus)
+    public ProductUpdatedDomainEventHandler(IEventBus eventBus)
     {
         _eventBus = eventBus;
     }

@@ -1,6 +1,7 @@
 using FluentValidation;
 
 namespace Catalog.Application.Products.ModifyProduct.ModifySize;
+
 internal sealed class ModifySizeCommandValidator : AbstractValidator<ModifySizeCommand>
 {
     public ModifySizeCommandValidator()
@@ -9,9 +10,8 @@ internal sealed class ModifySizeCommandValidator : AbstractValidator<ModifySizeC
             .NotNull().WithMessage("Product id cannot be null")
             .NotEmpty().WithMessage("Product id cannot be empty");
 
-        RuleFor(r => r.Size)
+        RuleFor(r => r.Sizes)
             .NotNull().WithMessage("Size cannot be null")
-            .NotEmpty().WithMessage("Size cannot be empty")
-            .MaximumLength(100);
+            .NotEmpty().WithMessage("Size cannot be empty");
     }
 }
