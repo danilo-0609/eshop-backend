@@ -5,12 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Catalog.Infrastructure.EventsBus;
 
-internal sealed class CatalogEventBus : ICatalogEventBus
+internal sealed class EventBus : IEventBus
 {
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ILogger<CatalogEventBus> _logger;
+    private readonly ILogger<EventBus> _logger;
 
-    public CatalogEventBus(IPublishEndpoint publishEndpoint, ILogger<CatalogEventBus> logger)
+    public EventBus(IPublishEndpoint publishEndpoint, ILogger<EventBus> logger)
     {
         _publishEndpoint = publishEndpoint;
         _logger = logger;
