@@ -1,21 +1,22 @@
 using System;
 using BuildingBlocks.Domain;
 using Catalog.Domain.Products.Errors;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 
 namespace Catalog.Domain.Products.Rules;
 internal sealed class ProductCannotBeSoldWhenProductIsOutOfStockRule : IBusinessRule
 {
-    private readonly int _inStock;
+    private readonly StockStatus _stockStatus;
 
-    public ProductCannotBeSoldWhenProductIsOutOfStockRule(int inStock)
+    public ProductCannotBeSoldWhenProductIsOutOfStockRule(StockStatus stockStatus)
     {
-        _inStock = inStock;
+        _stockStatus = stockStatus;
     }
 
     public Error Error => ProductErrorCodes.ProductOutOfStock;
 
-    public bool IsBroken() => _inStock == 0;
+    public bool IsBroken() => _stockStatus == StockStatus.OutOfStock;
 
     public static string Message => "Product cannot be sold when product is out of stock";
 }

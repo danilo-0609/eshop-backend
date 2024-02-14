@@ -37,13 +37,13 @@ public sealed class SellProductService
             product.Name,
             product.Price,
             product.Description,
-            product.Size,
+            product.Sizes,
             product.ProductType,
             product.Tags,
             product.InStock,
             product.CreatedDateTime,
             DateTime.UtcNow,
-            product.Color);
+            product.Colors);
 
         await _productRepository.UpdateAsync(update);
 

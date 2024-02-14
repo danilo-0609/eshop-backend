@@ -9,9 +9,5 @@ public sealed record ProductPublishedDomainEvent(Guid DomainEventId,
     string Description,
     decimal Price,
     int InStock,
-    string Size,
-    List<Tag> Tags,
-    ProductType ProductType,
-    DateTime OcurredOn,
-    string Color = "") : IDomainEvent;
+    DateTime OcurredOn) : IDomainEvent;
 

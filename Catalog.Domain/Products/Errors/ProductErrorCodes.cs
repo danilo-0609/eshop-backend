@@ -5,6 +5,9 @@ namespace Catalog.Domain.Products.Errors;
 
 public static class ProductErrorCodes
 {
+    public static Error CannotPublishWithNoStock =>
+        Error.Validation("Product.CannotPublishWithNoStock", ProductCannotBePublishedWithNoStockRule.Message);
+
     public static Error ProductOutOfStock =>
         Error.Validation("Product.OutOfStock", ProductCannotBeSoldWhenProductIsOutOfStockRule.Message);
     
