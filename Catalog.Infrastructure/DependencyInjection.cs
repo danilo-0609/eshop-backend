@@ -49,7 +49,7 @@ public static class DependencyInjection
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
         
         //Event bus service
-        services.AddTransient<ICatalogEventBus, CatalogEventBus>();
+        services.AddTransient<Application.Common.IEventBus, EventBus>();
 
         return services;
     }    
