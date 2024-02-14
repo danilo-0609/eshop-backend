@@ -1,4 +1,3 @@
-using BuildingBlocks.Application.EventBus;
 using Catalog.Application.Common;
 using Catalog.Domain.Comments;
 using Catalog.Domain.Products;
@@ -49,7 +48,7 @@ public static class DependencyInjection
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
         
         //Event bus service
-        services.AddTransient<Application.Common.IEventBus, EventBus>();
+        services.AddTransient<IEventBus, EventBus>();
 
         return services;
     }    
