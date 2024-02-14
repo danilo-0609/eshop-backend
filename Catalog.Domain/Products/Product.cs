@@ -1,6 +1,7 @@
 using BuildingBlocks.Domain;
 using Catalog.Domain.Products.Events;
 using Catalog.Domain.Products.Rules;
+using Catalog.Domain.Products.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -18,15 +19,17 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
 
     public string Description { get; private set; }
 
-    public string Size { get; private set; }
+    public List<Size> Sizes { get; private set; }
 
-    public string Color { get; private set; } = string.Empty;
+    public List<Color> Colors { get; private set; }
 
     public ProductType ProductType { get; private set; }
 
     public List<Tag> Tags { get; private set; }
 
     public int InStock { get; private set; }
+
+    public StockStatus StockStatus { get; private set; }
 
     public bool IsActive { get; private set; }
 
@@ -36,29 +39,37 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
 
     public DateTime? ExpiredDateTime { get; private set; }
 
-    public static Product Publish(Guid sellerId,
+
+    public static ErrorOr<Product> Publish(Guid sellerId,
         string name,
         decimal price,
         string description,
-        string size, 
+        List<Size> sizes, 
         ProductType productType,
         List<Tag> tags,
         int inStock,
         DateTime ocurredOn,
-        string color = "")
+        List<Color> colors)
     {
         Product product = new Product(ProductId.CreateUnique(),
             sellerId,
             name,
             price,
             description,
-            size,
-            color,
+            sizes,
+            colors,
             productType,
             tags,
             inStock,
             isActive: true,
             ocurredOn);
+
+        var cannotBePublishedWithNoStock = product.CheckRule(new ProductCannotBePublishedWithNoStockRule(product.StockStatus));
+
+        if (cannotBePublishedWithNoStock.IsError)
+        {
+            return cannotBePublishedWithNoStock.FirstError;
+        }
 
         ProductPublishedDomainEvent productPublishedDomainEvent = new(Guid.NewGuid(), 
             product.Id,
@@ -67,11 +78,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
             product.Description,
             product.Price,
             product.InStock,
-            product.Size,
-            product.Tags,
-            product.ProductType,
-            product.CreatedDateTime,
-            product.Color);
+            product.CreatedDateTime);
 
         product.Raise(productPublishedDomainEvent);
 
@@ -84,21 +91,21 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         string name,
         decimal price,
         string description,
-        string size,
+        List<Size> sizes,
         ProductType productType,
         List<Tag> tags,
         int inStock,
         DateTime createdOn,
         DateTime updatedOn,
-        string color = "")
+        List<Color> colors)
         {
             var product = new Product(id,
                 sellerId,
                 name,
                 price,
                 description,
-                size,
-                color,
+                sizes,
+                colors,
                 productType,
                 tags,
                 inStock,
@@ -131,7 +138,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
     
     public ErrorOr<Unit> OutOfStock()
     {
-        if (InStock != 0)
+        if (StockStatus == StockStatus.OutOfStock)
         {
             return Error.Validation("Product.HasStock", "Product is not out of stock");
         }
@@ -143,7 +150,7 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
 
     public ErrorOr<Unit> Sell(int amountOfProducts, Guid orderId)
     {
-        var isOutOfStockRule = CheckRule(new ProductCannotBeSoldWhenProductIsOutOfStockRule(InStock));
+        var isOutOfStockRule = CheckRule(new ProductCannotBeSoldWhenProductIsOutOfStockRule(StockStatus));
 
         if (isOutOfStockRule.IsError)
         {
@@ -182,13 +189,23 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         return Unit.Value;
     }
 
+    private StockStatus CheckStatus()
+    {
+        if (InStock == 0)
+        {
+            return StockStatus.OutOfStock;
+        }
+
+        return StockStatus.WithStock;
+    }
+
     public Product(ProductId id,
         Guid sellerId,
         string name,
         decimal price,
         string description,
-        string size,
-        string color,
+        List<Size> sizes,
+        List<Color> colors,
         ProductType productType,
         List<Tag> tags,
         int inStock,
@@ -203,20 +220,16 @@ public sealed class Product : AggregateRoot<ProductId, Guid>
         Name = name;
         Price = price;
         Description = description;
-        Size =  size;
-        Color = color;
+        Sizes =  sizes;
+        Colors = colors;
         ProductType = productType;
         Tags = tags;
         InStock = inStock;
+        StockStatus = CheckStatus();
         IsActive = isActive;
         CreatedDateTime = createdDateTime;
         UpdatedDateTime = updatedDateTime;
         ExpiredDateTime = expiredDateTime;
-
-        if (InStock == 0)
-        {
-            OutOfStock();
-        }
     }
 
     private Product(){}
