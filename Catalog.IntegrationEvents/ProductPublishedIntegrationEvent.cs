@@ -9,8 +9,4 @@ public sealed record ProductPublishedIntegrationEvent(Guid IntegrationEventId,
     string Description,
     decimal Price,
     int InStock,
-    string Size,
-    string ProductType,
-    List<string> Tags,
-    DateTime OcurredOn,
-    string Color = "") : IntegrationEvent(IntegrationEventId, OcurredOn);
+    DateTime OcurredOn) : IntegrationEvent(IntegrationEventId, OcurredOn);
