@@ -1,35 +1,62 @@
 ﻿using Catalog.Domain.Products;
 using Catalog.Domain.Products.Errors;
 using Catalog.Domain.Products.Events;
+using Catalog.Domain.Products.ValueObjects;
+using ErrorOr;
 
 namespace Catalog.Tests.UnitTests.Domain;
 
 
 public sealed class ProductTests
 {
+    private readonly List<Size> _sizes = new() { new Size("XL"), new Size("M"), new Size("L") };
+    private readonly List<Color> _colors = new() { new Color("Yellow"), new Color("Black"), new Color("Blue") };
+    private readonly List<Tag> _tags = new List<Tag>() { Tag.Create("#ForMan"), Tag.Create("#XL"), Tag.Create("#Casual") };
+
     [Fact]
-    public void Publish_Should_RaiseProductPublishedDomainEvent_WhenIsPublishedSuccessfully()
+    public void Publish_Should_ReturnAnErrorCannotPublishedWithNoStock_WhenPublishFailed()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "TShirt name",
             100.32m,
             "Product description",
-            "XL",
+            _sizes,
             ProductType.TShirt,
-            new List<Tag>
-            {
-                Tag.Create("#ForMan"),
-                Tag.Create("#XL"),
-                Tag.Create("#Casual")
-            },
+            _tags,
+            0,
+            DateTime.UtcNow,
+            _colors);
+
+        //Act
+        bool returnsCannotPublished = product
+            .Errors
+            .Any(r => r.Code == ProductErrorCodes.CannotPublishWithNoStock.Code);
+
+        //Assert
+        Assert.True(returnsCannotPublished);
+    }
+
+    [Fact]
+    public void Publish_Should_RaiseProductPublishedDomainEvent_WhenIsPublishedSuccessfully()
+    {
+        //Arrange
+        ErrorOr<Product> product = Product.Publish(
+            Guid.NewGuid(),
+            "TShirt name",
+            100.32m,
+            "Product description",
+            _sizes,
+            ProductType.TShirt,
+            _tags,
             100,
             DateTime.UtcNow,
-            "Yellow");
+            _colors);
 
         //Act 
         bool raisedProductPublishedDomainEvent = product
+            .Value
             .DomainEvents
             .Any(t => t.GetType() == typeof(ProductPublishedDomainEvent));
 
@@ -47,18 +74,13 @@ public sealed class ProductTests
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             91,
             DateTime.UtcNow.AddDays(-10),
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
 
@@ -71,90 +93,26 @@ public sealed class ProductTests
     }
 
     [Fact]
-    public void Remove_Should_ChangeIsActiveToFalse()
-    {
-        //Arrange
-        Product product = Product.Publish(
-            Guid.NewGuid(),
-            "TShirt name",
-            100.32m,
-            "Product description",
-            "XL",
-            ProductType.TShirt,
-            new List<Tag>
-            {
-                Tag.Create("#ForMan"),
-                Tag.Create("#XL"),
-                Tag.Create("#Casual")
-            },
-            100,
-            DateTime.UtcNow,
-            "Yellow");
-
-        //Act
-        product.Remove();
-
-        bool isActiveIsFalse = product.IsActive;
-
-        //Assert
-        Assert.False(isActiveIsFalse);
-    }
-
-    [Fact]
-    public void Remove_Should_SetExpiredDateTime()
-    {
-        //Arrange
-        Product product = Product.Publish(
-            Guid.NewGuid(),
-            "Jacket name",
-            198.32m,
-            "Product description",
-            "M",
-            ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
-            91,
-            DateTime.UtcNow,
-            "Black");
-
-        //Act
-        product.Remove();
-
-        bool hasExpiredDateTime = product.ExpiredDateTime.HasValue;
-
-        //Assert
-        Assert.True(hasExpiredDateTime);
-    }
-
-    [Fact]
     public void Remove_Should_RaiseProductRemovedDomainEvent()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "TShirt name",
             100.32m,
             "Product description",
-            "XL",
+            _sizes,
             ProductType.TShirt,
-            new List<Tag>
-            {
-                Tag.Create("#ForMan"),
-                Tag.Create("#XL"),
-                Tag.Create("#Casual")
-            },
+            _tags,
             100,
             DateTime.UtcNow,
-            "Yellow");
+            _colors);
 
         //Act 
-        product.Remove();
+        product.Value.Remove();
 
         bool raisedProductRemovedDomainEvent = product
+            .Value
             .DomainEvents
             .Any(t => t.GetType() == typeof(ProductRemovedDomainEvent));
 
@@ -166,58 +124,48 @@ public sealed class ProductTests
     public void OutOfStock_Should_ReturnAnError_WhenStockIsNotEmpty()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             20,
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
-        var isOutOfStock = product.OutOfStock();
+        var isOutOfStock = product.Value.OutOfStock();
 
         bool isError = isOutOfStock.IsError;
 
         //Arrange
         Assert.True(isError);
-
     }
 
     [Fact]
     public void OutOfStock_Should_RaiseProductOutOfStockDomainEvent_WhenIsSuccessfullyValidated()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             0,
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
-        product.OutOfStock();
+        product.Value.OutOfStock();
 
         bool raisedProductOutOfStockDomainEvent = product
+            .Value
             .DomainEvents
             .Any(r => r.GetType() == typeof(ProductOutOfStockDomainEvent));
 
@@ -229,22 +177,19 @@ public sealed class ProductTests
     public void Sell_Should_ReturnAnError_WhenTheProductIsOutOfStock()
     {
         //Arrange
-        Product product = Product.Publish(
+        Product product = Product.Update(
+            ProductId.CreateUnique(),
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             0,
+            DateTime.UtcNow.AddDays(-10),
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
         var sellingOperation = product.Sell(3, Guid.NewGuid());
@@ -260,27 +205,23 @@ public sealed class ProductTests
     public void Sell_Should_RaiseProductOutOfStockDomainEvent_WhenProductIsOutOfStock()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             0,
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
-        var sellingOperation = product.Sell(3, Guid.NewGuid());
+        var sellingOperation = product.Value.Sell(3, Guid.NewGuid());
 
         bool hasProductOutOfStockDomainEvent = product
+            .Value
             .DomainEvents
             .Any(g => g.GetType() == typeof(ProductOutOfStockDomainEvent));
     }
@@ -289,25 +230,20 @@ public sealed class ProductTests
     public void Sell_Should_ReturnAnError_WhenTheAmountOfProductsRequestedIsGreaterThanActualAmountInStock()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             10,
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
-        var sellingOperation = product.Sell(15, Guid.NewGuid());
+        var sellingOperation = product.Value.Sell(15, Guid.NewGuid());
 
         bool sellingOperationFailed = sellingOperation
             .Errors
@@ -321,27 +257,23 @@ public sealed class ProductTests
     public void Sell_Should_RaiseProductSellFailedDomainEvent_WhenSellingFailed()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "Jacket name",
             198.32m,
             "Product description",
-            "M",
+            _sizes,
             ProductType.Jacket,
-            new List<Tag>
-            {
-                Tag.Create("#ForWomen"),
-                Tag.Create("#M"),
-                Tag.Create("#Formal")
-            },
+            _tags,
             10,
             DateTime.UtcNow,
-            "Black");
+            _colors);
 
         //Act
-        var sellingOperation = product.Sell(15, Guid.NewGuid());
+        var sellingOperation = product.Value.Sell(15, Guid.NewGuid());
 
         bool raisedProductSellFailedDomainEvent = product
+            .Value
             .DomainEvents
             .Any(t => t.GetType() == typeof(ProductSellFailedDomainEvent));
     }
@@ -350,27 +282,23 @@ public sealed class ProductTests
     public void Sell_Should_RaiseProductSoldDomainEvent_WhenIsSuccesfullySold()
     {
         //Arrange
-        Product product = Product.Publish(
+        ErrorOr<Product> product = Product.Publish(
             Guid.NewGuid(),
             "TShirt name",
             100.32m,
             "Product description",
-            "XL",
+            _sizes,
             ProductType.TShirt,
-            new List<Tag>
-            {
-                Tag.Create("#ForMan"),
-                Tag.Create("#XL"),
-                Tag.Create("#Casual")
-            },
+            _tags,
             100,
             DateTime.UtcNow,
-            "Yellow");
+            _colors);
 
         //Act
-        product.Sell(3, Guid.NewGuid());
+        product.Value.Sell(3, Guid.NewGuid());
 
         bool raisedProductSoldDomainEvent = product
+            .Value
             .DomainEvents
             .Any(e => e.GetType() == typeof(ProductSoldDomainEvent));
 
