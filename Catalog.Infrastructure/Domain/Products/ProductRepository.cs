@@ -1,4 +1,5 @@
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.ValueObjects;
 using Catalog.Infrastructure.Outbox;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ internal sealed class ProductRepository : IProductRepository
     {
         _dbContext = dbContext;
     }
+
 
     public async Task AddAsync(Product product)
     {
@@ -110,6 +112,8 @@ internal sealed class ProductRepository : IProductRepository
     {
         await UpdateProduct(product);
         await InsertTags(product.Tags, product.Id);
+        await InsertColors(product.Colors, product.Id);
+        await InsertSizes(product.Sizes, product.Id);
         await InsertDomainEvents(product);
     }
 
@@ -121,10 +125,9 @@ internal sealed class ProductRepository : IProductRepository
           Name = @Name,
           Price = @Price,
           Description = @Description,
-          Size = @Size,
-          Color = @Color,
           ProductTypeValue = @ProductTypeValue,
           InStock = @InStock,
+          StockStatus = @StockStatus,
           IsActive = @IsActive,
           CreatedDateTime = @CreatedDateTime,
           UpdatedDateTime = @UpdatedDateTime
@@ -133,10 +136,9 @@ internal sealed class ProductRepository : IProductRepository
      new SqlParameter("@Name", product.Name),
      new SqlParameter("@Price", product.Price),
      new SqlParameter("@Description", product.Description),
-     new SqlParameter("@Size", product.Size),
-     new SqlParameter("@Color", product.Color),
      new SqlParameter("@ProductTypeValue", product.ProductType.Value),
      new SqlParameter("@InStock", product.InStock),
+     new SqlParameter("@StockStatus", product.StockStatus.Value),
      new SqlParameter("@IsActive", product.IsActive),
      new SqlParameter("@CreatedDateTime", product.CreatedDateTime),
      new SqlParameter("@UpdatedDateTime", product.UpdatedDateTime),
@@ -165,6 +167,56 @@ internal sealed class ProductRepository : IProductRepository
                     VALUES ({0}, {1});
                     """,
                     productId.Value, tag.Value);
+            }
+        }
+    }
+
+    private async Task InsertColors(List<Color> colors, ProductId productId)
+    {
+        List<string> colorList = await _dbContext
+            .Products
+            .Where(q => q.Id == productId)
+            .SelectMany(r => r.Colors
+                .Select(r => r.Value))
+            .ToListAsync();
+
+        foreach (Color color in colors)
+        {
+            if (!colorList.Contains(color.Value))
+            {
+                await _dbContext
+                    .Database
+                    .ExecuteSqlRawAsync(
+                    """
+                    INSERT INTO catalog.Colors (ProductId, Value)
+                    VALUES ({0}, {1});
+                    """,
+                    productId.Value, color.Value);
+            }
+        }
+    }
+
+    private async Task InsertSizes(List<Size> sizes, ProductId productId)
+    {
+        List<string> sizeList = await _dbContext
+            .Products
+            .Where(q => q.Id == productId)
+            .SelectMany(r => r.Sizes
+                .Select(r => r.Value))
+            .ToListAsync();
+
+        foreach (Size size in sizes)
+        {
+            if (!sizeList.Contains(size.Value))
+            {
+                await _dbContext
+                    .Database
+                    .ExecuteSqlRawAsync(
+                    """
+                    INSERT INTO catalog.Sizes (ProductId, Value)
+                    VALUES ({0}, {1});
+                    """,
+                    productId.Value, size.Value);
             }
         }
     }

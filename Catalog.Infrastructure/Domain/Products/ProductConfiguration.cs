@@ -1,6 +1,8 @@
 using Catalog.Domain.Products;
+using Catalog.Domain.Products.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 
 namespace Catalog.Infrastructure.Persistence.Configuration;
 
@@ -34,14 +36,6 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName("Description")
             .HasMaxLength(9000);
 
-        builder.Property(p => p.Size)
-            .HasColumnName("Size")
-            .HasMaxLength(100);
-
-        builder.Property(p => p.Color)
-            .HasColumnName("Color")
-            .HasMaxLength(100);
-
         builder.OwnsOne(p => p.ProductType, b =>
         {
             b.Property(p => p.Value).HasColumnName("ProductTypeValue");
@@ -56,8 +50,32 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
                 .HasColumnName("Value");
         });
 
+        builder.OwnsMany<Size>("Sizes", y =>
+        {
+            y.WithOwner().HasForeignKey("ProductId");
+            y.ToTable("Sizes", "catalog");
+
+            y.Property(y => y.Value)
+                .HasColumnName("Value");
+        });
+
+        builder.OwnsMany<Color>("Colors", y =>
+        {
+            y.WithOwner().HasForeignKey("ProductId");
+            y.ToTable("Colors", "catalog");
+
+            y.Property(y => y.Value)
+                .HasColumnName("Value");
+        });
+
         builder.Property(p => p.InStock)
             .HasColumnName("InStock");
+
+        builder.OwnsOne(p => p.StockStatus, b =>
+        {
+            b.Property(p => p.Value).HasColumnName("StockStatus");
+        });
+
 
         builder.Property(p => p.IsActive)
             .HasColumnName("IsActive");
@@ -74,3 +92,4 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired(false);
     }
 }
+
