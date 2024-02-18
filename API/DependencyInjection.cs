@@ -88,8 +88,12 @@ public static class DependencyInjection
 
         //Azure Blob Storage
         services.AddSingleton(x => new BlobServiceClient(configuration.GetConnectionString("AzureBlobConnectionString")));
-        
-        //Seed of work
+
+        //Health Checks
+        services.AddHealthChecks()
+            .AddSqlServer(configuration.GetConnectionString("Database")!);
+
+        //HttpContext
         services.AddSingleton<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>();
         services.AddSingleton<HttpContextAccessor>();
         services.AddHttpContextAccessor();

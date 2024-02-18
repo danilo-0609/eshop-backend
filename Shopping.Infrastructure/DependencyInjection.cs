@@ -25,6 +25,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        string connectionString = configuration.GetConnectionString("Database")!;
+
         //Background jobs
         services.AddQuartz();
         services.AddQuartzHostedService();
@@ -34,7 +36,7 @@ public static class DependencyInjection
         //Persistence. Database context
         services.AddDbContext<ShoppingDbContext>((optionsBuilder) =>
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
+            optionsBuilder.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext>(sp =>
@@ -53,6 +55,11 @@ public static class DependencyInjection
 
         //Event bus
         services.AddTransient<IShoppingEventBus, EventBus>();
+
+        //HealthChecks
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<ShoppingDbContext>();
 
         return services;
     }

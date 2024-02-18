@@ -3,6 +3,8 @@ using API.Middleware;
 using API.Modules.Catalog.Startup;
 using API.Modules.Shopping.Startup;
 using API.Modules.UserAccess.Startup;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,11 @@ app.UseSwaggerUI();
 app.UseExceptionHandler("/Error");
 
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("health", new HealthCheckOptions 
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseAuthentication();
 
