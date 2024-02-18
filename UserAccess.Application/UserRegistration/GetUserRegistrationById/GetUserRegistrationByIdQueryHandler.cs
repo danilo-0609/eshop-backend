@@ -3,6 +3,7 @@ using ErrorOr;
 using UserAccess.Application.UserRegistration.GetUserRegistrationByIda;
 using UserAccess.Domain.UserRegistrations;
 using UserAccess.Domain.UserRegistrations.Errors;
+using UserAccess.Application.Abstractions;
 
 namespace UserAccess.Application.UserRegistration.GetUserRegistrationById;
 

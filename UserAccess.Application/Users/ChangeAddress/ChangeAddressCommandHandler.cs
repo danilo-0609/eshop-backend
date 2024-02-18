@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using UserAccess.Application.Abstractions;
 using UserAccess.Application.Common;
 using UserAccess.Domain.Users;
 using UserAccess.Domain.Users.Errors;

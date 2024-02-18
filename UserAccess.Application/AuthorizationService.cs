@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.Application;
 using ErrorOr;
 using MediatR;
-using UserAccess.Application.Common;
+using UserAccess.Application.Abstractions;
 
 namespace UserAccess.Application;
 

@@ -3,6 +3,7 @@ using ErrorOr;
 using MediatR;
 using UserAccess.Domain.Users;
 using UserAccess.Domain.Users.Errors;
+using UserAccess.Application.Abstractions;
 
 namespace UserAccess.Application.Users.ChangeName;
 
