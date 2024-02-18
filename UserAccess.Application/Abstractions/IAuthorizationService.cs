@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 
-namespace UserAccess.Application.Common;
+namespace UserAccess.Application.Abstractions;
 
 internal interface IAuthorizationService
 {
