@@ -24,6 +24,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        string connectionString = configuration.GetConnectionString("Database")!;
+
         //Background jobs 
         services.AddQuartz();
         services.AddQuartzHostedService();
@@ -32,7 +34,7 @@ public static class DependencyInjection
         //Persistence. Database context
         services.AddDbContext<UserAccessDbContext>((sp, optionsBuilder) =>
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
+            optionsBuilder.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext>(sp =>
@@ -48,7 +50,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUsersCounter, UserRegistrationRepository>();
 
-        services.AddScoped<IBlobRepository, BlobRepository>();
+        services.AddScoped<IBlobService, BlobService>();
 
         services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
 
@@ -58,11 +60,15 @@ public static class DependencyInjection
         //Authorization
         services.AddAuthorization();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
-        services.AddSingleton<IAuthorizationPolicyProvider,  PermissionAuthorizationPolicyProvider>();
-        services.AddScoped<IPermissionService,  PermissionService>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        services.AddScoped<IPermissionService, PermissionService>();
 
         //Event bus services
         services.AddTransient<IEventBus, EventBus>();
+
+        //Health checks
+        services.AddHealthChecks()
+            .AddDbContextCheck<UserAccessDbContext>();
 
         return services;
     }
