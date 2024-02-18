@@ -3,6 +3,7 @@ using Catalog.Domain.Comments;
 using Catalog.Domain.Products;
 using Catalog.Domain.Ratings;
 using Catalog.Domain.Sales;
+using Catalog.Infrastructure.Cache;
 using Catalog.Infrastructure.Configuration.DbConnectionConfiguration;
 using Catalog.Infrastructure.Domain.Comments;
 using Catalog.Infrastructure.Domain.Products;
@@ -21,6 +22,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        string connectionString = configuration.GetConnectionString("Database")!;
+
+        //Memory cache
+        services.AddMemoryCache();
+
         //Background jobs
         services.AddQuartzHostedService();
         services.AddQuartz();
@@ -29,17 +35,19 @@ public static class DependencyInjection
         //Persistence. Database context
         services.AddDbContext<CatalogDbContext>((sp, optionsBuilder) => 
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
+            optionsBuilder.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<CatalogDbContext>());
 
         //Unit of work
-        services.AddScoped<ICatalogUnitOfWork, UnitOfWork>();    
+        services.AddScoped<ICatalogUnitOfWork, UnitOfWork>();
 
         //Repositories services
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.Decorate<IProductRepository, CachedProductRepository>();
+
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<IRatingRepository, RatingRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
@@ -49,6 +57,10 @@ public static class DependencyInjection
         
         //Event bus service
         services.AddTransient<IEventBus, EventBus>();
+
+        //Health checks
+        services.AddHealthChecks()
+            .AddDbContextCheck<CatalogDbContext>();
 
         return services;
     }    
