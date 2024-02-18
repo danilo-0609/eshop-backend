@@ -54,6 +54,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .WithMany(r => r.Users)
             .UsingEntity<UserRole>();
 
+        builder.Property(r => r.ProfileImageName)
+            .HasColumnName("ProfileImageName");
+
         builder.Property(x => x.Address)
             .HasColumnName("Address")
             .HasMaxLength(100);

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UserAccess.Domain;
 using UserAccess.Domain.Users;
@@ -62,32 +63,38 @@ internal sealed class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User user)
     {
+        SqlParameter updatedDateTime = user.UpdatedDateTime != null ?
+    new SqlParameter("@UpdatedDateTime", user.UpdatedDateTime) :
+    new SqlParameter("@UpdatedDateTime", DBNull.Value);
+
         await _dbContext
             .Database
             .ExecuteSqlRawAsync(
-            "UPDATE users.Users " +
-            "SET Login = {0}, " +
-            "Password = {1}, " +
-            "Email = {2}, " +
-            "IsActive = {3}, " +
-            "FirstName = {4}, " +
-            "LastName = {5}, " +
-            "Name = {6}, " +
-            "Address = {7}, " +
-            "CreatedDateTime = {8}, " +
-            "UpdatedDateTime = {9}  " +
-            "WHERE UserId = {10}",
-            user.Login,
-            user.Password.Value,
-            user.Email,
-            user.IsActive,
-            user.FirstName,
-            user.LastName,
-            user.Name,
-            user.Address,
-            user.CreatedDateTime,
-            user.UpdatedDateTime!,
-            user.Id.Value);
+            @"UPDATE users.Users " +
+            "SET Login = @Login, " +
+            "Password = @Password, " +
+            "Email = @Email, " +
+            "IsActive = @IsActive, " +
+            "FirstName = @FirstName, " +
+            "LastName = @LastName, " +
+            "Name = @Name, " +
+            "ProfileImageName = @ProfileImageName",
+            "Address = @Address, " +
+            "CreatedDateTime = @CreatedDateTime, " +
+            "UpdatedDateTime = @UpdatedDateTime " +
+            "WHERE UserId = @UserId",
+            new SqlParameter("@Login", user.Login),
+            new SqlParameter("@Password", user.Password.Value),
+            new SqlParameter("@Email", user.Email),
+            new SqlParameter("@IsActive", user.IsActive),
+            new SqlParameter("@FirstName", user.FirstName),
+            new SqlParameter("@LastName", user.LastName),
+            new SqlParameter("@Name", user.Name),
+            new SqlParameter("@ProfileImageName", user.ProfileImageName),
+            new SqlParameter("@Address", user.Address),
+            new SqlParameter("@CreatedDateTime", user.CreatedDateTime),
+            updatedDateTime,
+            new SqlParameter("@UserId", user.Id.Value));
     }
 
     private async Task InsertUser(User user)

@@ -20,6 +20,9 @@ public static class UserErrorsCodes
     public static Error CannotChangeName =>
         Error.Unauthorized("User.CannotChangeName", "Cannot change the other user's name");
 
+    public static Error CannotUploadImage =>
+        Error.Unauthorized("User.CannotUploadImage", "Cannot upload the other user's profile image ");
+
     public static Error CannotChangeLogin =>
         Error.Unauthorized("User.CannotChangeLogin", "Cannot change the other user's login");
 

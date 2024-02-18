@@ -177,6 +177,11 @@ namespace UserAccess.Infrastructure.Migrations
                         .HasColumnType("nvarchar(155)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("ProfileImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProfileImageName");
+
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDateTime");

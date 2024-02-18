@@ -27,6 +27,8 @@ public sealed class User : AggregateRoot<UserId, Guid>
 
     public List<Role> Roles { get; private set; }
 
+    public string ProfileImageName { get; private set; } = string.Empty;
+
     public DateTime CreatedDateTime { get; private set; }
 
     public DateTime? UpdatedDateTime { get; private set; } 
@@ -112,7 +114,8 @@ public sealed class User : AggregateRoot<UserId, Guid>
         string address,
         List<Role> roles,
         DateTime createdDateTime,
-        DateTime updatedDateTime)
+        DateTime updatedDateTime,
+        string profileImageName = "")
     {
         return new User(
             id,
@@ -125,6 +128,7 @@ public sealed class User : AggregateRoot<UserId, Guid>
             $"{firstName} {lastName}",
             address,
             roles,
+            profileImageName,
             createdDateTime,
             updatedDateTime);
     }
@@ -159,7 +163,41 @@ public sealed class User : AggregateRoot<UserId, Guid>
         Name = name;
 
         Roles = roles;
-        
+
+        ProfileImageName = "";
+        Address = address;
+        CreatedDateTime = createdDateTime;
+        UpdatedDateTime = updatedDateTime;
+    }
+
+    private User(
+    UserId id,
+    string login,
+    Password password,
+    string email,
+    bool isActive,
+    string firstName,
+    string lastName,
+    string name,
+    string address,
+    List<Role> roles,
+    string profileImageName,
+    DateTime createdDateTime,
+    DateTime? updatedDateTime)
+    : base(id)
+    {
+        Id = id;
+        Login = login;
+        Password = password;
+        Email = email;
+        IsActive = isActive;
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+
+        Roles = roles;
+
+        ProfileImageName = profileImageName;
         Address = address;
         CreatedDateTime = createdDateTime;
         UpdatedDateTime = updatedDateTime;
