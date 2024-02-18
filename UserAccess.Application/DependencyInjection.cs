@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using UserAccess.Application.Abstractions;
 using UserAccess.Application.Common;
 
 namespace UserAccess.Application;
